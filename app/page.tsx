@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+
 
 export default function Home() {
   const [currentVerbIndex, setCurrentVerbIndex] = useState(0);
-  const verbs = ['dream', 'build', 'lead', 'start', 'mentor', 'rise', 'create'];
+  const verbs = ['dream', 'build', 'lead', 'start', 'rise', 'create'];
   const [navScrolled, setNavScrolled] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(-1);
