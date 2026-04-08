@@ -2,15 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 
+const HERO_IMAGES = [
+  { src: "/hero%202.avif", alt: "Crowd at summit event", position: "50% 42%" },
+  { src: "/hero%205.jpg", alt: "Audience and stage lighting at summit", position: "50% 40%" },
+  { src: "/hero%206.png", alt: "Summit visual moment", position: "50% 46%" },
+  { src: "/hero%207.jpg", alt: "Conference audience in blue-lit venue", position: "50% 42%" },
+  { src: "/hero%208.png", alt: "Networking crowd at summit", position: "50% 44%" },
+];
+
 
 export default function Home() {
-  const [currentVerbIndex, setCurrentVerbIndex] = useState(0);
-  const verbs = ['dream', 'build', 'lead', 'start', 'rise', 'create'];
   const [navScrolled, setNavScrolled] = useState(false);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [openFaqIndex, setOpenFaqIndex] = useState(-1);
-  const [speakerIndex, setSpeakerIndex] = useState(1);
-  const verbRef = useRef<HTMLSpanElement>(null);
+  const [navHidden, setNavHidden] = useState(false);
+  const [navLightTheme, setNavLightTheme] = useState(false);
+  const lastScrollYRef = useRef(0);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);  const [speakerIndex, setSpeakerIndex] = useState(1);
+  const [speakerFlipDirection, setSpeakerFlipDirection] = useState<"prev" | "next" | null>(null);
+  const [speakerFlipping, setSpeakerFlipping] = useState(false);
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+  const [showMobileHeroCtas, setShowMobileHeroCtas] = useState(true);
   const speakerCards = [
     {
       image: "/summit-speaker.png",
@@ -55,33 +65,6 @@ export default function Home() {
   const rightSpeaker = speakerCards[(speakerIndex + 1) % speakerCount];
   
   useEffect(() => {
-    // Hero verb cycling logic
-    const cycleVerb = () => {
-      if (!verbRef.current) return;
-      
-      verbRef.current.classList.remove('active');
-      verbRef.current.classList.add('exit-up');
-      
-      setTimeout(() => {
-        setCurrentVerbIndex((prev) => (prev + 1) % verbs.length);
-        if (verbRef.current) {
-          verbRef.current.classList.remove('exit-up');
-          verbRef.current.classList.add('enter-below');
-          
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              if (verbRef.current) {
-                verbRef.current.classList.remove('enter-below');
-                verbRef.current.classList.add('active');
-              }
-            });
-          });
-        }
-      }, 500);
-    };
-    
-    const interval = setInterval(cycleVerb, 2800);
-    
     // Scroll reveal observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -95,28 +78,65 @@ export default function Home() {
     
     // Nav scroll effect
     const handleScroll = () => {
-      setNavScrolled(window.scrollY > 60);
+      const currentY = window.scrollY;
+      const lastY = lastScrollYRef.current;
+      const navElement = document.getElementById("nav");
+      const heroSection = document.getElementById("home");
+      const navHeight = navElement?.offsetHeight ?? 80;
+      const heroBottom = heroSection ? heroSection.offsetTop + heroSection.offsetHeight : 0;
+      const inHeroSection = currentY + navHeight < heroBottom;
+
+      setNavLightTheme(!inHeroSection);
+      setNavScrolled(currentY > 60);
+
+      if (currentY <= 48) {
+        setNavHidden(false);
+      } else if (currentY > lastY) {
+        setNavHidden(true);
+      } else if (currentY < lastY) {
+        setNavHidden(false);
+      }
+
+      lastScrollYRef.current = currentY;
     };
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
     
     return () => {
-      clearInterval(interval);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
-  }, [verbs.length]);
-  
-  const toggleFaq = (index: number) => {
-    setOpenFaqIndex(openFaqIndex === index ? -1 : index);
+  }, []);
+
+  useEffect(() => {
+    if (HERO_IMAGES.length < 2) return;
+    const intervalId = window.setInterval(() => {
+      setCurrentHeroIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 8000);
+    return () => window.clearInterval(intervalId);
+  }, []);
+
+  const flipSpeaker = (direction: "prev" | "next") => {
+    if (speakerFlipping) return;
+
+    setSpeakerFlipDirection(direction);
+    setSpeakerFlipping(true);
+
+    window.setTimeout(() => {
+      setSpeakerIndex((previous) =>
+        direction === "next"
+          ? (previous + 1) % speakerCount
+          : (previous - 1 + speakerCount) % speakerCount
+      );
+    }, 230);
+
+    window.setTimeout(() => {
+      setSpeakerFlipping(false);
+      setSpeakerFlipDirection(null);
+    }, 520);
   };
 
-  const showPreviousSpeaker = () => {
-    setSpeakerIndex((prev) => (prev - 1 + speakerCount) % speakerCount);
-  };
-
-  const showNextSpeaker = () => {
-    setSpeakerIndex((prev) => (prev + 1) % speakerCount);
-  };
-  
   // We need to inject dynamic attributes back. 
   // Let's replace the static HTML fragments with our state logic below.
   return (
@@ -124,7 +144,7 @@ export default function Home() {
 
 
 {/*  ========== NAVIGATION ==========  */}
-<nav className={`nav ${navScrolled ? 'scrolled' : ''}`} id="nav">
+<nav className={`nav ${navLightTheme ? 'light-theme' : ''} ${navScrolled ? 'scrolled' : ''} ${navHidden ? 'nav-hidden' : ''}`} id="nav">
   <div className="nav-inner">
     <a href="#" className="nav-logo">
       <img src="/reinvent-logo.png" alt="Reinvent Africa Network" style={{ height: "50px", width: "auto" }} />
@@ -146,24 +166,41 @@ export default function Home() {
 
 {/*  ========== 01. HERO ==========  */}
 <section className="hero" id="home">
-  <div className="hero-go-bg" aria-hidden="true">GO</div>
-  <div className="hero-content-wide">
-    <div className="hero-statement reveal reveal-delay-1">
-      <div className="hero-line hero-line-1">Are We</div>
-      <div className="hero-line hero-line-2">
-        <span className="hero-bold-enough">Bold Enough</span>
-        <span className="hero-to">to</span>
-        <span className="hero-verb-wrapper" id="verbWrapper"><span className="hero-verb active" id="heroVerb" ref={verbRef}>{verbs[currentVerbIndex]}</span></span>
-        <span className="hero-question">?</span>
+  <div className="hero-bg-slides" aria-hidden="true">
+    {HERO_IMAGES.map((image, index) => (
+      <img
+        key={image.src}
+        className={`hero-bg-slide ${index === currentHeroIndex ? "is-active" : ""}`}
+        src={image.src}
+        alt={image.alt}
+        style={{ objectPosition: image.position }}
+      />
+    ))}
+  </div>
+  <div className="hero-shell">
+    <div className="hero-content-wide">
+      <div className="hero-statement reveal reveal-delay-1">
+        <h1 className="hero-title">FROM GO TO GOAL</h1>
+        <div className="hero-event-line">
+          <span className="hero-event-name">RAN</span>
+          <span className="hero-event-year">2026</span>
+        </div>
+        <div className="hero-date-line">
+          <span>May 23rd, 2026</span>
+          <span className="hero-date-dot" aria-hidden="true">•</span>
+          <span>Accra, Ghana</span>
+        </div>
       </div>
-    </div>
 
-    <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value</p>
+      <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value</p>
 
-
-    <div className="hero-ctas reveal reveal-delay-3">
-      <a href="#register" className="btn-primary">Register Now &rarr;</a>
-      <div className="hero-date">23RD MAY 2026</div>
+      <div className={`hero-ctas reveal reveal-delay-3 ${showMobileHeroCtas ? "" : "mobile-ctas-hidden"}`}>
+        <a href="#register" className="hero-cta-primary">
+          <span className="hero-cta-fill" aria-hidden="true"></span>
+          <span className="hero-cta-label">Register Now</span>
+        </a>
+        <a href="#agenda" className="hero-cta-secondary">View Agenda</a>
+      </div>
     </div>
   </div>
 </section>
@@ -220,28 +257,34 @@ export default function Home() {
     <div className="experience-inbound-card reveal">
       <div className="experience-inbound-card-img">
         <img src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" />
+        <span className="experience-inbound-card-tag">Storytelling</span>
       </div>
       <div className="experience-inbound-card-body">
         <h3>Hear Real Stories</h3>
         <p>Unfiltered journeys of failure, growth, and breakthrough from seasoned professionals across industries. No rehearsed talks, just honest accounts of what it takes to build something meaningful.</p>
+        <a href="#agenda" className="experience-inbound-card-link">See sessions</a>
       </div>
     </div>
     <div className="experience-inbound-card reveal reveal-delay-1">
       <div className="experience-inbound-card-img">
         <img src="/summit-networking.png" alt="Professionals networking at the summit" />
+        <span className="experience-inbound-card-tag">Community</span>
       </div>
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
         <p>Connect with mentors, peers, and collaborators through structured networking moments designed to spark real relationships. Leave with contacts who share your ambition and can open new doors.</p>
+        <a href="#register" className="experience-inbound-card-link">Reserve your seat</a>
       </div>
     </div>
     <div className="experience-inbound-card reveal reveal-delay-2">
       <div className="experience-inbound-card-img">
         <img src="/summit-audience.png" alt="Engaged audience at the summit" />
+        <span className="experience-inbound-card-tag">Execution</span>
       </div>
       <div className="experience-inbound-card-body">
         <h3>Gain Practical Tools</h3>
         <p>Learn how speakers achieved goals once considered impossible. Understand the business behind passion and walk away with actionable frameworks and strategies you can apply the next day.</p>
+        <a href="#story" className="experience-inbound-card-link">Why this summit</a>
       </div>
     </div>
   </div>
@@ -310,7 +353,7 @@ export default function Home() {
     </div>
 
     <div className="agenda-cta reveal">
-      <a href="#register" className="btn-primary">Reserve Your Seat &rarr;</a>
+      <a href="#register" className="btn-primary">Reserve Your Seat</a>
     </div>
   </div>
 </section>
@@ -320,11 +363,31 @@ export default function Home() {
   <div className="container">
     <div className="speakers-header">
       <h2 className="speakers-title reveal">Speakers &amp; Contributors</h2>
-      <a href="#" className="btn-secondary speakers-nominate reveal" style={{"display":"inline-flex","padding":"10px 24px","fontSize":"13px"}}>Nominate a Speaker &rarr;</a>
+      <a href="#" className="btn-secondary speakers-nominate reveal" style={{"display":"inline-flex","padding":"10px 24px","fontSize":"13px"}}>Nominate a Speaker</a>
     </div>
-    <div className="speakers-carousel reveal">
-      <button className="speaker-arrow speaker-arrow-left" aria-label="Previous speaker" onClick={showPreviousSpeaker}>&larr;</button>
+    <div className="speakers-grid-desktop reveal">
+      {speakerCards.map((speaker, index) => (
+        <div className="speaker-card speaker-card-grid" key={`${speaker.name}-${index}`}>
+          <div className="speaker-photo">
+            <img src={speaker.image} alt={speaker.alt} />
+            <div className="speaker-overlay">
+              <div className="speaker-name">{speaker.name}</div>
+              <div className="speaker-role">{speaker.role}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
 
+    <div className="speakers-carousel-mobile speakers-carousel reveal">
+      <button
+        className="speaker-arrow speaker-arrow-left"
+        onClick={() => flipSpeaker("prev")}
+        aria-label="Show previous speaker"
+        type="button"
+      >
+        &#8249;
+      </button>
       <div className="speakers-track">
         <div className="speaker-card speaker-card-side">
           <div className="speaker-photo">
@@ -336,7 +399,17 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="speaker-card speaker-card-featured">
+        <div
+          className={`speaker-card speaker-card-featured ${
+            speakerFlipping && speakerFlipDirection === "next"
+              ? "speaker-card-flip-next"
+              : ""
+          } ${
+            speakerFlipping && speakerFlipDirection === "prev"
+              ? "speaker-card-flip-prev"
+              : ""
+          }`}
+        >
           <div className="speaker-photo">
             <img src={centerSpeaker.image} alt={centerSpeaker.alt} />
             <div className="speaker-overlay">
@@ -356,9 +429,16 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      <button className="speaker-arrow speaker-arrow-right" aria-label="Next speaker" onClick={showNextSpeaker}>&rarr;</button>
+      <button
+        className="speaker-arrow speaker-arrow-right"
+        onClick={() => flipSpeaker("next")}
+        aria-label="Show next speaker"
+        type="button"
+      >
+        &#8250;
+      </button>
     </div>
+
     <div className="speaker-cta-row reveal">
       <p style={{"color":"rgba(255,255,255,0.88)","fontSize":"20px","lineHeight":"1.4","marginBottom":"14px"}}>Speaker lineup will be announced soon. Want to be part of it?</p>
       <a href="mailto:hello@reinventafrica.org" className="speakers-contact-btn" style={{"display":"inline-flex","padding":"12px 28px","fontSize":"14px"}}>Get in Touch &rarr;</a>
@@ -495,62 +575,69 @@ export default function Home() {
       <h2 className="faq-title reveal">Frequently Asked Questions</h2>
     </div>
     <div className="faq-list">
-      <div className={`faq-item reveal ${openFaqIndex === 0 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(0)}>
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           What is FROM GO TO GOAL?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>FROM GO TO GOAL is a high-impact leadership and innovation summit designed to bridge the gap between ambition and execution, vision and value, and dreams and tangible outcomes. It convenes purpose-driven individuals, industry leaders, and change-makers to share real stories and practical frameworks.</p></div>
-      </div>
-      <div className={`faq-item reveal ${openFaqIndex === 1 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(1)}>
+      </details>
+
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           Who can attend the summit?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>The summit is open to students, recent graduates, young professionals, entrepreneurs, creatives, corporate professionals, NGO leaders, mentors, and ecosystem builders. If you're driven by ambition and ready to learn, this event is for you.</p></div>
-      </div>
-      <div className={`faq-item reveal ${openFaqIndex === 2 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(2)}>
+      </details>
+
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           Is there a cost to attend?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>Registration details and ticket pricing will be announced soon. Sign up for our newsletter to be first to know when early-bird tickets become available.</p></div>
-      </div>
-      <div className={`faq-item reveal ${openFaqIndex === 3 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(3)}>
+      </details>
+
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           Where and when is the summit taking place?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>The summit will be held in Accra, Ghana. Exact date and venue details will be confirmed shortly. Stay connected through our newsletter for updates.</p></div>
-      </div>
-      <div className={`faq-item reveal ${openFaqIndex === 4 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(4)}>
+      </details>
+
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           Can I attend virtually?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>We are exploring virtual attendance and livestream options. Follow our updates for the latest on remote participation opportunities.</p></div>
-      </div>
-      <div className={`faq-item reveal ${openFaqIndex === 5 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(5)}>
+      </details>
+
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           How do I become a speaker?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>We're actively seeking speakers who can share authentic, unfiltered stories and practical insights. If you'd like to be considered or nominate someone, reach out via our contact email or use the "Nominate a Speaker" link above.</p></div>
-      </div>
-      <div className={`faq-item reveal ${openFaqIndex === 6 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(6)}>
+      </details>
+
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           How can my organization sponsor or partner?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>We offer title, category, and supporting partnership opportunities with brand visibility, audience engagement, and media exposure. Contact our partnerships team for the sponsorship deck and available packages.</p></div>
-      </div>
-      <div className={`faq-item reveal ${openFaqIndex === 7 ? 'open' : ''}`}>
-        <button className="faq-question" onClick={() => toggleFaq(7)}>
+      </details>
+
+      <details className="faq-item reveal">
+        <summary className="faq-question">
           What should I expect from the summit?
           <span className="faq-icon">+</span>
-        </button>
+        </summary>
         <div className="faq-answer"><p>By the end of the summit, you should gain clarity on your personal and professional direction, understand the systems behind success, build meaningful networks with peers and mentors, and feel empowered to take decisive, intentional action.</p></div>
-      </div>
+      </details>
     </div>
   </div>
 </section>
@@ -564,7 +651,7 @@ export default function Home() {
       FROM GO TO GOAL is more than an event. It is a movement toward intentional ambition. Will you be part of it?
     </p>
     <div className="reveal">
-      <a href="#" className="btn-primary" style={{"fontSize":"17px","padding":"18px 44px"}}>Register Now &rarr;</a>
+        <a href="#" className="btn-primary" style={{"fontSize":"17px","padding":"18px 44px"}}>Register Now</a>
     </div>
   </div>
 </section>
@@ -639,3 +726,25 @@ export default function Home() {
     </main>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
