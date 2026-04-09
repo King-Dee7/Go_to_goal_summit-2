@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans, Syne, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 
@@ -51,6 +51,12 @@ export const metadata: Metadata = {
       "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

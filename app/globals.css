@@ -3795,15 +3795,15 @@ button {
 /* Smaller About/Story paragraph text on mobile */
 @media (max-width: 768px) {
   .about-tedai-body p {
-    font-size: 15px;
-    line-height: 1.52;
+    font-size: 18px;
+    line-height: 1.48;
   }
 }
 
 @media (max-width: 480px) {
   .about-tedai-body p {
-    font-size: 14px;
-    line-height: 1.48;
+    font-size: 17px;
+    line-height: 1.45;
   }
 }
 
@@ -4344,5 +4344,34 @@ button {
   .nav.light-theme .nav-links.mobile-open .nav-cta:hover {
     color: #ffffff !important;
     background: #509e71 !important;
+  }
+}
+
+/* iOS Safari safe-area fix: ensure nav paints the top inset */
+@media (max-width: 768px) {
+  .nav {
+    padding-top: calc(12px + env(safe-area-inset-top));
+  }
+
+  .nav.scrolled {
+    padding-top: calc(10px + env(safe-area-inset-top));
+  }
+
+  .nav::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(-1 * env(safe-area-inset-top));
+    height: env(safe-area-inset-top);
+    background: #000000;
+    border-bottom: 1px solid rgba(200, 164, 78, 0.1);
+    pointer-events: none;
+  }
+
+  .nav.light-theme::before,
+  .nav.scrolled.light-theme::before {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(12, 14, 13, 0.1);
   }
 }
