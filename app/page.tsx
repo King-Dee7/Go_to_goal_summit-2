@@ -180,7 +180,10 @@ export default function Home() {
   <div className="hero-shell">
     <div className="hero-content-wide">
       <div className="hero-statement reveal reveal-delay-1">
-        <h1 className="hero-title">FROM GO TO GOAL</h1>
+        <h1 className="hero-title">
+          <span className="hero-title-top">FROM GO TO</span>
+          <span className="hero-title-bottom">GOAL</span>
+        </h1>
         <div className="hero-event-line">
           <span className="hero-event-name">RAN</span>
           <span className="hero-event-year">2026</span>

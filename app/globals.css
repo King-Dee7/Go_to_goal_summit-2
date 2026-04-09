@@ -741,6 +741,11 @@ button {
   margin-bottom: clamp(2px, 0.8vw, 8px);
 }
 
+.hero-title-top,
+.hero-title-bottom {
+  display: inline;
+}
+
 .hero-event-line {
   display: flex;
   align-items: baseline;
@@ -886,8 +891,27 @@ button {
   }
 
   .hero-title {
-    font-size: clamp(46px, 13.5vw, 82px);
+    font-size: clamp(58px, 16.8vw, 104px);
     line-height: 0.9;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-title-top {
+    display: block;
+    font-size: 0.42em;
+    font-weight: 500;
+    letter-spacing: 0.065em;
+    line-height: 1;
+    margin-bottom: -0.12em;
+  }
+
+  .hero-title-bottom {
+    display: block;
+    font-size: 1.12em;
+    font-weight: 900;
+    letter-spacing: 0.008em;
+    line-height: 0.8;
   }
 
   .hero-event-name,
