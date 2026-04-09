@@ -200,7 +200,7 @@ export default function Home() {
       <div className={`hero-ctas reveal reveal-delay-3 ${showMobileHeroCtas ? "" : "mobile-ctas-hidden"}`}>
         <a href="#register" className="hero-cta-primary">
           <span className="hero-cta-fill" aria-hidden="true"></span>
-          <span className="hero-cta-label">Register Now</span>
+          <span className="hero-cta-label">Apply to Attend</span>
         </a>
         <a href="#agenda" className="hero-cta-secondary">View Agenda</a>
       </div>
@@ -260,7 +260,6 @@ export default function Home() {
     <div className="experience-inbound-card reveal">
       <div className="experience-inbound-card-img">
         <img src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" />
-        <span className="experience-inbound-card-tag">Storytelling</span>
       </div>
       <div className="experience-inbound-card-body">
         <h3>Hear Real Stories</h3>
@@ -271,7 +270,6 @@ export default function Home() {
     <div className="experience-inbound-card reveal reveal-delay-1">
       <div className="experience-inbound-card-img">
         <img src="/summit-networking.png" alt="Professionals networking at the summit" />
-        <span className="experience-inbound-card-tag">Community</span>
       </div>
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
@@ -282,7 +280,6 @@ export default function Home() {
     <div className="experience-inbound-card reveal reveal-delay-2">
       <div className="experience-inbound-card-img">
         <img src="/summit-audience.png" alt="Engaged audience at the summit" />
-        <span className="experience-inbound-card-tag">Execution</span>
       </div>
       <div className="experience-inbound-card-body">
         <h3>Gain Practical Tools</h3>
@@ -654,7 +651,7 @@ export default function Home() {
       FROM GO TO GOAL is more than an event. It is a movement toward intentional ambition. Will you be part of it?
     </p>
     <div className="reveal">
-        <a href="#" className="btn-primary" style={{"fontSize":"17px","padding":"18px 44px"}}>Register Now</a>
+        <a href="#" className="btn-primary" style={{"fontSize":"17px","padding":"18px 44px"}}>Apply to Attend</a>
     </div>
   </div>
 </section>
