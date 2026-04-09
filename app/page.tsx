@@ -75,6 +75,25 @@ export default function Home() {
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Dedicated audience fill observer (mobile-safe)
+    const isMobileViewport = window.innerWidth <= 768;
+    const audienceObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            audienceObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: isMobileViewport ? 0.2 : 0.3,
+        rootMargin: isMobileViewport ? "0px 0px -12% 0px" : "0px 0px -8% 0px",
+      }
+    );
+
+    document.querySelectorAll(".audience-role-row").forEach((el) => audienceObserver.observe(el));
     
     // Nav scroll effect
     const handleScroll = () => {
@@ -107,6 +126,8 @@ export default function Home() {
     handleScroll();
     
     return () => {
+      observer.disconnect();
+      audienceObserver.disconnect();
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
