@@ -3795,14 +3795,16 @@ button {
 /* Smaller About/Story paragraph text on mobile */
 @media (max-width: 768px) {
   .about-tedai-body p {
-    font-size: 18px;
+    font-weight: 400;
+    font-size: 19px;
     line-height: 1.48;
   }
 }
 
 @media (max-width: 480px) {
   .about-tedai-body p {
-    font-size: 17px;
+    font-weight: 400;
+    font-size: 18px;
     line-height: 1.45;
   }
 }
