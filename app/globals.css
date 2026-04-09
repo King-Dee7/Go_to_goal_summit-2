@@ -4254,3 +4254,43 @@ button {
   ) !important;
   z-index: 2;
 }
+
+/* Mobile hero viewport lock + vertical centering */
+@media (max-width: 768px) {
+  .hero {
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    padding: 0;
+  }
+
+  .hero-shell {
+    height: 100%;
+    display: flex;
+    padding: 0 var(--container-pad);
+  }
+
+  .hero-content-wide {
+    min-height: 100%;
+    height: 100%;
+    width: 100%;
+    justify-content: initial;
+    padding: clamp(84px, 16dvh, 128px) 20px calc(env(safe-area-inset-bottom) + 6px);
+  }
+
+  .hero-statement {
+    margin-top: auto;
+    margin-bottom: 14px;
+  }
+
+  .hero-subtitle-theme {
+    margin: 0 auto;
+    max-width: 34ch;
+  }
+
+  .hero-ctas {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: calc(-4px - env(safe-area-inset-bottom));
+  }
+}
