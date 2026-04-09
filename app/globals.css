@@ -886,7 +886,7 @@ button {
   }
 
   .hero-title {
-    font-size: clamp(46px, 13.5vw, 82px);
+    font-size: clamp(52px, 14.8vw, 92px);
     line-height: 0.9;
   }
 
@@ -1197,6 +1197,7 @@ button {
 
   .waterfall-collage {
     --w-width: min(31vw, 210px);
+    --w-height: calc(var(--w-width) * 2.55);
     --w-overlap: 0vw;
     --w-step: min(8vw, 42px);
     margin-top: 0;
@@ -3794,15 +3795,15 @@ button {
 /* Smaller About/Story paragraph text on mobile */
 @media (max-width: 768px) {
   .about-tedai-body p {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.52;
   }
 }
 
 @media (max-width: 480px) {
   .about-tedai-body p {
-    font-size: 13px;
-    line-height: 1.46;
+    font-size: 14px;
+    line-height: 1.48;
   }
 }
 
@@ -4332,5 +4333,16 @@ button {
   .nav .nav-links.mobile-open .nav-cta:hover {
     color: #ffffff !important;
     background: #000000 !important;
+  }
+
+  .nav.light-theme .nav-links.mobile-open .nav-cta {
+    color: #ffffff !important;
+    background: #509e71 !important;
+    border: 1.5px solid #509e71 !important;
+  }
+
+  .nav.light-theme .nav-links.mobile-open .nav-cta:hover {
+    color: #ffffff !important;
+    background: #509e71 !important;
   }
 }

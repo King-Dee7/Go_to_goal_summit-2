@@ -80,6 +80,7 @@ export default function Home() {
     const handleScroll = () => {
       const currentY = window.scrollY;
       const lastY = lastScrollYRef.current;
+      const isMobileViewport = window.innerWidth <= 768;
       const navElement = document.getElementById("nav");
       const heroSection = document.getElementById("home");
       const navHeight = navElement?.offsetHeight ?? 80;
@@ -89,7 +90,9 @@ export default function Home() {
       setNavLightTheme(!inHeroSection);
       setNavScrolled(currentY > 60);
 
-      if (currentY <= 48) {
+      if (isMobileViewport) {
+        setNavHidden(false);
+      } else if (currentY <= 48) {
         setNavHidden(false);
       } else if (currentY > lastY) {
         setNavHidden(true);
