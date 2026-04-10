@@ -31,11 +31,14 @@ const bebasNeue = Bebas_Neue({
   display: "swap",
 });
 
-
 export const metadata: Metadata = {
   title: "Go To Goal Summit | Reinvent Africa Network",
   description:
-    "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action — equipping the next generation of African leaders with practical tools, real networks, and stories that prove what's possible.",
+    "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action - equipping the next generation of African leaders with practical tools, real networks, and stories that prove what's possible.",
+  metadataBase: new URL("https://go-to-goal-summit-2.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Go To Goal Summit",
     "Reinvent Africa Network",
@@ -49,7 +52,28 @@ export const metadata: Metadata = {
     title: "Go To Goal Summit | Reinvent Africa Network",
     description:
       "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action.",
+    url: "https://go-to-goal-summit-2.vercel.app",
+    siteName: "Go To Goal Summit",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Go To Goal Summit by Reinvent Africa Network",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Go To Goal Summit | Reinvent Africa Network",
+    description:
+      "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action.",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

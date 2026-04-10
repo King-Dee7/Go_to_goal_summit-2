@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const HERO_IMAGES = [
@@ -9,6 +10,23 @@ const HERO_IMAGES = [
   { src: "/hero%207.jpg", alt: "Conference audience in blue-lit venue", position: "50% 42%" },
   { src: "/hero%208.png", alt: "Networking crowd at summit", position: "50% 44%" },
 ];
+const SPONSOR_LOGOS = [
+  { src: "/sponsors/pwc.svg", alt: "PWC logo" },
+  { src: "/sponsors/foley.svg", alt: "Foley logo" },
+  { src: "/sponsors/xero.svg", alt: "Xero logo" },
+  { src: "/sponsors/dataiku.svg", alt: "Dataiku logo" },
+  { src: "/sponsors/shack15.svg", alt: "Shack15 logo" },
+  { src: "/sponsors/hpe.svg", alt: "HPE logo" },
+  { src: "/sponsors/udemy.svg", alt: "Udemy logo" },
+  { src: "/sponsors/xai-labs.svg", alt: "XAI Labs logo" },
+  { src: "/sponsors/oracle.svg", alt: "Oracle logo" },
+  { src: "/sponsors/commtel.svg", alt: "Commtel logo" },
+  { src: "/sponsors/vectara.svg", alt: "Vectara logo" },
+  { src: "/sponsors/fetch-ai.svg", alt: "Fetch.ai logo" },
+];
+const SITE_URL = "https://go-to-goal-summit-2.vercel.app";
+const EVENT_START_DATE = "2026-05-23T09:00:00+00:00";
+const EVENT_END_DATE = "2026-05-23T19:00:00+00:00";
 
 
 export default function Home() {
@@ -16,11 +34,11 @@ export default function Home() {
   const [navHidden, setNavHidden] = useState(false);
   const [navLightTheme, setNavLightTheme] = useState(false);
   const lastScrollYRef = useRef(0);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);  const [speakerIndex, setSpeakerIndex] = useState(1);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [speakerIndex, setSpeakerIndex] = useState(1);
   const [speakerFlipDirection, setSpeakerFlipDirection] = useState<"prev" | "next" | null>(null);
   const [speakerFlipping, setSpeakerFlipping] = useState(false);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
-  const [showMobileHeroCtas, setShowMobileHeroCtas] = useState(true);
   const speakerCards = [
     {
       image: "/summit-speaker.png",
@@ -63,6 +81,52 @@ export default function Home() {
   const leftSpeaker = speakerCards[(speakerIndex - 1 + speakerCount) % speakerCount];
   const centerSpeaker = speakerCards[speakerIndex];
   const rightSpeaker = speakerCards[(speakerIndex + 1) % speakerCount];
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Reinvent Africa Network",
+    url: SITE_URL,
+    logo: `${SITE_URL}/reinvent-logo.png`,
+    sameAs: [
+      "https://www.linkedin.com",
+      "https://www.instagram.com",
+      "https://twitter.com",
+      "https://www.youtube.com",
+    ],
+  };
+  const eventJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: "Go To Goal Summit 2026",
+    description:
+      "A flagship youth empowerment summit in Accra, Ghana where ambition meets action.",
+    image: [`${SITE_URL}/og-image.jpg`],
+    startDate: EVENT_START_DATE,
+    endDate: EVENT_END_DATE,
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    location: {
+      "@type": "Place",
+      name: "Accra, Ghana",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Accra",
+        addressCountry: "GH",
+      },
+    },
+    organizer: {
+      "@type": "Organization",
+      name: "Reinvent Africa Network",
+      url: SITE_URL,
+    },
+    offers: {
+      "@type": "Offer",
+      url: `${SITE_URL}/#register`,
+      availability: "https://schema.org/InStock",
+      priceCurrency: "GHS",
+      price: "0",
+    },
+  };
   
   useEffect(() => {
     // Scroll reveal observer
@@ -141,6 +205,17 @@ export default function Home() {
     return () => window.clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileNavOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, []);
+
   const flipSpeaker = (direction: "prev" | "next") => {
     if (speakerFlipping) return;
 
@@ -165,15 +240,38 @@ export default function Home() {
   // Let's replace the static HTML fragments with our state logic below.
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+      />
 
 
 {/*  ========== NAVIGATION ==========  */}
 <nav className={`nav ${navLightTheme ? 'light-theme' : ''} ${navScrolled ? 'scrolled' : ''} ${navHidden ? 'nav-hidden' : ''}`} id="nav">
   <div className="nav-inner">
     <a href="#" className="nav-logo">
-      <img src="/reinvent-logo.png" alt="Reinvent Africa Network" style={{ height: "50px", width: "auto" }} />
+      <Image
+        src="/reinvent-logo.png"
+        alt="Reinvent Africa Network"
+        width={250}
+        height={50}
+        priority
+      />
     </a>
-    <ul className={`nav-links ${mobileNavOpen ? 'mobile-open' : ''}`} id="navLinks">
+    <ul
+      className={`nav-links ${mobileNavOpen ? 'mobile-open' : ''}`}
+      id="nav-menu"
+      onClick={(event) => {
+        const target = event.target as HTMLElement;
+        if (target.closest("a")) {
+          setMobileNavOpen(false);
+        }
+      }}
+    >
       <li><a href="#story">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#agenda">Agenda</a></li>
@@ -182,9 +280,17 @@ export default function Home() {
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#register" className="nav-cta">Join us in Accra</a></li>
     </ul>
-    <div className="nav-hamburger" id="hamburger" onClick={() => setMobileNavOpen(!mobileNavOpen)}>
+    <button
+      className="nav-hamburger"
+      id="hamburger"
+      type="button"
+      aria-label={mobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
+      aria-expanded={mobileNavOpen}
+      aria-controls="nav-menu"
+      onClick={() => setMobileNavOpen(!mobileNavOpen)}
+    >
       <span></span><span></span><span></span>
-    </div>
+    </button>
   </div>
 </nav>
 
@@ -192,11 +298,14 @@ export default function Home() {
 <section className="hero" id="home">
   <div className="hero-bg-slides" aria-hidden="true">
     {HERO_IMAGES.map((image, index) => (
-      <img
+      <Image
         key={image.src}
         className={`hero-bg-slide ${index === currentHeroIndex ? "is-active" : ""}`}
         src={image.src}
         alt={image.alt}
+        fill
+        sizes="100vw"
+        priority={index === 0}
         style={{ objectPosition: image.position }}
       />
     ))}
@@ -211,14 +320,14 @@ export default function Home() {
         </div>
         <div className="hero-date-line">
           <span>May 23rd, 2026</span>
-          <span className="hero-date-dot" aria-hidden="true">•</span>
+          <span className="hero-date-dot" aria-hidden="true">&bull;</span>
           <span>Accra, Ghana</span>
         </div>
       </div>
 
       <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value</p>
 
-      <div className={`hero-ctas reveal reveal-delay-3 ${showMobileHeroCtas ? "" : "mobile-ctas-hidden"}`}>
+      <div className="hero-ctas reveal reveal-delay-3">
         <a href="#register" className="hero-cta-primary">
           <span className="hero-cta-fill" aria-hidden="true"></span>
           <span className="hero-cta-label">Apply to Attend</span>
@@ -233,7 +342,7 @@ export default function Home() {
 <section className="about-tedai" id="story">
     <div className="about-tedai-header">
       <p className="about-tedai-lead reveal">
-        Hear the world's most compelling voices to share raw, unfiltered stories that transform aspiration into <span className="about-tedai-stamp">action.</span>
+        Hear the world&apos;s most compelling voices to share raw, unfiltered stories that transform aspiration into <span className="about-tedai-stamp">action.</span>
       </p>
     </div>
     
@@ -256,16 +365,16 @@ export default function Home() {
       {/* Right Column: TEDAI Waterfall Images */}
       <div className="waterfall-collage reveal">
         <div className="waterfall-img waterfall-img-1">
-          <img src="/summit-speaker.png" alt="Speaker on stage at the summit" />
+          <Image src="/summit-speaker.png" alt="Speaker on stage at the summit" fill sizes="196px" />
         </div>
         <div className="waterfall-img waterfall-img-2">
-          <img src="/summit-networking.png" alt="Professionals networking at the summit" />
+          <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="196px" />
         </div>
         <div className="waterfall-img waterfall-img-3">
-          <img src="/summit-stage.png" alt="Summit stage and venue" />
+          <Image src="/summit-stage.png" alt="Summit stage and venue" fill sizes="196px" />
         </div>
         <div className="waterfall-img waterfall-img-4">
-          <img src="/summit-audience.png" alt="Audience member at the summit" />
+          <Image src="/summit-audience.png" alt="Audience member at the summit" fill sizes="196px" />
         </div>
       </div>
     </div>
@@ -280,7 +389,7 @@ export default function Home() {
   <div className="experience-inbound-grid">
     <div className="experience-inbound-card reveal">
       <div className="experience-inbound-card-img">
-        <img src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" />
+        <Image src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" fill sizes="(max-width: 900px) 100vw, 33vw" />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Hear Real Stories</h3>
@@ -290,7 +399,7 @@ export default function Home() {
     </div>
     <div className="experience-inbound-card reveal reveal-delay-1">
       <div className="experience-inbound-card-img">
-        <img src="/summit-networking.png" alt="Professionals networking at the summit" />
+        <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
@@ -300,7 +409,7 @@ export default function Home() {
     </div>
     <div className="experience-inbound-card reveal reveal-delay-2">
       <div className="experience-inbound-card-img">
-        <img src="/summit-audience.png" alt="Engaged audience at the summit" />
+        <Image src="/summit-audience.png" alt="Engaged audience at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Gain Practical Tools</h3>
@@ -340,7 +449,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <img src="/summit-stage.png" alt="Summit stage during opening session" />
+          <Image src="/summit-stage.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" />
         </div>
       </article>
 
@@ -354,7 +463,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <img src="/summit-networking.png" alt="Professionals discussing ideas in a panel environment" />
+          <Image src="/summit-networking.png" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" />
         </div>
       </article>
 
@@ -368,7 +477,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <img src="/summit-audience.png" alt="Audience networking and engaging at summit close" />
+          <Image src="/summit-audience.png" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" />
         </div>
       </article>
     </div>
@@ -390,7 +499,7 @@ export default function Home() {
       {speakerCards.map((speaker, index) => (
         <div className="speaker-card speaker-card-grid" key={`${speaker.name}-${index}`}>
           <div className="speaker-photo">
-            <img src={speaker.image} alt={speaker.alt} />
+            <Image src={speaker.image} alt={speaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
             <div className="speaker-overlay">
               <div className="speaker-name">{speaker.name}</div>
               <div className="speaker-role">{speaker.role}</div>
@@ -412,7 +521,7 @@ export default function Home() {
       <div className="speakers-track">
         <div className="speaker-card speaker-card-side">
           <div className="speaker-photo">
-            <img src={leftSpeaker.image} alt={leftSpeaker.alt} />
+            <Image src={leftSpeaker.image} alt={leftSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
             <div className="speaker-overlay">
               <div className="speaker-name">{leftSpeaker.name}</div>
               <div className="speaker-role">{leftSpeaker.role}</div>
@@ -432,7 +541,7 @@ export default function Home() {
           }`}
         >
           <div className="speaker-photo">
-            <img src={centerSpeaker.image} alt={centerSpeaker.alt} />
+            <Image src={centerSpeaker.image} alt={centerSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
             <div className="speaker-overlay">
               <div className="speaker-name">{centerSpeaker.name}</div>
               <div className="speaker-role">{centerSpeaker.role}</div>
@@ -442,7 +551,7 @@ export default function Home() {
 
         <div className="speaker-card speaker-card-side">
           <div className="speaker-photo">
-            <img src={rightSpeaker.image} alt={rightSpeaker.alt} />
+            <Image src={rightSpeaker.image} alt={rightSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
             <div className="speaker-overlay">
               <div className="speaker-name">{rightSpeaker.name}</div>
               <div className="speaker-role">{rightSpeaker.role}</div>
@@ -545,18 +654,11 @@ export default function Home() {
     </div>
 
     <div className="sponsor-logo-grid reveal">
-      <div className="sponsor-logo-item"><img src="/sponsors/pwc.svg" alt="PWC logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/foley.svg" alt="Foley logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/xero.svg" alt="Xero logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/dataiku.svg" alt="Dataiku logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/shack15.svg" alt="Shack15 logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/hpe.svg" alt="HPE logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/udemy.svg" alt="Udemy logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/xai-labs.svg" alt="XAI Labs logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/oracle.svg" alt="Oracle logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/commtel.svg" alt="Commtel logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/vectara.svg" alt="Vectara logo" /></div>
-      <div className="sponsor-logo-item"><img src="/sponsors/fetch-ai.svg" alt="Fetch.ai logo" /></div>
+      {SPONSOR_LOGOS.map((logo) => (
+        <div className="sponsor-logo-item" key={logo.src}>
+          <Image src={logo.src} alt={logo.alt} width={160} height={46} />
+        </div>
+      ))}
     </div>
 
     <div className="sponsor-cta reveal">
@@ -573,7 +675,7 @@ export default function Home() {
         <div className="section-label reveal">The Organizers</div>
         <h2 className="about-org-title reveal">Reinvent Africa Network</h2>
         <p className="about-org-text reveal">
-          A non-profit organization committed to redefining opportunity, mentorship, and access for Africa's present and future generations. FROM GO TO GOAL is a flagship initiative of this mission.
+          A non-profit organization committed to redefining opportunity, mentorship, and access for Africa&apos;s present and future generations. FROM GO TO GOAL is a flagship initiative of this mission.
         </p>
         <ul className="about-org-pillars reveal">
           <li>Mentorship &amp; leadership development</li>
@@ -609,7 +711,7 @@ export default function Home() {
           Who can attend the summit?
           <span className="faq-icon">+</span>
         </summary>
-        <div className="faq-answer"><p>The summit is open to students, recent graduates, young professionals, entrepreneurs, creatives, corporate professionals, NGO leaders, mentors, and ecosystem builders. If you're driven by ambition and ready to learn, this event is for you.</p></div>
+        <div className="faq-answer"><p>The summit is open to students, recent graduates, young professionals, entrepreneurs, creatives, corporate professionals, NGO leaders, mentors, and ecosystem builders. If you&apos;re driven by ambition and ready to learn, this event is for you.</p></div>
       </details>
 
       <details className="faq-item reveal">
@@ -641,7 +743,7 @@ export default function Home() {
           How do I become a speaker?
           <span className="faq-icon">+</span>
         </summary>
-        <div className="faq-answer"><p>We're actively seeking speakers who can share authentic, unfiltered stories and practical insights. If you'd like to be considered or nominate someone, reach out via our contact email or use the "Nominate a Speaker" link above.</p></div>
+        <div className="faq-answer"><p>We&apos;re actively seeking speakers who can share authentic, unfiltered stories and practical insights. If you&apos;d like to be considered or nominate someone, reach out via our contact email or use the &quot;Nominate a Speaker&quot; link above.</p></div>
       </details>
 
       <details className="faq-item reveal">
@@ -697,10 +799,16 @@ export default function Home() {
     <div className="footer-inner">
       <div>
         <div className="footer-brand-name">
-          <img src="/reinvent-logo.png" alt="Reinvent Africa Network" style={{ height: "60px", width: "auto", marginBottom: "16px" }} />
+          <Image
+            src="/reinvent-logo.png"
+            alt="Reinvent Africa Network"
+            width={300}
+            height={60}
+            style={{ height: "60px", width: "auto", marginBottom: "16px" }}
+          />
         </div>
         <p className="footer-brand-desc">
-          A flagship initiative of Reinvent Africa Network. Bridging vision and value for Africa's present and future generations.
+          A flagship initiative of Reinvent Africa Network. Bridging vision and value for Africa&apos;s present and future generations.
         </p>
       </div>
       <div>

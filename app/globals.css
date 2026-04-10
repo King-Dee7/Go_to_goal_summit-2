@@ -77,6 +77,14 @@ button {
   background: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #2f78ec;
+  outline-offset: 2px;
+}
+
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
@@ -228,6 +236,12 @@ button {
   transition: transform 0.3s, opacity 0.3s;
 }
 
+.nav-hamburger:focus-visible {
+  outline: 3px solid #2f78ec;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
 .nav.light-theme {
   background: #ffffff;
   border-bottom: 1px solid rgba(12, 14, 13, 0.1);
@@ -246,7 +260,7 @@ button {
 }
 
 .nav.light-theme .nav-links a:hover {
-  color: var(--brand-white);
+  color: #111111;
 }
 
 .nav.light-theme .nav-cta {
