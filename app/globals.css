@@ -1669,6 +1669,7 @@ summary:focus-visible {
 }
 
 .agenda-row-media {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 4px;
@@ -4464,7 +4465,7 @@ summary:focus-visible {
   .hero-ctas {
     width: 100%;
     margin-top: auto;
-    margin-bottom: calc(env(safe-area-inset-bottom) + 10px);
+    margin-bottom: calc(env(safe-area-inset-bottom) + 22px);
   }
 }
 

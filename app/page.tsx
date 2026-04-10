@@ -4,10 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const HERO_IMAGES = [
-  { src: "/hero%202.avif", alt: "Crowd at summit event", position: "50% 42%" },
   { src: "/hero%205.jpg", alt: "Audience and stage lighting at summit", position: "50% 40%" },
   { src: "/hero%206.png", alt: "Summit visual moment", position: "50% 46%" },
-  { src: "/hero%207.jpg", alt: "Conference audience in blue-lit venue", position: "50% 42%" },
   { src: "/hero%208.png", alt: "Networking crowd at summit", position: "50% 44%" },
 ];
 const SPONSOR_LOGOS = [
@@ -342,6 +340,8 @@ export default function Home() {
         alt={image.alt}
         fill
         sizes="100vw"
+        quality={100}
+        unoptimized
         priority={index === 0}
         style={{ objectPosition: image.position }}
       />
@@ -402,16 +402,16 @@ export default function Home() {
       {/* Right Column: TEDAI Waterfall Images */}
       <div className="waterfall-collage reveal">
         <div className="waterfall-img waterfall-img-1">
-          <Image src="/summit-speaker.png" alt="Speaker on stage at the summit" fill sizes="196px" />
+          <Image src="/summit-speaker.png" alt="Speaker on stage at the summit" fill sizes="196px" quality={95} unoptimized />
         </div>
         <div className="waterfall-img waterfall-img-2">
-          <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="196px" />
+          <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="196px" quality={95} unoptimized />
         </div>
         <div className="waterfall-img waterfall-img-3">
-          <Image src="/summit-stage.png" alt="Summit stage and venue" fill sizes="196px" />
+          <Image src="/summit-stage.png" alt="Summit stage and venue" fill sizes="196px" quality={95} unoptimized />
         </div>
         <div className="waterfall-img waterfall-img-4">
-          <Image src="/summit-audience.png" alt="Audience member at the summit" fill sizes="196px" />
+          <Image src="/summit-audience.png" alt="Audience member at the summit" fill sizes="196px" quality={95} unoptimized />
         </div>
       </div>
     </div>
@@ -426,7 +426,7 @@ export default function Home() {
   <div className="experience-inbound-grid">
     <div className="experience-inbound-card reveal">
       <div className="experience-inbound-card-img">
-        <Image src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" fill sizes="(max-width: 900px) 100vw, 33vw" />
+        <Image src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" fill sizes="(max-width: 900px) 100vw, 33vw" quality={95} unoptimized />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Hear Real Stories</h3>
@@ -436,7 +436,7 @@ export default function Home() {
     </div>
     <div className="experience-inbound-card reveal reveal-delay-1">
       <div className="experience-inbound-card-img">
-        <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" />
+        <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={95} unoptimized />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
@@ -446,7 +446,7 @@ export default function Home() {
     </div>
     <div className="experience-inbound-card reveal reveal-delay-2">
       <div className="experience-inbound-card-img">
-        <Image src="/summit-audience.png" alt="Engaged audience at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" />
+        <Image src="/summit-audience.png" alt="Engaged audience at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={95} unoptimized />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Gain Practical Tools</h3>
@@ -486,7 +486,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/summit-stage.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" />
+          <Image src="/summit-stage.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
         </div>
       </article>
 
@@ -500,7 +500,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/summit-networking.png" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" />
+          <Image src="/summit-networking.png" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
         </div>
       </article>
 
@@ -514,7 +514,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/summit-audience.png" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" />
+          <Image src="/summit-audience.png" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
         </div>
       </article>
     </div>
@@ -536,7 +536,7 @@ export default function Home() {
       {speakerCards.map((speaker, index) => (
         <div className="speaker-card speaker-card-grid" key={`${speaker.name}-${index}`}>
           <div className="speaker-photo">
-            <Image src={speaker.image} alt={speaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
+            <Image src={speaker.image} alt={speaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
             <div className="speaker-overlay">
               <div className="speaker-name">{speaker.name}</div>
               <div className="speaker-role">{speaker.role}</div>
@@ -558,7 +558,7 @@ export default function Home() {
       <div className="speakers-track">
         <div className="speaker-card speaker-card-side">
           <div className="speaker-photo">
-            <Image src={leftSpeaker.image} alt={leftSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
+            <Image src={leftSpeaker.image} alt={leftSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
             <div className="speaker-overlay">
               <div className="speaker-name">{leftSpeaker.name}</div>
               <div className="speaker-role">{leftSpeaker.role}</div>
@@ -578,7 +578,7 @@ export default function Home() {
           }`}
         >
           <div className="speaker-photo">
-            <Image src={centerSpeaker.image} alt={centerSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
+            <Image src={centerSpeaker.image} alt={centerSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
             <div className="speaker-overlay">
               <div className="speaker-name">{centerSpeaker.name}</div>
               <div className="speaker-role">{centerSpeaker.role}</div>
@@ -588,7 +588,7 @@ export default function Home() {
 
         <div className="speaker-card speaker-card-side">
           <div className="speaker-photo">
-            <Image src={rightSpeaker.image} alt={rightSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" />
+            <Image src={rightSpeaker.image} alt={rightSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
             <div className="speaker-overlay">
               <div className="speaker-name">{rightSpeaker.name}</div>
               <div className="speaker-role">{rightSpeaker.role}</div>
