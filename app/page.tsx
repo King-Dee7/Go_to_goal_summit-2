@@ -30,6 +30,9 @@ const EVENT_END_DATE = "2026-05-23T19:00:00+00:00";
 
 
 export default function Home() {
+  const [showSplash, setShowSplash] = useState(true);
+  const [splashExiting, setSplashExiting] = useState(false);
+  const [siteReady, setSiteReady] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
   const [navLightTheme, setNavLightTheme] = useState(false);
@@ -128,6 +131,22 @@ export default function Home() {
     },
   };
   
+  useEffect(() => {
+    const splashDisplayTimer = window.setTimeout(() => {
+      setSplashExiting(true);
+      setSiteReady(true);
+    }, 2500);
+
+    const splashRemoveTimer = window.setTimeout(() => {
+      setShowSplash(false);
+    }, 3400);
+
+    return () => {
+      window.clearTimeout(splashDisplayTimer);
+      window.clearTimeout(splashRemoveTimer);
+    };
+  }, []);
+
   useEffect(() => {
     // Scroll reveal observer
     const observer = new IntersectionObserver((entries) => {
@@ -239,7 +258,25 @@ export default function Home() {
   // We need to inject dynamic attributes back. 
   // Let's replace the static HTML fragments with our state logic below.
   return (
-    <main>
+    <>
+      {showSplash && (
+        <div className={`site-preloader ${splashExiting ? "is-exiting" : ""}`} aria-hidden={splashExiting}>
+          <div className="site-preloader-content">
+            <Image
+              className="site-preloader-logo"
+              src="/reinvent-logo.png"
+              alt="Reinvent Africa Network"
+              width={430}
+              height={86}
+              priority
+            />
+            <div className="site-preloader-loadingline" aria-hidden="true">
+              <span className="site-preloader-loadingline-fill"></span>
+            </div>
+          </div>
+        </div>
+      )}
+    <main className={`site-shell ${siteReady ? "is-visible" : ""}`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -853,6 +890,7 @@ export default function Home() {
 {/*  ========== SCRIPTS ==========  */}
 
     </main>
+    </>
   );
 }
 
