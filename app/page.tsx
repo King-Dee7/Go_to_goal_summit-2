@@ -25,10 +25,12 @@ const SPONSOR_LOGOS = [
 const SITE_URL = "https://go-to-goal-summit-2.vercel.app";
 const EVENT_START_DATE = "2026-05-23T09:00:00+00:00";
 const EVENT_END_DATE = "2026-05-23T19:00:00+00:00";
+const SPLASH_SEEN_KEY = "gtg_splash_seen";
+const ENTRY_PATH_KEY = "gtg_entry_path";
 
 
 export default function Home() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(false);
   const [splashExiting, setSplashExiting] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
@@ -122,7 +124,7 @@ export default function Home() {
     },
     offers: {
       "@type": "Offer",
-      url: `${SITE_URL}/#register`,
+      url: `${SITE_URL}/#signup-updates`,
       availability: "https://schema.org/InStock",
       priceCurrency: "GHS",
       price: "0",
@@ -130,18 +132,47 @@ export default function Home() {
   };
   
   useEffect(() => {
-    const splashDisplayTimer = window.setTimeout(() => {
-      setSplashExiting(true);
-      setSiteReady(true);
-    }, 2500);
+    let splashDisplayTimer: number | undefined;
+    let splashRemoveTimer: number | undefined;
 
-    const splashRemoveTimer = window.setTimeout(() => {
+    try {
+      const entryPath = sessionStorage.getItem(ENTRY_PATH_KEY) || "/";
+      const hasSeenSplash = sessionStorage.getItem(SPLASH_SEEN_KEY) === "1";
+      const shouldShowSplash = entryPath === "/" && !hasSeenSplash;
+
+      if (!shouldShowSplash) {
+        setShowSplash(false);
+        setSplashExiting(false);
+        setSiteReady(true);
+        return;
+      }
+
+      sessionStorage.setItem(SPLASH_SEEN_KEY, "1");
+      setShowSplash(true);
+      setSplashExiting(false);
+      setSiteReady(false);
+
+      splashDisplayTimer = window.setTimeout(() => {
+        setSplashExiting(true);
+        setSiteReady(true);
+      }, 2500);
+
+      splashRemoveTimer = window.setTimeout(() => {
+        setShowSplash(false);
+      }, 3400);
+    } catch {
       setShowSplash(false);
-    }, 3400);
+      setSplashExiting(false);
+      setSiteReady(true);
+    }
 
     return () => {
-      window.clearTimeout(splashDisplayTimer);
-      window.clearTimeout(splashRemoveTimer);
+      if (splashDisplayTimer) {
+        window.clearTimeout(splashDisplayTimer);
+      }
+      if (splashRemoveTimer) {
+        window.clearTimeout(splashRemoveTimer);
+      }
     };
   }, []);
 
@@ -262,10 +293,11 @@ export default function Home() {
           <div className="site-preloader-content">
             <Image
               className="site-preloader-logo"
-              src="/reinvent-logo.png"
+              src="/reinvent-logo-white.png"
               alt="Reinvent Africa Network"
               width={430}
-              height={86}
+              height={107}
+              unoptimized
               priority
             />
             <div className="site-preloader-loadingline" aria-hidden="true">
@@ -288,15 +320,16 @@ export default function Home() {
 {/*  ========== NAVIGATION ==========  */}
 <nav className={`nav ${navLightTheme ? 'light-theme' : ''} ${navScrolled ? 'scrolled' : ''} ${navHidden ? 'nav-hidden' : ''}`} id="nav">
   <div className="nav-inner">
-    <a href="#" className="nav-logo">
-      <Image
-        src="/reinvent-logo.png"
-        alt="Reinvent Africa Network"
-        width={250}
-        height={50}
-        priority
-      />
-    </a>
+      <a href="#" className="nav-logo">
+        <Image
+          src={navLightTheme ? "/reinvent-logo.png" : "/reinvent-logo-white.png"}
+          alt="Reinvent Africa Network"
+          width={250}
+          height={62}
+          unoptimized
+          priority
+        />
+      </a>
     <ul
       className={`nav-links ${mobileNavOpen ? 'mobile-open' : ''}`}
       id="nav-menu"
@@ -313,7 +346,7 @@ export default function Home() {
       <li><a href="#speakers">Speakers</a></li>
       <li><a href="#sponsors">Partners</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#register" className="nav-cta">Join us in Accra</a></li>
+      <li><a href="#signup-updates" className="nav-cta">Join us in Accra</a></li>
     </ul>
     <button
       className="nav-hamburger"
@@ -365,7 +398,7 @@ export default function Home() {
       <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value</p>
 
       <div className="hero-ctas reveal reveal-delay-3">
-        <a href="#register" className="hero-cta-primary">
+        <a href="#signup-updates" className="hero-cta-primary">
           <span className="hero-cta-fill" aria-hidden="true"></span>
           <span className="hero-cta-label">Apply to Attend</span>
         </a>
@@ -441,7 +474,7 @@ export default function Home() {
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
         <p>Connect with mentors, peers, and collaborators through structured networking moments designed to spark real relationships. Leave with contacts who share your ambition and can open new doors.</p>
-        <a href="#register" className="experience-inbound-card-link">Reserve your seat</a>
+        <a href="#signup-updates" className="experience-inbound-card-link">Reserve your seat</a>
       </div>
     </div>
     <div className="experience-inbound-card reveal reveal-delay-2">
@@ -520,7 +553,7 @@ export default function Home() {
     </div>
 
     <div className="agenda-cta reveal">
-      <a href="#register" className="btn-primary">Reserve Your Seat</a>
+      <a href="#signup-updates" className="btn-primary">Reserve Your Seat</a>
     </div>
   </div>
 </section>
@@ -811,7 +844,7 @@ export default function Home() {
       FROM GO TO GOAL is more than an event. It is a movement toward intentional ambition. Will you be part of it?
     </p>
     <div className="reveal">
-        <a href="#" className="btn-primary" style={{"fontSize":"17px","padding":"18px 44px"}}>Apply to Attend</a>
+        <a href="#signup-updates" className="btn-primary" style={{"fontSize":"17px","padding":"18px 44px"}}>Apply to Attend</a>
     </div>
   </div>
 </section>
@@ -835,15 +868,16 @@ export default function Home() {
   <div className="container">
     <div className="footer-inner">
       <div>
-        <div className="footer-brand-name">
-          <Image
-            src="/reinvent-logo.png"
-            alt="Reinvent Africa Network"
-            width={300}
-            height={60}
-            style={{ height: "60px", width: "auto", marginBottom: "16px" }}
-          />
-        </div>
+         <div className="footer-brand-name">
+           <Image
+             src="/reinvent-logo-white.png"
+             alt="Reinvent Africa Network"
+             width={300}
+             height={74}
+             unoptimized
+             style={{ height: "60px", width: "auto", marginBottom: "16px" }}
+           />
+         </div>
         <p className="footer-brand-desc">
           A flagship initiative of Reinvent Africa Network. Bridging vision and value for Africa&apos;s present and future generations.
         </p>
@@ -855,7 +889,7 @@ export default function Home() {
           <li><a href="#experience">Experience</a></li>
           <li><a href="#agenda">Agenda</a></li>
           <li><a href="#speakers">Speakers</a></li>
-          <li><a href="#register">Register</a></li>
+          <li><a href="#signup-updates">Sign Up</a></li>
         </ul>
       </div>
       <div>
