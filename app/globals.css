@@ -115,7 +115,6 @@ summary:focus-visible {
 .site-preloader-logo {
   width: 100%;
   height: auto;
-  filter: brightness(0) invert(1);
   display: block;
 }
 
@@ -234,10 +233,6 @@ summary:focus-visible {
   color: var(--brand-gold);
 }
 
-.nav-logo img {
-  filter: brightness(0) invert(1);
-}
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -327,9 +322,6 @@ summary:focus-visible {
   background: #ffffff;
 }
 
-.nav.light-theme .nav-logo img {
-  filter: none;
-}
 
 .nav.light-theme .nav-links a {
   color: var(--brand-muted);
