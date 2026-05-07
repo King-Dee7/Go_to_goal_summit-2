@@ -4,9 +4,11 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const HERO_IMAGES = [
+  { src: "/hero%202.avif", alt: "Summit highlight moment", position: "50% 50%" },
   { src: "/hero%205.jpg", alt: "Audience and stage lighting at summit", position: "50% 40%" },
   { src: "/hero%206.png", alt: "Summit visual moment", position: "50% 46%" },
-  { src: "/hero%208.png", alt: "Networking crowd at summit", position: "50% 44%" },
+  { src: "/hero%207.jpg", alt: "Key summit interaction", position: "50% 50%" },
+  { src: "/hero%208.jpg", alt: "Networking crowd at summit", position: "50% 44%" },
 ];
 const SPONSOR_LOGOS = [
   { src: "/sponsors/pwc.svg", alt: "PWC logo" },
@@ -23,8 +25,8 @@ const SPONSOR_LOGOS = [
   { src: "/sponsors/fetch-ai.svg", alt: "Fetch.ai logo" },
 ];
 const SITE_URL = "https://go-to-goal-summit-2.vercel.app";
-const EVENT_START_DATE = "2026-05-23T09:00:00+00:00";
-const EVENT_END_DATE = "2026-05-23T19:00:00+00:00";
+const EVENT_START_DATE = "2026-07-17T09:00:00+00:00";
+const EVENT_END_DATE = "2026-07-17T19:00:00+00:00";
 const SPLASH_SEEN_KEY = "gtg_splash_seen";
 const ENTRY_PATH_KEY = "gtg_entry_path";
 
@@ -44,37 +46,43 @@ export default function Home() {
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const speakerCards = [
     {
-      image: "/summit-speaker.png",
+      id: "01",
+      image: "",
       alt: "Summit speaker profile",
       name: "Speaker Announcement",
       role: "Industry Leader & Executive",
     },
     {
-      image: "/summit-networking.png",
+      id: "02",
+      image: "",
       alt: "Featured summit speaker",
       name: "Featured Speaker",
       role: "Founder, Creator, Mentor",
     },
     {
-      image: "/summit-audience.png",
+      id: "03",
+      image: "",
       alt: "Summit contributor profile",
       name: "Speaker Announcement",
       role: "Creative & Cultural Architect",
     },
     {
-      image: "/summit-stage.png",
+      id: "04",
+      image: "",
       alt: "Speaker delivering session on stage",
       name: "Speaker Announcement",
       role: "Policy & Ecosystem Builder",
     },
     {
-      image: "/summit-speaker.png",
+      id: "05",
+      image: "",
       alt: "Summit keynote speaker portrait",
       name: "Speaker Announcement",
       role: "Entrepreneur & Founder",
     },
     {
-      image: "/summit-networking.png",
+      id: "06",
+      image: "",
       alt: "Summit contributor in audience conversation",
       name: "Speaker Announcement",
       role: "Creative Director & Strategist",
@@ -251,7 +259,7 @@ export default function Home() {
       setCurrentHeroIndex((prev) => (prev + 1) % HERO_IMAGES.length);
     }, 8000);
     return () => window.clearInterval(intervalId);
-  }, []);
+  }, [HERO_IMAGES.length]);
 
   useEffect(() => {
     const onEscape = (event: KeyboardEvent) => {
@@ -346,7 +354,7 @@ export default function Home() {
       <li><a href="#speakers">Speakers</a></li>
       <li><a href="#sponsors">Partners</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#signup-updates" className="nav-cta">Join us in Accra</a></li>
+      <li><a href="/apply" className="nav-cta">Apply to Attend</a></li>
     </ul>
     <button
       className="nav-hamburger"
@@ -374,7 +382,6 @@ export default function Home() {
         fill
         sizes="100vw"
         quality={100}
-        unoptimized
         priority={index === 0}
         style={{ objectPosition: image.position }}
       />
@@ -389,7 +396,7 @@ export default function Home() {
           <span className="hero-event-year">2026</span>
         </div>
         <div className="hero-date-line">
-          <span>May 23rd, 2026</span>
+          <span>July 17th, 2026</span>
           <span className="hero-date-dot" aria-hidden="true">&bull;</span>
           <span>Accra, Ghana</span>
         </div>
@@ -398,7 +405,7 @@ export default function Home() {
       <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value</p>
 
       <div className="hero-ctas reveal reveal-delay-3">
-        <a href="#signup-updates" className="hero-cta-primary">
+        <a href="/apply" className="hero-cta-primary">
           <span className="hero-cta-fill" aria-hidden="true"></span>
           <span className="hero-cta-label">Apply to Attend</span>
         </a>
@@ -474,7 +481,7 @@ export default function Home() {
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
         <p>Connect with mentors, peers, and collaborators through structured networking moments designed to spark real relationships. Leave with contacts who share your ambition and can open new doors.</p>
-        <a href="#signup-updates" className="experience-inbound-card-link">Reserve your seat</a>
+        <a href="/apply" className="experience-inbound-card-link">Apply to attend</a>
       </div>
     </div>
     <div className="experience-inbound-card reveal reveal-delay-2">
@@ -511,7 +518,7 @@ export default function Home() {
     <div className="agenda-rows">
       <article className="agenda-row reveal">
         <div className="agenda-row-copy">
-          <p className="agenda-row-date">May 23</p>
+          <p className="agenda-row-date">July 17</p>
           <h3 className="agenda-row-title">Opening Sessions</h3>
           <p className="agenda-row-blurb">
             The day starts with bold keynotes and context-setting conversations on ambition, leadership,
@@ -519,13 +526,13 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/summit-stage.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
+          <Image src="/Opening Sessions.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
         </div>
       </article>
 
       <article className="agenda-row reveal reveal-delay-1">
         <div className="agenda-row-copy">
-          <p className="agenda-row-date">May 23</p>
+          <p className="agenda-row-date">July 17</p>
           <h3 className="agenda-row-title">Panel Discussions</h3>
           <p className="agenda-row-blurb">
             Founders, operators, and creatives share practical lessons on building momentum, navigating setbacks,
@@ -533,13 +540,13 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/summit-networking.png" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
+          <Image src="/Panel Discussions.jpg" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
         </div>
       </article>
 
       <article className="agenda-row reveal reveal-delay-2">
         <div className="agenda-row-copy">
-          <p className="agenda-row-date">May 23</p>
+          <p className="agenda-row-date">July 17</p>
           <h3 className="agenda-row-title">Networking &amp; Close</h3>
           <p className="agenda-row-blurb">
             Curated networking moments and an intentional close designed to help you leave with clear next steps,
@@ -547,13 +554,13 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/summit-audience.png" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
+          <Image src="/Networking & Close.jpg" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
         </div>
       </article>
     </div>
 
     <div className="agenda-cta reveal">
-      <a href="#signup-updates" className="btn-primary">Reserve Your Seat</a>
+      <a href="/apply" className="btn-primary">Apply to Attend</a>
     </div>
   </div>
 </section>
@@ -569,7 +576,13 @@ export default function Home() {
       {speakerCards.map((speaker, index) => (
         <div className="speaker-card speaker-card-grid" key={`${speaker.name}-${index}`}>
           <div className="speaker-photo">
-            <Image src={speaker.image} alt={speaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            {speaker.image ? (
+              <Image src={speaker.image} alt={speaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            ) : (
+              <div className="speaker-placeholder">
+                <span className="speaker-placeholder-num">{speaker.id}</span>
+              </div>
+            )}
             <div className="speaker-overlay">
               <div className="speaker-name">{speaker.name}</div>
               <div className="speaker-role">{speaker.role}</div>
@@ -591,7 +604,13 @@ export default function Home() {
       <div className="speakers-track">
         <div className="speaker-card speaker-card-side">
           <div className="speaker-photo">
-            <Image src={leftSpeaker.image} alt={leftSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            {leftSpeaker.image ? (
+              <Image src={leftSpeaker.image} alt={leftSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            ) : (
+              <div className="speaker-placeholder">
+                <span className="speaker-placeholder-num">{leftSpeaker.id}</span>
+              </div>
+            )}
             <div className="speaker-overlay">
               <div className="speaker-name">{leftSpeaker.name}</div>
               <div className="speaker-role">{leftSpeaker.role}</div>
@@ -611,7 +630,13 @@ export default function Home() {
           }`}
         >
           <div className="speaker-photo">
-            <Image src={centerSpeaker.image} alt={centerSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            {centerSpeaker.image ? (
+              <Image src={centerSpeaker.image} alt={centerSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            ) : (
+              <div className="speaker-placeholder">
+                <span className="speaker-placeholder-num">{centerSpeaker.id}</span>
+              </div>
+            )}
             <div className="speaker-overlay">
               <div className="speaker-name">{centerSpeaker.name}</div>
               <div className="speaker-role">{centerSpeaker.role}</div>
@@ -621,7 +646,13 @@ export default function Home() {
 
         <div className="speaker-card speaker-card-side">
           <div className="speaker-photo">
-            <Image src={rightSpeaker.image} alt={rightSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            {rightSpeaker.image ? (
+              <Image src={rightSpeaker.image} alt={rightSpeaker.alt} fill sizes="(max-width: 900px) 72vw, 33vw" quality={95} unoptimized />
+            ) : (
+              <div className="speaker-placeholder">
+                <span className="speaker-placeholder-num">{rightSpeaker.id}</span>
+              </div>
+            )}
             <div className="speaker-overlay">
               <div className="speaker-name">{rightSpeaker.name}</div>
               <div className="speaker-role">{rightSpeaker.role}</div>
@@ -737,7 +768,6 @@ export default function Home() {
   </div>
 </section>
 
-{/*  ========== 08. ABOUT REINVENT AFRICA NETWORK ==========  */}
 <section className="about-org" id="about-org">
   <div className="container">
     <div className="about-org-inner">
@@ -754,13 +784,54 @@ export default function Home() {
         </ul>
       </div>
       <div className="about-org-visual reveal">
-        <span>Reinvent<br />Africa</span>
+        <Image 
+          src="/RAN logo 1.jpg" 
+          alt="Reinvent Africa Network Logo" 
+          fill 
+          sizes="(max-width: 768px) 100vw, 50vw"
+          style={{ objectFit: 'cover' }}
+        />
       </div>
     </div>
   </div>
 </section>
 
-{/*  ========== 09. FAQ ==========  */}
+{/*  ========== 09. THE VENUE ==========  */}
+<section className="venue" id="venue">
+  <Image 
+    src="/venue.jpg" 
+    alt="Google AI Community Center in Accra" 
+    fill 
+    sizes="100vw" 
+    className="venue-bg" 
+    quality={90} 
+  />
+  <div className="venue-overlay"></div>
+  <div className="container venue-container">
+    <div className="venue-header">
+      <div className="venue-eyebrow reveal">THE VENUE</div>
+      <a 
+        href="https://maps.google.com/?q=Google+Accra+87+Independence+Ave" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="venue-directions reveal reveal-delay-3"
+      >
+        GET DIRECTIONS <span className="venue-directions-arrow">&rsaquo;</span>
+      </a>
+    </div>
+    <div className="venue-content">
+      <h2 className="venue-title reveal reveal-delay-1">
+        The Google AI Community Center<br />
+        at the <em>heart</em> of Accra
+      </h2>
+      <p className="venue-desc reveal reveal-delay-2">
+        Located at 87 Independence Ave, Accra, this state-of-the-art center provides the perfect backdrop for innovation, learning, and meaningful connection.
+      </p>
+    </div>
+  </div>
+</section>
+
+{/*  ========== 10. FAQ ==========  */}
 <section className="faq" id="faq">
   <div className="container">
     <div className="faq-header">
@@ -781,7 +852,7 @@ export default function Home() {
           Who can attend the summit?
           <span className="faq-icon">+</span>
         </summary>
-        <div className="faq-answer"><p>The summit is open to students, recent graduates, young professionals, entrepreneurs, creatives, corporate professionals, NGO leaders, mentors, and ecosystem builders. If you&apos;re driven by ambition and ready to learn, this event is for you.</p></div>
+        <div className="faq-answer"><p>The summit is open to purpose-driven individuals across all sectors—from students and founders to corporate leaders. However, to maintain a curated and intimate experience, all attendees must apply and be selected, or receive a personal invitation.</p></div>
       </details>
 
       <details className="faq-item reveal">
@@ -789,7 +860,7 @@ export default function Home() {
           Is there a cost to attend?
           <span className="faq-icon">+</span>
         </summary>
-        <div className="faq-answer"><p>Registration details and ticket pricing will be announced soon. Sign up for our newsletter to be first to know when early-bird tickets become available.</p></div>
+        <div className="faq-answer"><p>Attendance is free. However, to ensure a high-impact environment for all participants, the summit is strictly application-based or by personal invitation only. You can submit your application directly through the portal.</p></div>
       </details>
 
       <details className="faq-item reveal">
@@ -870,12 +941,12 @@ export default function Home() {
       <div>
          <div className="footer-brand-name">
            <Image
-             src="/reinvent-logo-white.png"
+             src="/RAN logo 1.jpg"
              alt="Reinvent Africa Network"
              width={300}
              height={74}
              unoptimized
-             style={{ height: "60px", width: "auto", marginBottom: "16px" }}
+             style={{ height: "60px", width: "auto", marginBottom: "16px", mixBlendMode: "multiply" }}
            />
          </div>
         <p className="footer-brand-desc">
