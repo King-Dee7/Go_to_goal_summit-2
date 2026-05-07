@@ -409,13 +409,7 @@ function InviteForm({ onBack }: { onBack: () => void }) {
     
     try {
       // Re-using claimInviteCode but passing the full userData
-      const result = await claimInviteCode(code, {
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: userData.email,
-        // We'll update the server action to handle these extra fields too
-        ...userData
-      } as any);
+      const result = await claimInviteCode(code, userData as any);
 
       if (result.success) {
         setIsSuccess(true);
