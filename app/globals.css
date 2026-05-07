@@ -1921,6 +1921,27 @@ summary:focus-visible {
   display: block;
 }
 
+.speaker-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(175, 33, 34, 0.15) 0%, var(--brand-dark) 60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.speaker-placeholder-num {
+  font-family: var(--font-display);
+  font-size: clamp(100px, 12vw, 160px);
+  color: rgba(255, 255, 255, 0.04);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
 .speaker-overlay {
   position: absolute;
   inset: 0;
@@ -4533,5 +4554,164 @@ summary:focus-visible {
   .nav.scrolled.light-theme::before {
     background: #ffffff;
     border-bottom: 1px solid rgba(12, 14, 13, 0.1);
+  }
+}
+
+/* ============================================
+   09. THE VENUE (TEDAI STYLE)
+   ============================================ */
+.venue {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: stretch;
+  padding: 80px 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.venue-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+.venue-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 100%);
+  z-index: 1;
+}
+
+.venue-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.venue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.venue-content {
+  max-width: 900px;
+}
+
+.venue-eyebrow {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+.venue-title {
+  font-family: var(--font-display);
+  font-size: clamp(54px, 7vw, 92px);
+  font-weight: 400;
+  line-height: 1.02;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.venue-title em {
+  font-style: italic;
+}
+
+.venue-desc {
+  font-size: clamp(17px, 1.3vw, 20px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 650px;
+}
+
+.venue-directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: opacity 0.3s;
+}
+
+.venue-directions:hover {
+  opacity: 0.8;
+}
+
+.venue-directions-arrow {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .venue {
+    min-height: auto;
+    padding: 0 0 60px 0;
+    align-items: flex-start;
+  }
+
+  .venue-bg {
+    height: 45vh !important;
+    bottom: auto !important;
+  }
+
+  .venue-overlay {
+    height: 45.5vh;
+    bottom: auto;
+    background: linear-gradient(to top, #000 0%, rgba(0,0,0,0) 60%);
+  }
+
+  .venue-container {
+    padding-top: calc(45vh - 10px);
+    gap: 12px;
+    justify-content: flex-start;
+  }
+
+  .venue-header {
+    margin-bottom: 0;
+  }
+
+  .venue-eyebrow {
+    font-size: 14px;
+    letter-spacing: 0.12em;
+  }
+
+  .venue-directions {
+    font-size: 14px;
+    gap: 6px;
+  }
+
+  .venue-directions-arrow {
+    font-size: 18px;
+  }
+
+  .venue-title {
+    font-size: clamp(34px, 9.5vw, 44px);
+    margin-bottom: 14px;
+  }
+
+  .venue-desc {
+    font-size: 16px;
+    line-height: 1.45;
   }
 }
