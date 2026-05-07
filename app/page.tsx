@@ -259,7 +259,7 @@ export default function Home() {
       setCurrentHeroIndex((prev) => (prev + 1) % HERO_IMAGES.length);
     }, 8000);
     return () => window.clearInterval(intervalId);
-  }, [HERO_IMAGES.length]);
+  }, []);
 
   useEffect(() => {
     const onEscape = (event: KeyboardEvent) => {

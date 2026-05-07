@@ -1,6 +1,6 @@
 import { google } from 'googleapis';
 
-export async function appendToSheet(data: any[]) {
+export async function appendToSheet(data: string[]) {
   try {
     const auth = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,

@@ -1,7 +1,7 @@
 export async function addToMailerLite(subscriber: {
   email: string;
   name?: string;
-  fields?: Record<string, any>;
+  fields?: Record<string, string>;
 }) {
   try {
     const apiKey = process.env.MAILERLITE_API_KEY;

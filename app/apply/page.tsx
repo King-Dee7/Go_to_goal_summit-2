@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type InputHTMLAttributes, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitApplication } from "@/app/actions/submit-application";
-import { verifyInviteCode, claimInviteCode } from "@/app/actions/invite-actions";
+import { claimInviteCode } from "@/app/actions/invite-actions";
 
 export default function ApplyPage() {
   const [activeTab, setActiveTab] = useState<"gateway" | "apply" | "invite">("gateway");
@@ -196,11 +196,11 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
         console.error("Submission failed:", result.error);
         setIsSuccess(true); // Still showing success for now to not break UX, but logging error
       }
-    } catch (err) {
-      console.error("Submission error:", err);
-      setIsSuccess(true);
-    } finally {
-      setIsSubmitting(false);
+      } catch (error) {
+        console.error("Submission error:", error);
+        setIsSuccess(true);
+      } finally {
+        setIsSubmitting(false);
     }
   };
 
@@ -409,14 +409,14 @@ function InviteForm({ onBack }: { onBack: () => void }) {
     
     try {
       // Re-using claimInviteCode but passing the full userData
-      const result = await claimInviteCode(code, userData as any);
+      const result = await claimInviteCode(code, userData);
 
       if (result.success) {
         setIsSuccess(true);
       } else {
         setError(result.error || "Invalid or already claimed invite code.");
       }
-    } catch (err) {
+    } catch {
       setError("An unexpected error occurred.");
     } finally {
       setIsChecking(false);
@@ -515,7 +515,12 @@ function InviteForm({ onBack }: { onBack: () => void }) {
 }
 
 // Reusable Input Components matched to the inspo
-const Input = ({ label, icon, ...props }: any) => (
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  label: string;
+  icon?: ReactNode;
+};
+
+const Input = ({ label, icon, ...props }: InputProps) => (
   <div>
     <label className="block text-sm font-medium mb-1.5" style={{ color: "#111827" }}>{label}</label>
     <div className="relative group">
@@ -530,18 +535,6 @@ const Input = ({ label, icon, ...props }: any) => (
         {...props} 
       />
     </div>
-  </div>
-);
-
-const Textarea = ({ label, rows = 3, ...props }: any) => (
-  <div>
-    <label className="block text-sm font-medium mb-1.5" style={{ color: "#111827" }}>{label}</label>
-    <textarea 
-      rows={rows} 
-      className="w-full border rounded-md px-4 py-3.5 text-base focus:outline-none transition-all duration-300 focus:ring-1 focus:ring-black focus:border-black resize-y" 
-      style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#111827" }} 
-      {...props} 
-    />
   </div>
 );
 

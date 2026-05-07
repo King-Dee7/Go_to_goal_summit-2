@@ -1,11 +1,26 @@
 'use server';
 
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { appendToSheet } from '@/lib/google-sheets';
 import { addToMailerLite } from '@/lib/mailerlite';
 
-export async function claimInviteCode(code: string, userData: { firstName: string, lastName: string, email: string }) {
+type InviteClaimUserData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  role?: string;
+  company?: string;
+};
+
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : 'Unknown error';
+}
+
+export async function claimInviteCode(code: string, userData: InviteClaimUserData) {
   try {
+    const supabase = getSupabase();
+
     // 1. Verify and claim the code in Supabase
     const { data: invite, error: inviteError } = await supabase
       .from('invite_codes')
@@ -31,16 +46,16 @@ export async function claimInviteCode(code: string, userData: { firstName: strin
     if (updateError) throw updateError;
 
     // 3. Create a record in applications table
-    const { data: application, error: appError } = await supabase
+    const { error: appError } = await supabase
       .from('applications')
       .insert([
         {
           first_name: userData.firstName,
           last_name: userData.lastName,
           email: userData.email,
-          phone_number: (userData as any).phone,
-          current_role: (userData as any).role,
-          company: (userData as any).company,
+          phone_number: userData.phone,
+          current_role: userData.role,
+          company: userData.company,
           category: 'Invited Guest',
           status: 'Accepted', // Auto-accepted since they had a code
           invite_code_issued: code.toUpperCase()
@@ -91,13 +106,15 @@ export async function claimInviteCode(code: string, userData: { firstName: strin
     }
 
     return { success: true };
-  } catch (error: any) {
+  } catch (error) {
     console.error('Invite claim error:', error);
-    return { success: false, error: error.message };
+    return { success: false, error: getErrorMessage(error) };
   }
 }
 
 export async function verifyInviteCode(code: string) {
+  const supabase = getSupabase();
+
   const { data, error } = await supabase
     .from('invite_codes')
     .select('code, status')
