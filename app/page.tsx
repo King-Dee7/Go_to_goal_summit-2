@@ -381,8 +381,9 @@ export default function Home() {
         alt={image.alt}
         fill
         sizes="100vw"
-        quality={100}
+        quality={85}
         priority={index === 0}
+        loading={index === 0 ? undefined : "lazy"}
         style={{ objectPosition: image.position }}
       />
     ))}
@@ -442,16 +443,16 @@ export default function Home() {
       {/* Right Column: TEDAI Waterfall Images */}
       <div className="waterfall-collage reveal">
         <div className="waterfall-img waterfall-img-1">
-          <Image src="/summit-speaker.png" alt="Speaker on stage at the summit" fill sizes="196px" quality={95} unoptimized />
+          <Image src="/summit-speaker.png" alt="Speaker on stage at the summit" fill sizes="196px" quality={85} loading="lazy" />
         </div>
         <div className="waterfall-img waterfall-img-2">
-          <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="196px" quality={95} unoptimized />
+          <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="196px" quality={85} loading="lazy" />
         </div>
         <div className="waterfall-img waterfall-img-3">
-          <Image src="/summit-stage.png" alt="Summit stage and venue" fill sizes="196px" quality={95} unoptimized />
+          <Image src="/summit-stage.png" alt="Summit stage and venue" fill sizes="196px" quality={85} loading="lazy" />
         </div>
         <div className="waterfall-img waterfall-img-4">
-          <Image src="/summit-audience.png" alt="Audience member at the summit" fill sizes="196px" quality={95} unoptimized />
+          <Image src="/summit-audience.png" alt="Audience member at the summit" fill sizes="196px" quality={85} loading="lazy" />
         </div>
       </div>
     </div>
@@ -466,7 +467,7 @@ export default function Home() {
   <div className="experience-inbound-grid">
     <div className="experience-inbound-card reveal">
       <div className="experience-inbound-card-img">
-        <Image src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" fill sizes="(max-width: 900px) 100vw, 33vw" quality={95} unoptimized />
+        <Image src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Hear Real Stories</h3>
@@ -476,7 +477,7 @@ export default function Home() {
     </div>
     <div className="experience-inbound-card reveal reveal-delay-1">
       <div className="experience-inbound-card-img">
-        <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={95} unoptimized />
+        <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Build Your Network</h3>
@@ -486,7 +487,7 @@ export default function Home() {
     </div>
     <div className="experience-inbound-card reveal reveal-delay-2">
       <div className="experience-inbound-card-img">
-        <Image src="/summit-audience.png" alt="Engaged audience at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={95} unoptimized />
+        <Image src="/summit-audience.png" alt="Engaged audience at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
       </div>
       <div className="experience-inbound-card-body">
         <h3>Gain Practical Tools</h3>
@@ -526,7 +527,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/Opening Sessions.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
+          <Image src="/Opening Sessions.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
         </div>
       </article>
 
@@ -540,7 +541,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/Panel Discussions.jpg" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
+          <Image src="/Panel Discussions.jpg" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
         </div>
       </article>
 
@@ -554,7 +555,7 @@ export default function Home() {
           </p>
         </div>
         <div className="agenda-row-media">
-          <Image src="/Networking & Close.jpg" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={95} unoptimized />
+          <Image src="/Networking & Close.jpg" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
         </div>
       </article>
     </div>
@@ -945,7 +946,7 @@ export default function Home() {
              alt="Reinvent Africa Network"
              width={300}
              height={74}
-             unoptimized
+             loading="lazy"
              style={{ height: "60px", width: "auto", marginBottom: "16px", mixBlendMode: "multiply" }}
            />
          </div>
