@@ -47,6 +47,7 @@ CREATE TABLE applications (
     -- Status tracking
     status VARCHAR(50) DEFAULT 'Under Review', -- 'Under Review', 'Accepted', 'Rejected'
     invite_code_issued VARCHAR(50),
+    sync_errors TEXT,
     
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

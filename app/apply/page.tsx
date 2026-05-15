@@ -165,6 +165,7 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", email: "", phone: "", socialPlatform: "LinkedIn", socialHandle: "", role: "", company: "", category: "",
@@ -192,15 +193,13 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
       if (result.success) {
         setIsSuccess(true);
       } else {
-        // Fallback or error handling
-        console.error("Submission failed:", result.error);
-        setIsSuccess(true); // Still showing success for now to not break UX, but logging error
+        setError(result.error || "Submission failed. Please try again.");
       }
-      } catch (error) {
-        console.error("Submission error:", error);
-        setIsSuccess(true);
-      } finally {
-        setIsSubmitting(false);
+    } catch (err) {
+      setError("An unexpected error occurred.");
+      console.error("Submission error:", err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -220,24 +219,6 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
       </motion.div>
     );
   }
-
-  const ConversationalQuestion = ({ question, name, value }: { question: string, name: string, value: string }) => (
-    <div className="flex-1 flex flex-col justify-center">
-      <h3 className="text-xl md:text-3xl font-bold mb-6 md:mb-8 leading-tight" style={{ color: "#111827" }}>
-        {question}
-      </h3>
-      <textarea
-        name={name}
-        value={value}
-        onChange={handleChange}
-        placeholder="Type your answer here..."
-        className="w-full text-base md:text-xl leading-relaxed resize-none bg-transparent focus:outline-none placeholder-gray-300"
-        style={{ color: "#111827", minHeight: "200px" }}
-        required
-        autoFocus
-      />
-    </div>
-  );
 
   return (
     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.4 }} className="flex flex-col h-full">
@@ -326,31 +307,31 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
 
         {step === 3 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col h-full">
-            <ConversationalQuestion question="What are you currently building or passionate about?" name="q1" value={formData.q1} />
+            <ConversationalQuestion question="What are you currently building or passionate about?" name="q1" value={formData.q1} onChange={handleChange} />
           </motion.div>
         )}
 
         {step === 4 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col h-full">
-            <ConversationalQuestion question="What's something you should do differently but haven't yet and why?" name="q2" value={formData.q2} />
+            <ConversationalQuestion question="What's something you should do differently but haven't yet and why?" name="q2" value={formData.q2} onChange={handleChange} />
           </motion.div>
         )}
 
         {step === 5 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col h-full">
-            <ConversationalQuestion question="What are you trying to build or become in the next few years?" name="q3" value={formData.q3} />
+            <ConversationalQuestion question="What are you trying to build or become in the next few years?" name="q3" value={formData.q3} onChange={handleChange} />
           </motion.div>
         )}
 
         {step === 6 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col h-full">
-            <ConversationalQuestion question="Why are you applying and what are your intentions after the summit?" name="q4" value={formData.q4} />
+            <ConversationalQuestion question="Why are you applying and what are your intentions after the summit?" name="q4" value={formData.q4} onChange={handleChange} />
           </motion.div>
         )}
 
         {step === 7 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col h-full">
-            <ConversationalQuestion question="What's a belief you held strongly that you've since changed?" name="q5" value={formData.q5} />
+            <ConversationalQuestion question="What's a belief you held strongly that you've since changed?" name="q5" value={formData.q5} onChange={handleChange} />
           </motion.div>
         )}
 
@@ -360,6 +341,12 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
               Back
             </button>
           )}
+          {error && (
+            <div className="w-full p-3 bg-red-50 text-red-600 text-xs font-bold rounded-sm border border-red-100 uppercase tracking-widest text-center mb-4">
+              {error}
+            </div>
+          )}
+
           {step < 7 ? (
             <button type="submit" className="flex-1 py-4 rounded-sm font-bold text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-black/10" style={{ backgroundColor: "#000000", color: "#ffffff" }}>
               Next Step
@@ -519,6 +506,34 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   icon?: ReactNode;
 };
+
+const ConversationalQuestion = ({ 
+  question, 
+  name, 
+  value, 
+  onChange 
+}: { 
+  question: string, 
+  name: string, 
+  value: string, 
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void 
+}) => (
+  <div className="flex-1 flex flex-col justify-center">
+    <h3 className="text-xl md:text-3xl font-bold mb-6 md:mb-8 leading-tight" style={{ color: "#111827" }}>
+      {question}
+    </h3>
+    <textarea
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder="Type your answer here..."
+      className="w-full text-base md:text-xl leading-relaxed resize-none bg-transparent focus:outline-none placeholder-gray-300"
+      style={{ color: "#111827", minHeight: "200px" }}
+      required
+      autoFocus
+    />
+  </div>
+);
 
 const Input = ({ label, icon, ...props }: InputProps) => (
   <div>

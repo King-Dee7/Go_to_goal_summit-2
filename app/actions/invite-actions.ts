@@ -1,8 +1,10 @@
 'use server';
 
-import { getSupabase } from '@/lib/supabase';
+import { getSupabaseAdmin } from '@/lib/supabase';
 import { appendToSheet } from '@/lib/google-sheets';
 import { addToMailerLite } from '@/lib/mailerlite';
+import { sendEmail } from '@/lib/email';
+import { getApprovedEmail } from '@/lib/email-templates';
 
 type InviteClaimUserData = {
   firstName: string;
@@ -19,7 +21,7 @@ function getErrorMessage(error: unknown) {
 
 export async function claimInviteCode(code: string, userData: InviteClaimUserData) {
   try {
-    const supabase = getSupabase();
+    const supabase = getSupabaseAdmin();
 
     // 1. Verify and claim the code in Supabase
     const { data: invite, error: inviteError } = await supabase
@@ -105,6 +107,18 @@ export async function claimInviteCode(code: string, userData: InviteClaimUserDat
       console.error('MailerLite sync error:', err);
     }
 
+    // 6. Send Approval Email
+    try {
+      const emailHtml = getApprovedEmail(userData.firstName);
+      await sendEmail({
+        to: userData.email,
+        subject: "You're Officially Invited to the From Go To Goal Summit",
+        html: emailHtml,
+      });
+    } catch (err) {
+      console.error('Approval Email Error:', err);
+    }
+
     return { success: true };
   } catch (error) {
     console.error('Invite claim error:', error);
@@ -113,7 +127,7 @@ export async function claimInviteCode(code: string, userData: InviteClaimUserDat
 }
 
 export async function verifyInviteCode(code: string) {
-  const supabase = getSupabase();
+  const supabase = getSupabaseAdmin();
 
   const { data, error } = await supabase
     .from('invite_codes')

@@ -1,8 +1,10 @@
 'use server';
 
-import { getSupabase } from '@/lib/supabase';
+import { getSupabaseAdmin } from '@/lib/supabase';
 import { appendToSheet } from '@/lib/google-sheets';
 import { addToMailerLite } from '@/lib/mailerlite';
+import { sendEmail } from '@/lib/email';
+import { getApplicationReceivedEmail } from '@/lib/email-templates';
 
 type ApplicationFormData = {
   firstName: string;
@@ -23,15 +25,19 @@ type ApplicationFormData = {
   q5: string;
 };
 
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : 'Unknown error';
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  if (typeof error === 'object' && error !== null && 'message' in error) {
+    return String(error.message);
+  }
+  return 'Unknown error occurred';
 }
 
 export async function submitApplication(formData: ApplicationFormData) {
   const syncErrors: string[] = [];
 
   try {
-    const supabase = getSupabase();
+    const supabase = getSupabaseAdmin();
 
     // 1. Push to Supabase (Initial Insert)
     const { data: application, error: supabaseError } = await supabase
@@ -109,7 +115,24 @@ export async function submitApplication(formData: ApplicationFormData) {
       syncErrors.push(`MailerLite: ${message}`);
     }
 
-    // 4. If there were any sync errors, update the Supabase record with the log
+    try {
+      const emailHtml = getApplicationReceivedEmail(formData.firstName);
+      const emailResult = await sendEmail({
+        to: formData.email,
+        subject: "We've received your application - From Go To Goal Summit",
+        html: emailHtml,
+      });
+      
+      if (!emailResult.success) {
+        syncErrors.push(`Email: ${getErrorMessage(emailResult.error)}`);
+      }
+    } catch (error) {
+      const message = getErrorMessage(error);
+      console.error('Receipt Email Error:', message);
+      syncErrors.push(`Email Exception: ${message}`);
+    }
+
+    // 5. If there were any sync errors, update the Supabase record with the log
     if (syncErrors.length > 0) {
       await supabase
         .from('applications')
