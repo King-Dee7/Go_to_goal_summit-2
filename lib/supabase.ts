@@ -4,6 +4,7 @@ function getRequiredEnvVar(name: 'NEXT_PUBLIC_SUPABASE_URL' | 'NEXT_PUBLIC_SUPAB
   const value = process.env[name];
 
   if (!value) {
+    console.error(`CRITICAL: Missing env var ${name}`);
     throw new Error(`Missing required environment variable: ${name}`);
   }
 

@@ -110,8 +110,8 @@ export default function Home() {
     "@type": "Event",
     name: "Go To Goal Summit 2026",
     description:
-      "A flagship youth empowerment summit in Accra, Ghana where ambition meets action.",
-    image: [`${SITE_URL}/og-image.jpg`],
+      "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
+    image: [`${SITE_URL}/real-og.jpg`],
     startDate: EVENT_START_DATE,
     endDate: EVENT_END_DATE,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",

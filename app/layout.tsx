@@ -35,8 +35,8 @@ const bebasNeue = Bebas_Neue({
 export const metadata: Metadata = {
   title: "Go To Goal Summit | Reinvent Africa Network",
   description:
-    "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action - equipping the next generation of African leaders with practical tools, real networks, and stories that prove what's possible.",
-  metadataBase: new URL("https://go-to-goal-summit-2.vercel.app"),
+    "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
+  metadataBase: new URL("https://reinventaf.com"),
   alternates: {
     canonical: "/",
   },
@@ -52,13 +52,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Go To Goal Summit | Reinvent Africa Network",
     description:
-      "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action.",
-    url: "https://go-to-goal-summit-2.vercel.app",
+      "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
+    url: "https://reinventaf.com",
     siteName: "Go To Goal Summit",
     type: "website",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/real-og.jpg",
         width: 1200,
         height: 630,
         alt: "Go To Goal Summit by Reinvent Africa Network",
@@ -69,8 +69,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Go To Goal Summit | Reinvent Africa Network",
     description:
-      "A flagship youth empowerment summit in Accra, Ghana. Where ambition meets action.",
-    images: ["/og-image.jpg"],
+      "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
+    images: ["/real-og.jpg"],
   },
   robots: {
     index: true,
