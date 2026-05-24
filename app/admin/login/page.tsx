@@ -53,7 +53,7 @@ export default function AdminLogin() {
           <p className="text-gray-400 text-sm">Secure access for the curation team.</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
           <form onSubmit={handleLogin} className="space-y-6">
             {error && (
               <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
@@ -68,7 +68,7 @@ export default function AdminLogin() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#f4f7f6] border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#c8a44e]/20 focus:border-[#c8a44e] transition-colors placeholder:text-gray-400"
+                className="w-full bg-[#f4f7f6] border border-gray-200 rounded-2xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a3b2b]/20 focus:border-[#1a3b2b] transition-colors placeholder:text-gray-400"
                 placeholder="admin@reinventaf.com"
               />
             </div>
@@ -80,7 +80,7 @@ export default function AdminLogin() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#f4f7f6] border border-gray-200 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#c8a44e]/20 focus:border-[#c8a44e] transition-colors placeholder:text-gray-400"
+                className="w-full bg-[#f4f7f6] border border-gray-200 rounded-2xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1a3b2b]/20 focus:border-[#1a3b2b] transition-colors placeholder:text-gray-400"
                 placeholder="••••••••"
               />
             </div>
@@ -88,7 +88,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-[#1a3b2b] text-white font-bold rounded-lg hover:bg-[#122a1f] transition-all active:scale-[0.98] disabled:opacity-50 shadow-md shadow-green-900/10"
+              className="w-full py-4 bg-[#1a3b2b] text-[#ffffff] font-bold rounded-lg hover:bg-[#122a1f] hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 shadow-sm"
             >
               {isLoading ? "Verifying..." : "Sign In to Dashboard"}
             </button>

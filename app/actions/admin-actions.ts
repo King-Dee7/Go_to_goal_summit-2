@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { getSupabaseAdmin } from '@/lib/supabase';
+import { getSupabaseAdmin, verifyAdminSession } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
 import { getApprovedEmail, getDeclinedEmail } from '@/lib/email-templates';
 
 export async function approveApplication(id: string) {
   try {
+    await verifyAdminSession();
     console.log('Server Action: Approving application ID:', id);
     const supabase = getSupabaseAdmin();
 
@@ -89,6 +90,7 @@ export async function approveApplication(id: string) {
 
 export async function declineApplication(id: string) {
   try {
+    await verifyAdminSession();
     const supabase = getSupabaseAdmin();
 
     // 1. Get application details
@@ -136,6 +138,7 @@ export async function declineApplication(id: string) {
 }
 
 export async function fetchApplications() {
+  await verifyAdminSession();
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from('applications')
@@ -147,6 +150,7 @@ export async function fetchApplications() {
 }
 
 export async function fetchInviteCodes() {
+  await verifyAdminSession();
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from('invite_codes')
@@ -159,6 +163,7 @@ export async function fetchInviteCodes() {
 
 export async function generateInviteCode(category: string = 'VIP') {
   try {
+    await verifyAdminSession();
     const supabase = getSupabaseAdmin();
     // Generate a random 8-character alphanumeric code
     const code = Math.random().toString(36).substring(2, 10).toUpperCase();
@@ -179,6 +184,7 @@ export async function generateInviteCode(category: string = 'VIP') {
 
 export async function toggleInviteCodeStatus(id: string, currentStatus: string) {
   try {
+    await verifyAdminSession();
     const supabase = getSupabaseAdmin();
     const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
 

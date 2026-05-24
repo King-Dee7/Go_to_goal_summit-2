@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Cy Grotesk Grand';
+  src: url('/fonts/CyGrotesk-GrandHeavy.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 /* ============================================
    BRAND VARIABLES — SWAP THESE WHEN ASSETS ARRIVE
@@ -16,15 +24,24 @@
   /* formerly charcoal */
   --brand-surface: #DFD9CF;
   /* formerly surface */
-  --brand-gold: #C8A44E;
-  --brand-gold-light: #B49040;
-  --brand-gold-dim: rgba(200, 164, 78, 0.15);
+  --brand-gold: #1A3B2B;
+  --brand-gold-light: #25543d;
+  --brand-gold-dim: rgba(26, 59, 43, 0.15);
   --brand-cream: #1C201E;
   /* formerly cream (now dark for quotes) */
   --brand-white: #0C0E0D;
   /* formerly white (now dark text) */
   --brand-muted: #666A68;
   --brand-light-muted: #444745;
+
+  /* Tailwind CSS theme variables mapping */
+  --color-primary: #1a3b2b;
+  --color-secondary: #1a3b2b;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-muted: #6b7280;
+  --color-surface: #ffffff;
+  --color-surface-light: #f3f4f6;
 
   /* Typography */
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -837,7 +854,7 @@ summary:focus-visible {
 
 .hero-statement {
   margin-bottom: 22px;
-  max-width: min(100%, 980px);
+  max-width: min(100%, 1200px);
   margin-left: auto;
   margin-right: auto;
 }
@@ -862,16 +879,16 @@ summary:focus-visible {
 }
 
 .hero-event-name {
-  font-family: var(--font-body);
+  font-family: 'Cy Grotesk Grand', var(--font-body);
   font-size: clamp(38px, 5.1vw, 66px);
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.05em;
   color: #ffffff;
 }
 
 .hero-event-year {
-  font-family: var(--font-body);
+  font-family: var(--font-oswald), sans-serif;
   font-size: clamp(38px, 5.1vw, 66px);
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -997,14 +1014,50 @@ summary:focus-visible {
     padding: 42px 20px 36px;
   }
 
+  .hero-statement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-event-line {
+    order: -1;
+    margin-bottom: 8px;
+  }
+
   .hero-title {
-    font-size: clamp(52px, 14.8vw, 92px);
-    line-height: 0.9;
+    order: 2;
+    width: 100%;
+    font-size: clamp(52px, 15vw, 84px);
+    line-height: 1;
+    margin-bottom: 16px;
+    text-align: center !important;
+  }
+
+  .hero-title .hero-top-text {
+    display: block;
+    text-align: center !important;
+    font-size: clamp(16px, 5vw, 26px);
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+    margin-bottom: -6px;
+    line-height: 1;
+    padding-left: 0.5em;
+  }
+
+  .hero-date-line {
+    order: 3;
+    font-size: clamp(14px, 4vw, 18px);
   }
 
   .hero-event-name,
   .hero-event-year {
-    font-size: clamp(30px, 9vw, 44px);
+    font-size: clamp(24px, 7vw, 36px);
+  }
+
+  .hero-event-name {
+    letter-spacing: 0.08em;
   }
 
   .hero-event-year {
@@ -2407,11 +2460,12 @@ summary:focus-visible {
 }
 
 .sponsors-title {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-syne);
   font-size: clamp(40px, 5.2vw, 64px);
-  font-weight: 500;
+  font-weight: 700;
   color: #101214;
   margin-bottom: 10px;
+  letter-spacing: -0.01em;
 }
 
 .sponsors-sub {
@@ -2519,11 +2573,12 @@ summary:focus-visible {
 }
 
 .about-org-title {
-  font-family: var(--font-syne), var(--font-body), sans-serif;
+  font-family: var(--font-syne);
   font-size: clamp(26px, 3.5vw, 36px);
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 20px;
   line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 .about-org-text {
@@ -2618,11 +2673,12 @@ summary:focus-visible {
 }
 
 .faq-title {
-  font-family: var(--font-display);
+  font-family: var(--font-syne);
   font-size: clamp(28px, 4vw, 40px);
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 12px;
   color: #ffffff;
+  letter-spacing: -0.01em;
 }
 
 .faq-list {
@@ -3116,8 +3172,8 @@ summary:focus-visible {
 }
 
 .experience-inbound-card-link:hover {
-  color: #c8a44e;
-  border-color: rgba(200, 164, 78, 0.75);
+  color: #1a3b2b;
+  border-color: rgba(26, 59, 43, 0.75);
 }
 
 @media (max-width: 900px) {
@@ -4134,12 +4190,7 @@ summary:focus-visible {
   border-color: #000000 !important;
 }
 
-/* FAQ stability + remove gold/glow effects globally */
-:root {
-  --brand-gold: #ffffff;
-  --brand-gold-light: #ffffff;
-  --brand-gold-dim: rgba(255, 255, 255, 0);
-}
+
 
 /* Remove decorative gold glow blobs */
 .experience-inbound::before,
@@ -4472,7 +4523,7 @@ summary:focus-visible {
 
   .hero-subtitle-theme {
     margin: 0 auto;
-    max-width: 34ch;
+    max-width: 45ch;
   }
 
   .hero-ctas {
