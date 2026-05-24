@@ -2,7 +2,6 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -21,6 +20,8 @@ const config: Config = {
         display: ["var(--font-display)", "sans-serif"],
         body: ["var(--font-body)", "sans-serif"],
         syne: ["var(--font-syne)", "sans-serif"],
+        "open-sans": ["var(--font-open-sans)", "sans-serif"],
+        roboto: ["var(--font-roboto)", "sans-serif"],
       },
 
       animation: {

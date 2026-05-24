@@ -58,16 +58,23 @@ export async function middleware(request: NextRequest) {
 
   // Protect /admin routes
   if (request.nextUrl.pathname.startsWith('/admin')) {
+    const isAdmin = !!(user && (
+      user.app_metadata?.role === 'admin' ||
+      user.user_metadata?.role === 'admin' ||
+      user.app_metadata?.is_admin === true ||
+      user.user_metadata?.is_admin === true
+    ));
+
     // Exclude the login page itself to avoid infinite redirect
     if (request.nextUrl.pathname === '/admin/login') {
-      if (user) {
+      if (isAdmin) {
         return NextResponse.redirect(new URL('/admin', request.url))
       }
       return response
     }
 
-    if (!user) {
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL('/admin/login?error=unauthorized', request.url))
     }
   }
 

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, DM_Sans, Syne, Bebas_Neue } from "next/font/google";
+import { Playfair_Display, DM_Sans, Syne, Bebas_Neue, Oswald, Open_Sans, Roboto } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -32,10 +32,31 @@ const bebasNeue = Bebas_Neue({
   display: "swap",
 });
 
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--font-open-sans",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  variable: "--font-roboto",
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Go To Goal Summit | Reinvent Africa Network",
+  title: "RAN'26 - From Go To Goal Summit",
   description:
-    "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
+    "Join us July 17 for RAN2026: a defining Accra summit equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
   metadataBase: new URL("https://reinventaf.com"),
   alternates: {
     canonical: "/",
@@ -50,9 +71,9 @@ export const metadata: Metadata = {
     "entrepreneurship",
   ],
   openGraph: {
-    title: "Go To Goal Summit | Reinvent Africa Network",
+    title: "RAN'26 - From Go To Goal Summit",
     description:
-      "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
+      "Join us July 17 for RAN2026: a defining Accra summit equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
     url: "https://reinventaf.com",
     siteName: "Go To Goal Summit",
     type: "website",
@@ -67,9 +88,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Go To Goal Summit | Reinvent Africa Network",
+    title: "RAN'26 - From Go To Goal Summit",
     description:
-      "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
+      "Join us July 17 for RAN2026: a defining Accra summit equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
     images: ["/real-og.jpg"],
   },
   robots: {
@@ -90,7 +111,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${syne.variable} ${bebasNeue.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${syne.variable} ${bebasNeue.variable} ${oswald.variable} ${openSans.variable} ${roboto.variable}`}>
       <body className="antialiased">
         {children}
         <Analytics />

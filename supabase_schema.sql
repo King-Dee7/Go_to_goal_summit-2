@@ -55,3 +55,10 @@ CREATE TABLE applications (
 -- Optional: Create an index for filtering by status or email
 CREATE INDEX idx_applications_status ON applications(status);
 CREATE INDEX idx_applications_email ON applications(email);
+
+-- Enable Row Level Security (RLS) on sensitive tables to block direct client API queries
+-- Enabling RLS without explicit public policies will deny all direct client-side (anon) requests.
+-- All database reads and writes in the application are securely performed on the server side via Server Actions,
+-- which bypasses RLS using the administrative service role. This ensures maximum protection.
+ALTER TABLE invite_codes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE applications ENABLE ROW LEVEL SECURITY;
