@@ -192,8 +192,6 @@ export function CardStack<T extends CardStackItem>({
 
   if (!len) return null;
 
-  const activeItem = items[active]!;
-
   return (
     <div
       className={cn("w-full", className)}
