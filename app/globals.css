@@ -1029,7 +1029,7 @@ summary:focus-visible {
   .hero-title {
     order: 2;
     width: 100%;
-    font-size: clamp(52px, 15vw, 84px);
+    font-size: clamp(78px, 22.5vw, 126px);
     line-height: 1;
     margin-bottom: 16px;
     text-align: center !important;
@@ -1038,7 +1038,7 @@ summary:focus-visible {
   .hero-title .hero-top-text {
     display: block;
     text-align: center !important;
-    font-size: clamp(16px, 5vw, 26px);
+    font-size: clamp(24px, 7.5vw, 39px);
     letter-spacing: 0.15em;
     white-space: nowrap;
     margin-bottom: -6px;
@@ -1048,12 +1048,12 @@ summary:focus-visible {
 
   .hero-date-line {
     order: 3;
-    font-size: clamp(14px, 4vw, 18px);
+    font-size: clamp(21px, 6vw, 27px);
   }
 
   .hero-event-name,
   .hero-event-year {
-    font-size: clamp(24px, 7vw, 36px);
+    font-size: clamp(36px, 10.5vw, 54px);
   }
 
   .hero-event-name {
@@ -1065,7 +1065,7 @@ summary:focus-visible {
   }
 
   .hero-date-line {
-    font-size: clamp(14px, 4.2vw, 18px);
+    font-size: clamp(21px, 6.3vw, 27px);
     gap: 8px;
     letter-spacing: 0.045em;
   }
