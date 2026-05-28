@@ -12,11 +12,17 @@ function useWindowSize() {
   });
 
   useEffect(() => {
+    let lastWidth: number | null = null;
+    
     function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      const newWidth = window.innerWidth;
+      if (lastWidth === null || newWidth !== lastWidth) {
+        lastWidth = newWidth;
+        setWindowSize({
+          width: newWidth,
+          height: window.innerHeight,
+        });
+      }
     }
     
     window.addEventListener("resize", handleResize);
@@ -27,13 +33,7 @@ function useWindowSize() {
   return windowSize;
 }
 
-const HERO_IMAGES = [
-  { src: "/hero%202.avif", alt: "Summit highlight moment", position: "50% 50%" },
-  { src: "/hero%205.jpg", alt: "Audience and stage lighting at summit", position: "50% 40%" },
-  { src: "/hero%206.png", alt: "Summit visual moment", position: "50% 46%" },
-  { src: "/hero%207.jpg", alt: "Key summit interaction", position: "50% 50%" },
-  { src: "/hero%208.jpg", alt: "Networking crowd at summit", position: "50% 44%" },
-];
+
 const SPONSOR_LOGOS = [
   { src: "/sponsors/pwc.svg", alt: "PWC logo" },
   { src: "/sponsors/foley.svg", alt: "Foley logo" },
@@ -64,15 +64,10 @@ export default function Home() {
   const [navLightTheme, setNavLightTheme] = useState(false);
   const lastScrollYRef = useRef(0);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const { width: windowWidth } = useWindowSize();
   
   // Calculate CardStack dimensions based on breakpoints
-  const isMobile = windowWidth < 640;
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
-  const cardWidth = isMobile ? 280 : isTablet ? 400 : 520;
-  const cardHeight = isMobile ? 360 : 320;
-  const cardOverlap = isMobile ? 0.6 : 0.48;
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -91,8 +86,8 @@ export default function Home() {
     "@type": "Event",
     name: "From Go To Goal Summit 2026",
     description:
-      "Join us July 17 for RAN2026, a defining gathering designed to equip the next generation of African builders, entrepreneurs, creators and professionals with raw unfiltered stories, connections and actionable insight to turn ambition into action.",
-    image: [`${SITE_URL}/real-og.jpg`],
+      "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
+    image: [`${SITE_URL}/Og%20image.png`],
     startDate: EVENT_START_DATE,
     endDate: EVENT_END_DATE,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -235,14 +230,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (HERO_IMAGES.length < 2) return;
-    const intervalId = window.setInterval(() => {
-      setCurrentHeroIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 8000);
-    return () => window.clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
     const onEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMobileNavOpen(false);
@@ -336,20 +323,15 @@ export default function Home() {
         {/*  ========== 01. HERO ==========  */}
         <section className="hero" id="home">
           <div className="hero-bg-slides" aria-hidden="true">
-            {HERO_IMAGES.map((image, index) => (
-              <Image
-                key={image.src}
-                className={`hero-bg-slide ${index === currentHeroIndex ? "is-active" : ""}`}
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="100vw"
-                quality={85}
-                priority={index === 0}
-                loading={index === 0 ? undefined : "lazy"}
-                style={{ objectPosition: image.position }}
-              />
-            ))}
+            <Image
+              className="hero-bg-slide"
+              src="/Hero_image.png"
+              alt="Go To Goal Summit background image"
+              fill
+              sizes="100vw"
+              quality={85}
+              priority
+            />
           </div>
           <div className="hero-shell">
             <div className="hero-content-wide">
@@ -360,8 +342,7 @@ export default function Home() {
                   <span className="hero-event-year">2026</span>
                 </div>
                 <div className="hero-date-line">
-                  <span>July 17</span>
-                  <span className="hero-date-dot" aria-hidden="true">&bull;</span>
+                  <span>July 17, 2026</span>
                   <span>Accra, Ghana</span>
                 </div>
               </div>
@@ -537,7 +518,8 @@ export default function Home() {
               <a href="#" className="btn-secondary speakers-nominate reveal" style={{ "display": "inline-flex", "padding": "10px 24px", "fontSize": "13px" }}>Nominate a Speaker</a>
             </div>
             
-            <div className="reveal" style={{ display: "flex", justifyContent: "center" }}>
+            {/* Desktop/Tablet CardStack: visible only on larger viewports */}
+            <div className="reveal hidden sm:flex" style={{ justifyContent: "center" }}>
               <CardStack
                 items={speakerCards}
                 initialIndex={0}
@@ -545,10 +527,26 @@ export default function Home() {
                 intervalMs={3000}
                 pauseOnHover
                 showDots
-                cardWidth={cardWidth}
-                cardHeight={cardHeight}
-                overlap={cardOverlap}
-                perspectivePx={isMobile ? 800 : 1100}
+                cardWidth={isTablet ? 400 : 520}
+                cardHeight={320}
+                overlap={0.48}
+                perspectivePx={1100}
+              />
+            </div>
+            
+            {/* Mobile CardStack: visible only on small viewports */}
+            <div className="reveal flex sm:hidden" style={{ justifyContent: "center" }}>
+              <CardStack
+                items={speakerCards}
+                initialIndex={0}
+                autoAdvance
+                intervalMs={3000}
+                pauseOnHover
+                showDots
+                cardWidth={280}
+                cardHeight={360}
+                overlap={0.6}
+                perspectivePx={800}
               />
             </div>
 
