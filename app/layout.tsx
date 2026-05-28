@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, DM_Sans, Syne, Bebas_Neue, Oswald, Open_Sans, Roboto } from "next/font/google";
+import { Playfair_Display, DM_Sans, Syne, Bebas_Neue, Oswald, Open_Sans, Roboto, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -53,10 +53,17 @@ const roboto = Roboto({
   display: "swap",
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "RAN'26 - From Go To Goal Summit",
   description:
-    "Join us July 17 for RAN2026: a defining Accra summit equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
+    "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
   metadataBase: new URL("https://reinventaf.com"),
   alternates: {
     canonical: "/",
@@ -73,13 +80,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "RAN'26 - From Go To Goal Summit",
     description:
-      "Join us July 17 for RAN2026: a defining Accra summit equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
+      "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
     url: "https://reinventaf.com",
     siteName: "Go To Goal Summit",
     type: "website",
     images: [
       {
-        url: "/real-og.jpg",
+        url: "/Og%20image.png",
         width: 1200,
         height: 630,
         alt: "Go To Goal Summit by Reinvent Africa Network",
@@ -90,8 +97,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "RAN'26 - From Go To Goal Summit",
     description:
-      "Join us July 17 for RAN2026: a defining Accra summit equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
-    images: ["/real-og.jpg"],
+      "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
+    images: ["/Og%20image.png"],
   },
   robots: {
     index: true,
@@ -111,7 +118,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${syne.variable} ${bebasNeue.variable} ${oswald.variable} ${openSans.variable} ${roboto.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${syne.variable} ${bebasNeue.variable} ${oswald.variable} ${openSans.variable} ${roboto.variable} ${inter.variable}`}>
       <body className="antialiased">
         {children}
         <Analytics />

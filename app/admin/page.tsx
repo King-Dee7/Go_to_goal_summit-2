@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   approveApplication, 
   declineApplication, 
@@ -49,6 +50,7 @@ export default function AdminDashboard() {
   const [inviteCodes, setInviteCodes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
+  const [selectedApplicant, setSelectedApplicant] = useState<any | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [newCodeCategory, setNewCodeCategory] = useState('VIP');
   const [searchQuery, setSearchQuery] = useState("");
@@ -608,7 +610,11 @@ export default function AdminDashboard() {
                         const initials = `${(app.first_name?.[0] || "").toUpperCase()}${(app.last_name?.[0] || "").toUpperCase()}`;
 
                         return (
-                          <tr key={app.id} className="hover:bg-slate-50/50 transition-colors group">
+                          <tr 
+                            key={app.id} 
+                            onClick={() => setSelectedApplicant(app)}
+                            className="hover:bg-slate-50/50 transition-colors group cursor-pointer"
+                          >
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-3">
                                 <div className={avatarStyle}>{initials || "??"}</div>
@@ -640,14 +646,14 @@ export default function AdminDashboard() {
                               {app.status === 'Under Review' ? (
                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                   <button 
-                                    onClick={() => onDecline(app.id)}
+                                    onClick={(e) => { e.stopPropagation(); onDecline(app.id); }}
                                     disabled={processingId !== null}
                                     className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 text-xs font-bold transition-all disabled:opacity-50"
                                   >
                                     Decline
                                   </button>
                                   <button 
-                                    onClick={() => onApprove(app.id)}
+                                    onClick={(e) => { e.stopPropagation(); onApprove(app.id); }}
                                     disabled={processingId !== null}
                                     className="px-3 py-1.5 rounded-lg bg-[#5347CE] text-white hover:bg-[#4337b5] text-xs font-bold transition-all shadow-sm hover:shadow disabled:opacity-50"
                                   >
@@ -728,6 +734,134 @@ export default function AdminDashboard() {
             )}
           </div>
         )}
+
+        {/* --- DRAWER (SIDE PANEL) --- */}
+        <AnimatePresence>
+          {selectedApplicant && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedApplicant(null)}
+                className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[100]"
+              />
+
+              {/* Drawer Panel */}
+              <motion.div
+                initial={{ x: "100%", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: "100%", opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed top-0 bottom-0 right-0 w-full max-w-xl bg-white shadow-2xl z-[101] flex flex-col overflow-hidden border-l border-slate-100"
+              >
+                {/* Header */}
+                <div className="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/50 shrink-0">
+                  <div className="flex items-center gap-4">
+                    <div className={`${getAvatarStyle(selectedApplicant.first_name || "", selectedApplicant.last_name || "")} w-14 h-14 text-lg shadow-md`}>
+                      {`${(selectedApplicant.first_name?.[0] || "").toUpperCase()}${(selectedApplicant.last_name?.[0] || "").toUpperCase()}` || "??"}
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-800">{selectedApplicant.first_name} {selectedApplicant.last_name}</h2>
+                      <p className="text-sm font-medium text-slate-500 mb-1.5">{selectedApplicant.email}</p>
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${
+                        selectedApplicant.status === 'Accepted' 
+                          ? 'bg-[#16C8C7]/10 text-[#16C8C7]' 
+                          : selectedApplicant.status === 'Rejected' 
+                          ? 'bg-rose-500/10 text-rose-500' 
+                          : 'bg-[#887CFD]/10 text-[#887CFD]'
+                      }`}>
+                        {selectedApplicant.status === 'Accepted' ? 'Approved' : selectedApplicant.status}
+                      </span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedApplicant(null)}
+                    className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition-colors"
+                  >
+                    <Icons.XCircle className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {/* Scrollable Content */}
+                <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8 bg-white">
+                  
+                  {/* Quick Info Grid */}
+                  <div className="grid grid-cols-2 gap-y-6 gap-x-4 p-5 bg-slate-50 rounded-2xl border border-slate-100/60">
+                    <div>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Role</span>
+                      <span className="text-sm font-bold text-slate-700">{selectedApplicant.current_role || "N/A"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Company / Uni</span>
+                      <span className="text-sm font-bold text-slate-700">{selectedApplicant.company || selectedApplicant.university || "N/A"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Category</span>
+                      <span className="text-sm font-bold text-slate-700">{selectedApplicant.category || "N/A"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Social</span>
+                      <span className="text-sm font-bold text-[#5347CE] break-all">{selectedApplicant.social_handle || "N/A"}</span>
+                    </div>
+                  </div>
+
+                  {/* Q&A Section */}
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2 mb-6 border-b border-slate-100 pb-3">
+                      <svg className="w-4 h-4 text-[#5347CE]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                      Application Answers
+                    </h3>
+                    
+                    <div className="space-y-8">
+                      {[
+                        { q: "What are you currently building or passionate about?", a: selectedApplicant.q1_passion },
+                        { q: "What's something you should do differently but haven't yet and why?", a: selectedApplicant.q2_differently },
+                        { q: "What are you trying to build or become in the next few years?", a: selectedApplicant.q3_future_goals },
+                        { q: "Why are you applying and what are your intentions after the summit?", a: selectedApplicant.q4_intentions },
+                        { q: "What's a belief you held strongly that you've since changed?", a: selectedApplicant.q5_changed_belief },
+                      ].map((item, idx) => (
+                        <div key={idx} className="group">
+                          <p className="text-[13px] font-bold text-slate-500 mb-2 leading-snug group-hover:text-[#5347CE] transition-colors">{item.q}</p>
+                          <div className="text-[15px] text-slate-800 leading-relaxed font-medium whitespace-pre-wrap pl-4 border-l-2 border-slate-100 group-hover:border-[#5347CE]/30 transition-colors">
+                            {item.a || <span className="text-slate-400 italic">No answer provided.</span>}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Footer */}
+                {selectedApplicant.status === 'Under Review' && (
+                  <div className="p-5 border-t border-slate-100 bg-white flex gap-3 shrink-0">
+                    <button 
+                      onClick={() => {
+                        onDecline(selectedApplicant.id);
+                        setSelectedApplicant(null);
+                      }}
+                      disabled={processingId !== null}
+                      className="flex-1 py-3 rounded-xl border-2 border-slate-200 text-slate-600 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 text-sm font-bold transition-all disabled:opacity-50"
+                    >
+                      Decline Profile
+                    </button>
+                    <button 
+                      onClick={() => {
+                        onApprove(selectedApplicant.id);
+                        setSelectedApplicant(null);
+                      }}
+                      disabled={processingId !== null}
+                      className="flex-1 py-3 rounded-xl bg-[#5347CE] text-white hover:bg-[#4337b5] text-sm font-bold transition-all shadow-[0_4px_14px_rgba(83,71,206,0.3)] hover:shadow-[0_6px_20px_rgba(83,71,206,0.4)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50"
+                    >
+                      Approve Applicant
+                    </button>
+                  </div>
+                )}
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
         
       </main>
     </div>

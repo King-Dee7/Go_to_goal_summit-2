@@ -10,6 +10,72 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Helvetica Neue LT Std 107 Extra Black Condensed';
+  src: url('/fonts/helvetica-neue-lt-std-107-extra-black-condensed/Helvetica Neue LT Std 107 Extra Black Condensed/Helvetica Neue LT Std 107 Extra Black Condensed.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Custom';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueUltraLight.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Custom';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueThin.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Custom';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Custom';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueRoman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Custom';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueMedium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Custom';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Custom';
+  src: url('/fonts/helvetica-neue-5/HelveticaNeueBlack.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
 
 /* ============================================
    BRAND VARIABLES — SWAP THESE WHEN ASSETS ARRIVE
@@ -46,6 +112,9 @@
   /* Typography */
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-helvetica-condensed: 'Helvetica Neue LT Std 107 Extra Black Condensed', var(--font-body), sans-serif;
+  --font-helvetica-custom: 'Helvetica Neue Custom', var(--font-body), sans-serif;
 
   /* Spacing */
   --section-pad: clamp(60px, 10vw, 120px);
@@ -802,19 +871,11 @@ summary:focus-visible {
 .hero-bg-slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
+  opacity: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% 42%;
-  transform: scale(1);
-  transition: opacity 1.4s ease-in-out, transform 8s ease-out;
-  will-change: opacity, transform;
-}
-
-.hero-bg-slide.is-active {
-  opacity: 1;
-  transform: scale(1.04);
 }
 
 .hero-shell {
@@ -860,10 +921,10 @@ summary:focus-visible {
 }
 
 .hero-title {
-  font-family: var(--font-body), sans-serif;
-  font-size: clamp(66px, 9.6vw, 138px);
+  font-family: var(--font-helvetica-condensed);
+  font-size: clamp(75px, 10.8vw, 155px);
   font-weight: 900;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   line-height: 0.9;
   text-transform: uppercase;
   color: #ffffff;
@@ -874,24 +935,24 @@ summary:focus-visible {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 14px;
+  gap: 2px;
   margin-bottom: 6px;
 }
 
 .hero-event-name {
-  font-family: 'Cy Grotesk Grand', var(--font-body);
-  font-size: clamp(38px, 5.1vw, 66px);
+  font-family: var(--font-helvetica-custom);
+  font-size: clamp(34px, 4.6vw, 60px);
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.01em;
   color: #ffffff;
 }
 
 .hero-event-year {
-  font-family: var(--font-oswald), sans-serif;
-  font-size: clamp(38px, 5.1vw, 66px);
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-family: var(--font-helvetica-custom);
+  font-size: clamp(34px, 4.6vw, 60px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
   color: #ffffff;
 }
 
@@ -901,7 +962,7 @@ summary:focus-visible {
   justify-content: center;
   gap: clamp(10px, 1.6vw, 18px);
   flex-wrap: wrap;
-  font-family: var(--font-body);
+  font-family: var(--font-inter);
   font-size: clamp(17px, 1.45vw, 24px);
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -917,7 +978,7 @@ summary:focus-visible {
 }
 
 .hero-subtitle-theme {
-  font-family: var(--font-body);
+  font-family: var(--font-inter);
   font-size: clamp(18px, 1.5vw, 24px);
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -946,9 +1007,11 @@ summary:focus-visible {
   justify-content: center;
   padding: 14px 26px;
   border-radius: 10px;
-  font-family: var(--font-body);
+  font-family: var(--font-helvetica-custom);
   font-size: 18px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.22s ease, color 0.22s ease;
 }
 
@@ -1005,11 +1068,13 @@ summary:focus-visible {
 @media (max-width: 768px) {
   .hero {
     min-height: 84vh;
+    min-height: 84svh;
     padding: 98px 0 28px;
   }
 
   .hero-content-wide {
     min-height: 72vh;
+    min-height: 72svh;
     border-radius: 8px;
     padding: 42px 20px 36px;
   }
@@ -1029,7 +1094,7 @@ summary:focus-visible {
   .hero-title {
     order: 2;
     width: 100%;
-    font-size: clamp(78px, 22.5vw, 126px);
+    font-size: clamp(68px, 19.5vw, 110px);
     line-height: 1;
     margin-bottom: 16px;
     text-align: center !important;
@@ -1038,36 +1103,43 @@ summary:focus-visible {
   .hero-title .hero-top-text {
     display: block;
     text-align: center !important;
-    font-size: clamp(24px, 7.5vw, 39px);
-    letter-spacing: 0.15em;
+    font-size: clamp(20px, 6.5vw, 34px);
+    font-family: var(--font-helvetica-custom);
+    font-weight: 500; /* Heavier on mobile */
+    letter-spacing: 0.02em;
     white-space: nowrap;
-    margin-bottom: -6px;
+    margin-bottom: 6px;
     line-height: 1;
     padding-left: 0.5em;
   }
 
+  .hero-title .hero-main-text {
+    display: block;
+    color: rgba(255, 255, 255, 0.94);
+  }
+
   .hero-date-line {
     order: 3;
-    font-size: clamp(21px, 6vw, 27px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: clamp(13px, 3.8vw, 16px);
+    gap: 6px;
+    letter-spacing: 0.045em;
+    margin-top: 16px;
   }
 
   .hero-event-name,
   .hero-event-year {
-    font-size: clamp(36px, 10.5vw, 54px);
+    font-size: clamp(25px, 7.3vw, 38px);
   }
 
   .hero-event-name {
-    letter-spacing: 0.08em;
+    letter-spacing: -0.01em;
   }
 
   .hero-event-year {
-    font-weight: 400;
-  }
-
-  .hero-date-line {
-    font-size: clamp(21px, 6.3vw, 27px);
-    gap: 8px;
-    letter-spacing: 0.045em;
+    font-weight: 300;
   }
 
   .hero-subtitle-theme {
@@ -1092,15 +1164,6 @@ summary:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-bg-slide {
-    transition: opacity 0.01ms linear;
-    transform: none;
-  }
-
-  .hero-bg-slide.is-active {
-    transform: none;
-  }
-
   .hero-cta-primary,
   .hero-cta-secondary,
   .hero-cta-fill,
@@ -1112,10 +1175,6 @@ summary:focus-visible {
 @media (max-aspect-ratio: 4/3) {
   .hero-bg-slide {
     object-position: 50% 30%;
-  }
-
-  .hero-bg-slide.is-active {
-    transform: scale(1.02);
   }
 }
 

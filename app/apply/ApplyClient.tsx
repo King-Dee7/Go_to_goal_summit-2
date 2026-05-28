@@ -77,7 +77,7 @@ export default function ApplyClient() {
         {/* LEFT PANEL - PICTURE SIDE */}
         <div className="relative w-full md:w-[45%] h-48 md:h-auto p-8 md:p-12 flex flex-col justify-end overflow-hidden">
           <Image
-            src="/hero 6.png"
+            src="/Hero_image.png"
             alt="Go To Goal Summit"
             fill
             className="object-cover object-center absolute inset-0 z-0"
@@ -248,7 +248,7 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
             <div className="p-4 rounded-2xl border mb-2" style={{ backgroundColor: "#f9fafb", borderColor: "#f3f4f6" }}>
               <p className="text-base leading-relaxed" style={{ color: "#6b7280" }}>
                 <span className="block mb-1" style={{ color: "#111827" }}>A note on curation:</span>
-                Please answer the upcoming questions as honestly as possible. There are no right or wrong answers, only how you would truly behave in these situations.
+                Please answer the upcoming questions as honestly as possible. There are no right or wrong answers, only your genuine journey, ambitions, and personal reflections.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
