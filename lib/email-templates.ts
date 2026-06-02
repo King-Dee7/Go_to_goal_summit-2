@@ -68,8 +68,16 @@ export const getDeclinedEmail = (firstName: string) => wrapEmail(`
   <h1 style="font-size: 24px; color: ${DARK_COLOR}; margin-bottom: 20px; font-weight: 700;">Regarding your application</h1>
   <p>Hi ${firstName},</p>
   <p>Thank you for your interest in the <strong>From Go To Goal Summit</strong>. We truly appreciate the time you took to share your journey and goals with us.</p>
-  <p>After a careful review of all applications, we are unable to offer you a spot for this specific session. Due to the intimate nature of the venue, we have to make very difficult decisions to ensure the right mix of profiles.</p>
-  <p>However, we were very impressed by your background and would love to keep your details on file for future Reinvent Africa events and initiatives. We hope to see you at one of our upcoming gatherings soon.</p>
+  <p>After a careful review of all applications, we are unable to offer you an in-person invitation for this session. Due to the intimate nature of the venue, we have to make very difficult decisions to ensure the right mix of profiles.</p>
+  
+  <div style="background-color: ${GRAY_COLOR}; padding: 25px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #509e71;">
+    <h3 style="margin-top: 0; margin-bottom: 12px; font-size: 16px; color: ${DARK_COLOR};">Join Us Virtually</h3>
+    <p style="margin: 0; font-size: 15px; line-height: 1.6;">
+      However, we would love to have you participate! Because of the high volume of interest, we are offering full <strong>online attendance</strong>. We will share the virtual streaming links and details with you closer to the event date so you can tune in and join the conversations.
+    </p>
+  </div>
+
+  <p>We are very impressed by your background and would love to keep your details on file for future Reinvent Africa events and initiatives. We hope to connect with you online on July 17!</p>
   <p>Wishing you the very best in your current endeavors.</p>
   <p style="margin-top: 30px;">Warm regards,<br /><strong>The Reinvent Africa Team</strong></p>
 `);

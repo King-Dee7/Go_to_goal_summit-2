@@ -1002,6 +1002,7 @@ summary:focus-visible {
 .hero-cta-primary,
 .hero-cta-secondary {
   display: inline-flex;
+  white-space: nowrap;
   min-width: clamp(190px, 20vw, 260px);
   align-items: center;
   justify-content: center;
@@ -1013,6 +1014,10 @@ summary:focus-visible {
   text-transform: uppercase;
   letter-spacing: -0.01em;
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.22s ease, color 0.22s ease;
+}
+
+.cta-br {
+  display: none;
 }
 
 .hero-cta-primary {
@@ -2641,7 +2646,7 @@ summary:focus-visible {
 }
 
 .about-org-text {
-  font-size: 15px;
+  font-size: clamp(18px, 1.55vw, 24px);
   color: var(--brand-light-muted);
   line-height: 1.8;
   margin-bottom: 16px;
@@ -2690,6 +2695,12 @@ summary:focus-visible {
 @media (max-width: 768px) {
   .about-org-inner {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-org-text {
+    font-size: clamp(16px, 4.7vw, 20px);
   }
 }
 
@@ -2753,7 +2764,7 @@ summary:focus-visible {
   width: 100%;
   text-align: left;
   padding: 20px 0;
-  font-size: 15px;
+  font-size: clamp(18px, 1.55vw, 24px);
   font-weight: 500;
   color: #ffffff;
   display: flex;
@@ -2789,9 +2800,18 @@ summary:focus-visible {
 }
 
 .faq-answer p {
-  font-size: 14px;
+  font-size: clamp(18px, 1.55vw, 24px);
   color: rgba(255, 255, 255, 0.82);
   line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .faq-question {
+    font-size: clamp(16px, 4.7vw, 20px);
+  }
+  .faq-answer p {
+    font-size: clamp(16px, 4.7vw, 20px);
+  }
 }
 
 /* ============================================
@@ -3376,20 +3396,46 @@ summary:focus-visible {
   }
 }
 
-/* Mobile hero CTAs side-by-side */
-@media (max-width: 768px) {
+/* Mobile Hero CTAs (Side-by-Side with Stacked Words for small phones) */
+@media (max-width: 576px) {
   .hero-ctas {
+    flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     gap: 10px;
+    width: 100%;
   }
-
   .hero-cta-primary,
   .hero-cta-secondary {
     width: calc((100% - 10px) / 2);
     min-width: 0;
     font-size: 15px;
     padding: 12px 10px;
+    white-space: normal;
+    text-align: center;
+  }
+  .cta-br {
+    display: block;
+  }
+}
+
+/* Tablet/Medium Screen Hero CTAs (Side-by-Side, single-line text) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .hero-ctas {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+  }
+  .hero-cta-primary,
+  .hero-cta-secondary {
+    width: auto;
+    min-width: 180px;
+    max-width: 240px;
+    font-size: 15px;
+    padding: 12px 20px;
+    white-space: nowrap;
   }
 }
 
@@ -4555,9 +4601,6 @@ summary:focus-visible {
     height: 100svh;
     min-height: 100svh;
     max-height: 100svh;
-    height: 100dvh;
-    min-height: 100dvh;
-    max-height: 100dvh;
     padding: 0;
   }
 
@@ -4572,7 +4615,7 @@ summary:focus-visible {
     height: 100%;
     width: 100%;
     justify-content: initial;
-    padding: clamp(84px, 16dvh, 128px) 20px calc(env(safe-area-inset-bottom) + 6px);
+    padding: clamp(84px, 16svh, 128px) 20px calc(env(safe-area-inset-bottom) + 6px);
   }
 
   .hero-statement {
@@ -4745,7 +4788,7 @@ summary:focus-visible {
 }
 
 .venue-desc {
-  font-size: clamp(17px, 1.3vw, 20px);
+  font-size: clamp(18px, 1.55vw, 24px);
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.9);
   max-width: 650px;
@@ -4821,7 +4864,7 @@ summary:focus-visible {
   }
 
   .venue-desc {
-    font-size: 16px;
+    font-size: clamp(16px, 4.7vw, 20px);
     line-height: 1.45;
   }
 }
