@@ -1088,7 +1088,7 @@ summary:focus-visible {
 
   .hero-event-line {
     order: -1;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
   }
 
   .hero-title {
@@ -1096,7 +1096,7 @@ summary:focus-visible {
     width: 100%;
     font-size: clamp(68px, 19.5vw, 110px);
     line-height: 1;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     text-align: center !important;
   }
 
@@ -1126,7 +1126,7 @@ summary:focus-visible {
     font-size: clamp(13px, 3.8vw, 16px);
     gap: 6px;
     letter-spacing: 0.045em;
-    margin-top: 16px;
+    margin-top: 0;
   }
 
   .hero-event-name,

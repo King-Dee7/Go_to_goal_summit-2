@@ -48,7 +48,7 @@ const SPONSOR_LOGOS = [
   { src: "/sponsors/vectara.svg", alt: "Vectara logo" },
   { src: "/sponsors/fetch-ai.svg", alt: "Fetch.ai logo" },
 ];
-const SITE_URL = "https://go-to-goal-summit-2.vercel.app";
+const SITE_URL = "https://reinventaf.com";
 const EVENT_START_DATE = "2026-07-17T09:00:00+00:00";
 const EVENT_END_DATE = "2026-07-17T19:00:00+00:00";
 const SPLASH_SEEN_KEY = "gtg_splash_seen";
@@ -106,12 +106,18 @@ export default function Home() {
       name: "Reinvent Africa Network",
       url: SITE_URL,
     },
+    performer: {
+      "@type": "Organization",
+      name: "Reinvent Africa Network",
+      url: SITE_URL,
+    },
     offers: {
       "@type": "Offer",
       url: `${SITE_URL}/#signup-updates`,
       availability: "https://schema.org/InStock",
       priceCurrency: "GHS",
       price: "0",
+      validFrom: "2026-06-01T00:00:00+00:00",
     },
   };
 
@@ -855,7 +861,7 @@ export default function Home() {
               <div>
                 <div className="footer-col-title">Contact</div>
                 <ul className="footer-links">
-                  <li><a href="mailto:hello@reinventafrica.org">hello@reinventafrica.org</a></li>
+                  <li><a href="mailto:info@reinventaf.com">info@reinventaf.com</a></li>
                   <li><a href="#">Accra, Ghana</a></li>
                 </ul>
               </div>
