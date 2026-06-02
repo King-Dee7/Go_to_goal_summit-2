@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { CardStack } from "@/components/ui/card-stack";
 import { speakerCards } from "@/lib/data/speakers";
+import { subscribeToUpdates } from "@/app/actions/subscribe";
 
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
@@ -65,6 +66,44 @@ export default function Home() {
   const lastScrollYRef = useRef(0);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const { width: windowWidth } = useWindowSize();
+
+  // Signup form states
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupFirstName, setSignupFirstName] = useState("");
+  const [signupLastName, setSignupLastName] = useState("");
+  const [signupStatus, setSignupStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [signupMessage, setSignupMessage] = useState("");
+
+  const handleSignupSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!signupEmail || !signupFirstName || !signupLastName) return;
+
+    setSignupStatus("submitting");
+    setSignupMessage("");
+
+    try {
+      const result = await subscribeToUpdates({
+        email: signupEmail,
+        firstName: signupFirstName,
+        lastName: signupLastName,
+      });
+
+      if (result.success) {
+        setSignupStatus("success");
+        setSignupMessage("Thank you for subscribing! Check your email for confirmation.");
+        setSignupEmail("");
+        setSignupFirstName("");
+        setSignupLastName("");
+      } else {
+        setSignupStatus("error");
+        setSignupMessage(result.error || "Failed to subscribe. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setSignupStatus("error");
+      setSignupMessage("An unexpected error occurred. Please try again.");
+    }
+  };
   
   // Calculate CardStack dimensions based on breakpoints
   const isTablet = windowWidth >= 640 && windowWidth < 1024;
@@ -358,9 +397,9 @@ export default function Home() {
               <div className="hero-ctas reveal reveal-delay-3">
                 <a href="/apply" className="hero-cta-primary">
                   <span className="hero-cta-fill" aria-hidden="true"></span>
-                  <span className="hero-cta-label">Apply to Attend</span>
+                  <span className="hero-cta-label">Apply to<br className="cta-br" /> Attend</span>
                 </a>
-                <a href="#agenda" className="hero-cta-secondary">View Agenda</a>
+                <a href="#agenda" className="hero-cta-secondary">View<br className="cta-br" /> Agenda</a>
               </div>
             </div>
           </div>
@@ -801,7 +840,7 @@ export default function Home() {
               FROM GO TO GOAL SUMMIT is more than an event. It is a movement toward intentional ambition. Will you be part of it?
             </p>
             <div className="reveal">
-              <a href="#signup-updates" className="btn-primary" style={{ "fontSize": "17px", "padding": "18px 44px" }}>Apply to Attend</a>
+              <a href="/apply" className="btn-primary" style={{ "fontSize": "17px", "padding": "18px 44px" }}>Apply to Attend</a>
             </div>
           </div>
         </section>
@@ -811,12 +850,46 @@ export default function Home() {
           <div className="signup-inner reveal">
             <h3 className="signup-title">Sign up for updates</h3>
             <p className="signup-sub">Get speaker announcements, agenda updates, and ticket release alerts.</p>
-            <form className="signup-form" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="Enter your email" required={true} />
-              <input type="text" placeholder="Enter your first name" required={true} />
-              <input type="text" placeholder="Enter your last name" required={true} />
-              <button type="submit">Sign Up</button>
+            <form className="signup-form" onSubmit={handleSignupSubmit}>
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                required={true} 
+                value={signupEmail}
+                onChange={(e) => setSignupEmail(e.target.value)}
+                disabled={signupStatus === "submitting"}
+              />
+              <input 
+                type="text" 
+                placeholder="Enter your first name" 
+                required={true} 
+                value={signupFirstName}
+                onChange={(e) => setSignupFirstName(e.target.value)}
+                disabled={signupStatus === "submitting"}
+              />
+              <input 
+                type="text" 
+                placeholder="Enter your last name" 
+                required={true} 
+                value={signupLastName}
+                onChange={(e) => setSignupLastName(e.target.value)}
+                disabled={signupStatus === "submitting"}
+              />
+              <button type="submit" disabled={signupStatus === "submitting"}>
+                {signupStatus === "submitting" ? "Signing Up..." : "Sign Up"}
+              </button>
             </form>
+            {signupMessage && (
+              <p className={`signup-message ${signupStatus}`} style={{ 
+                marginTop: "16px", 
+                fontSize: "15px",
+                color: signupStatus === "success" ? "#509e71" : "#af2122",
+                fontWeight: "500",
+                textAlign: "center"
+              }}>
+                {signupMessage}
+              </p>
+            )}
           </div>
         </section>
 
