@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { speakerCards } from "@/lib/data/speakers";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://go-to-goal-summit-2.vercel.app";
+  const baseUrl = "https://reinventaf.com";
   const now = new Date();
 
   // Dynamically map all speakers' profile paths
