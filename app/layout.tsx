@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   title: "RAN'26 - From Go To Goal Summit",
   description:
     "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
-  metadataBase: new URL("https://reinventaf.com"),
+  metadataBase: new URL("https://www.reinventaf.com"),
   alternates: {
     canonical: "/",
   },
