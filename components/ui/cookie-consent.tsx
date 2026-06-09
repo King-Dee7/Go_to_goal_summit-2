@@ -52,7 +52,7 @@ export default function CookieConsent() {
         {/* Absolute positioned cookie image */}
         <div className="flex items-center justify-center relative w-full gap-2 pb-3">
           <img
-            className="absolute -top-14 md:-top-16 w-24 h-24 pointer-events-none select-none"
+            className="absolute -top-10 w-16 h-16 md:-top-16 md:w-24 md:h-24 pointer-events-none select-none"
             src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/cookies/cookieImage2.svg"
             alt="Cookie"
           />
@@ -81,7 +81,7 @@ export default function CookieConsent() {
           <button
             type="button"
             onClick={() => handleConsent("accepted")}
-            className="bg-indigo-600 px-6 py-2 rounded text-white font-medium active:scale-95 transition hover:bg-indigo-700 shadow-sm"
+            className="bg-black px-6 py-2 rounded text-white font-medium active:scale-95 transition hover:bg-gray-900 shadow-sm"
           >
             Accept
           </button>
