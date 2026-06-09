@@ -928,7 +928,7 @@ export default function Home() {
                   <li><a href="#sponsors">Sponsor</a></li>
                   <li><a href="#faq">FAQ</a></li>
                   <li><a href="#">Code of Conduct</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
+                  <li><a href="/privacy">Privacy Policy</a></li>
                 </ul>
               </div>
               <div>
