@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans, Syne, Bebas_Neue, Oswald, Open_Sans, Roboto, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import CookieConsent from "@/components/ui/cookie-consent";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -121,6 +122,7 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${syne.variable} ${bebasNeue.variable} ${oswald.variable} ${openSans.variable} ${roboto.variable} ${inter.variable}`}>
       <body className="antialiased">
         {children}
+        <CookieConsent />
         <Analytics />
       </body>
     </html>
