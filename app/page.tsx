@@ -7,33 +7,6 @@ import { speakerCards } from "@/lib/data/speakers";
 import { subscribeToUpdates } from "@/app/actions/subscribe";
 import { Navbar } from "@/components/ui/Navbar";
 
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 1200,
-    height: typeof window !== "undefined" ? window.innerHeight : 800,
-  });
-
-  useEffect(() => {
-    let lastWidth: number | null = null;
-    
-    function handleResize() {
-      const newWidth = window.innerWidth;
-      if (lastWidth === null || newWidth !== lastWidth) {
-        lastWidth = newWidth;
-        setWindowSize({
-          width: newWidth,
-          height: window.innerHeight,
-        });
-      }
-    }
-    
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Call at mount
-    
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  return windowSize;
-}
 
 
 const SPONSOR_LOGOS = [
@@ -61,7 +34,7 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(false);
   const [splashExiting, setSplashExiting] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
-  const { width: windowWidth } = useWindowSize();
+
 
   // Signup form states
   const [signupEmail, setSignupEmail] = useState("");

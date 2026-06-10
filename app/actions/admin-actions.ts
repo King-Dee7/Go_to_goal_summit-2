@@ -8,7 +8,7 @@ import { getApprovedEmail, getDeclinedEmail } from '@/lib/email-templates';
 export async function approveApplication(id: string) {
   try {
     await verifyAdminSession();
-    console.log('Server Action: Approving application ID:', id);
+
     const supabase = getSupabaseAdmin();
 
     // 1. Get application details first
@@ -20,7 +20,7 @@ export async function approveApplication(id: string) {
     if (getError) throw new Error(`Database query error: ${getError.message}`);
     
     const application = apps && apps.length > 0 ? apps[0] : null;
-    console.log('Server Action: Found application data:', application);
+
     
     if (!application) {
       console.error('No application found for ID:', id);
