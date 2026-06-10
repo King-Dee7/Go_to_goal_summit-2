@@ -1321,9 +1321,17 @@ summary:focus-visible {
    continuous staggered sequence.                          */
 
 .waterfall-collage {
+  /* Clean geometric structure with uniform identical sizing */
+  --w-width: 196px;
+  --w-height: calc(var(--w-width) * 2.025);
+  /* Zero overlap enforces touching edges with no spaces between frames */
+  --w-overlap: 0px;
+  --w-step: 56px;
+
+  --w-shift: calc(var(--w-width) - var(--w-overlap));
+
   position: relative;
-  width: 100%;
-  height: 540px;
+  height: calc(var(--w-height) + calc(var(--w-step) * 3));
   margin-top: 10px;
 }
 
@@ -1331,10 +1339,16 @@ summary:focus-visible {
   position: absolute;
   overflow: hidden;
   border-radius: 0;
+  /* No rounded corners for a refined editorial look */
+
+  /* Strictly enforced identical sizes */
+  width: var(--w-width) !important;
+  height: var(--w-height) !important;
 
   /* Start aligned, then drop into staircase when section is revealed */
+  --drop-index: 0;
   --stagger-delay: 0ms;
-  transform: translateY(-80px);
+  transform: translateY(calc(var(--drop-index) * var(--w-step) * -1));
   transition: transform 1.45s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
@@ -1363,41 +1377,37 @@ summary:focus-visible {
 
 /* Image 1 — Lead */
 .waterfall-img-1 {
-  left: 0%;
-  width: 32%;
-  height: 380px;
+  left: 0;
   top: 0;
   z-index: 1;
-  --stagger-delay: 0ms;
+  --drop-index: 0;
+  transition-delay: 0ms;
 }
 
 /* Image 2 */
 .waterfall-img-2 {
-  left: 32%;
-  width: 22%;
-  height: 460px;
-  top: 40px;
+  left: var(--w-shift);
+  top: var(--w-step);
   z-index: 2;
+  --drop-index: 1;
   --stagger-delay: 180ms;
 }
 
 /* Image 3 */
 .waterfall-img-3 {
-  left: 54%;
-  width: 28%;
-  height: 340px;
-  top: 120px;
+  left: calc(var(--w-shift) * 2);
+  top: calc(var(--w-step) * 2);
   z-index: 3;
+  --drop-index: 2;
   --stagger-delay: 360ms;
 }
 
 /* Image 4 */
 .waterfall-img-4 {
-  left: 82%;
-  width: 18%;
-  height: 300px;
-  top: 180px;
+  left: calc(var(--w-shift) * 3);
+  top: calc(var(--w-step) * 3);
   z-index: 4;
+  --drop-index: 3;
   --stagger-delay: 540ms;
 }
 
@@ -1405,25 +1415,22 @@ summary:focus-visible {
 
 @media (max-width: 1200px) {
   .waterfall-collage {
-    height: 460px;
+    --w-width: 130px;
+    --w-overlap: 0px;
+    --w-step: 36px;
   }
-  .waterfall-img-1 { height: 320px; }
-  .waterfall-img-2 { height: 380px; }
-  .waterfall-img-3 { height: 280px; }
-  .waterfall-img-4 { height: 240px; }
 }
 
 @media (max-width: 1024px) {
   .about-tedai-inner {
     grid-template-columns: 1fr 1fr;
   }
+
   .waterfall-collage {
-    height: 380px;
+    --w-width: 110px;
+    --w-overlap: 0px;
+    --w-step: 24px;
   }
-  .waterfall-img-1 { height: 260px; top: 0; }
-  .waterfall-img-2 { height: 320px; top: 20px; }
-  .waterfall-img-3 { height: 240px; top: 60px; }
-  .waterfall-img-4 { height: 200px; top: 100px; }
 }
 
 @media (max-width: 900px) {
@@ -1440,36 +1447,40 @@ summary:focus-visible {
   }
 
   .waterfall-collage {
+    --w-width: min(31vw, 210px);
+    --w-height: calc(var(--w-width) * 2.55);
+    --w-overlap: 0vw;
+    --w-step: min(8vw, 42px);
     margin-top: 0;
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: 0;
-    height: 520px;
-    overflow: hidden;
+    overflow: visible;
   }
 
-  .waterfall-img-1 { left: 0%; width: 34%; height: 380px; top: 0; }
-  .waterfall-img-2 { left: 34%; width: 33%; height: 460px; top: 30px; }
-  .waterfall-img-3 { left: 67%; width: 33%; height: 340px; top: 80px; }
-  .waterfall-img-4 { display: none; }
+  .waterfall-img-4 {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
   .waterfall-collage {
-    height: 420px;
+    --w-width: 33.34vw;
+    --w-overlap: 0vw;
+    --w-step: 10vw;
   }
-  .waterfall-img-1 { height: 280px; }
-  .waterfall-img-2 { height: 360px; }
-  .waterfall-img-3 { height: 260px; }
 }
 
 @media (max-width: 480px) {
   .waterfall-collage {
-    height: 360px;
+    --w-width: 33.34vw;
+    --w-overlap: 0vw;
+    --w-step: 10vw;
   }
-  .waterfall-img-1 { height: 220px; }
-  .waterfall-img-2 { height: 300px; }
-  .waterfall-img-3 { height: 200px; }
+
+  .waterfall-img-3 {
+    left: calc((var(--w-shift) * 2) - 1px);
+  }
 }
 
 
