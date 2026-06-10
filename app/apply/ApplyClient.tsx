@@ -78,7 +78,7 @@ export default function ApplyClient() {
         <div className="relative w-full md:w-[45%] h-48 md:h-auto p-8 md:p-12 flex flex-col justify-end overflow-hidden">
           <Image
             src="/Hero_image.png"
-            alt="Go To Goal Summit"
+            alt="From Go To Goal Summit"
             fill
             className="object-cover object-center absolute inset-0 z-0"
             unoptimized
@@ -93,7 +93,7 @@ export default function ApplyClient() {
               </h1>
             </div>
             <p className="text-sm md:text-base leading-relaxed max-w-sm opacity-90 hidden sm:block" style={{ color: "#ffffff" }}>
-              To ensure meaningful connections and a high-caliber environment, attendance to the Go To Goal Summit is carefully curated.
+              To ensure meaningful connections and a high-caliber environment, attendance to the From Go To Goal Summit is carefully curated.
             </p>
           </div>
         </div>

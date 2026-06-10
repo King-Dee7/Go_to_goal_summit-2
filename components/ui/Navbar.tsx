@@ -25,7 +25,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
     const handleScroll = () => {
       const currentY = window.scrollY;
       const lastY = lastScrollYRef.current;
-      const isMobileViewport = window.innerWidth <= 768;
+      const isMobileViewport = window.innerWidth <= 1200;
 
       setNavScrolled(currentY > 60);
 
@@ -40,15 +40,14 @@ export function Navbar({ forceLight = false }: NavbarProps) {
 
       if (isMobileViewport) {
         setNavHidden(false);
+        lastScrollYRef.current = currentY;
       } else if (currentY <= 48) {
         setNavHidden(false);
-      } else if (currentY > lastY) {
-        setNavHidden(true);
-      } else if (currentY < lastY) {
-        setNavHidden(false);
+        lastScrollYRef.current = currentY;
+      } else if (Math.abs(currentY - lastY) > 8) {
+        setNavHidden(currentY > lastY);
+        lastScrollYRef.current = currentY;
       }
-
-      lastScrollYRef.current = currentY;
     };
 
     window.addEventListener("scroll", handleScroll);

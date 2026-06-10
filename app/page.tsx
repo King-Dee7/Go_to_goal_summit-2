@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { SpeakerDesktopFilmstrip } from "@/components/ui/speaker-layouts";
+import { SpeakerDesktopFilmstrip, SpeakerMobileFilmstrip } from "@/components/ui/speaker-layouts";
 import { speakerCards } from "@/lib/data/speakers";
 import { subscribeToUpdates } from "@/app/actions/subscribe";
 import { Navbar } from "@/components/ui/Navbar";
-
-
 
 const SPONSOR_LOGOS = [
   { src: "/sponsors/pwc.svg", alt: "PWC logo" },
@@ -34,8 +32,6 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(false);
   const [splashExiting, setSplashExiting] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
-
-
   // Signup form states
   const [signupEmail, setSignupEmail] = useState("");
   const [signupFirstName, setSignupFirstName] = useState("");
@@ -437,7 +433,7 @@ export default function Home() {
         </section>
 
         {/*  ========== 05. SPEAKERS ==========  */}
-        <section className="speakers" id="speakers" style={{ overflow: "hidden", padding: "80px 0", position: "relative" }}>
+        <section className="speakers pt-[20px] pb-[32px] sm:py-[80px]" id="speakers" style={{ overflow: "hidden", position: "relative" }}>
           
           {/* Creative Background Layers - Hardcoded to Neon & Grid */}
           <div className="speakers-bg-container" style={{ background: `var(--speakers-theme-neon)` }}>
@@ -447,18 +443,26 @@ export default function Home() {
 
           <div className="container" style={{ position: "relative", zIndex: 10 }}>
             <div className="speakers-header" style={{ marginBottom: "20px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <h2 className="speakers-title reveal">Speakers &amp; Contributors</h2>
-              <p className="speakers-subtitle reveal" style={{ maxWidth: "900px", margin: "8px auto 0", fontSize: "1.25rem", lineHeight: "1.6", color: "#000", fontWeight: 400, opacity: 0.9 }}>
+              <h2 className="speakers-title reveal max-sm:!text-[clamp(36px,9vw,52px)] max-sm:!whitespace-normal max-sm:!leading-[1.05] max-sm:px-4">Speakers &amp; Contributors</h2>
+              <p className="speakers-subtitle reveal text-[15px] sm:text-base md:text-xl" style={{ maxWidth: "900px", margin: "8px auto 0", lineHeight: "1.6", color: "#000", fontWeight: 400, opacity: 0.9 }}>
                 Hear from the brightest minds and leading experts driving change across the continent.
               </p>
             </div>
+          </div>
             
-            {/* Unified Responsive Filmstrip for all viewports */}
-            <div className="reveal flex w-full justify-center overflow-hidden">
-              <SpeakerDesktopFilmstrip items={speakerCards} />
+          {/* Desktop/Tablet Layout Filmstrip */}
+          <div className="reveal hidden sm:flex w-full" style={{ justifyContent: "center", position: "relative", zIndex: 10 }}>
+            <SpeakerDesktopFilmstrip items={speakerCards} />
+          </div>
+          
+          <div className="container" style={{ position: "relative", zIndex: 10 }}>
+            
+            {/* Mobile CardStack: visible only on small viewports */}
+            <div className="reveal flex sm:hidden w-full" style={{ justifyContent: "center" }}>
+              <SpeakerMobileFilmstrip items={speakerCards} />
             </div>
 
-            <div className="reveal" style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
+            <div className="reveal flex justify-center mt-4 sm:mt-10">
               <a href="/apply" className="btn-primary">Apply to Attend</a>
             </div>
 
@@ -657,7 +661,7 @@ export default function Home() {
                   Where and when is the summit taking place?
                   <span className="faq-icon">+</span>
                 </summary>
-                <div className="faq-answer"><p>The summit is being held at the Google AI Community Center in Accra, Ghana. Exact date details will be confirmed shortly. Stay connected through our newsletter for updates.</p></div>
+                <div className="faq-answer"><p>The summit is being held at the Google AI Community Center in Accra, Ghana on July 17, 2026. Stay connected through our newsletter for any schedule updates.</p></div>
               </details>
 
               <details className="faq-item reveal">

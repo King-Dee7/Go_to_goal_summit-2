@@ -23,8 +23,6 @@ function LinkedInIcon() {
   );
 }
 
-// Unused icons removed
-
 export function SpeakerFooter() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);

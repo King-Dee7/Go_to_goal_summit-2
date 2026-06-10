@@ -68,11 +68,11 @@ export const speakerCards: Speaker[] = [
     socials: {}
   },
   {
-    id: "antony-shaw",
-    title: "Antony Shaw",
+    id: "anthony-shaw",
+    title: "Anthony Shaw",
     description: "Country Director, Wi-flix & Marketing Executive",
-    imageSrc: "/speakers/Antony Shaw.jpeg",
-    href: "/speakers/antony-shaw",
+    imageSrc: "/speakers/Anthony Shaw.jpeg",
+    href: "/speakers/anthony-shaw",
     bio: "Anthony Shaw is a 39-year-old business leader, marketing executive, and entrepreneur with over 15 years of combined international and local experience. His career spans luxury retail, education management, telecommunications, and brand development, and he is recognized for his ability to align commercial success with social impact.",
     socials: {}
   }
