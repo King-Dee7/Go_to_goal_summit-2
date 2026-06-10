@@ -23,22 +23,7 @@ function LinkedInIcon() {
   );
 }
 
-function YouTubeIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
-      <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function XIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
+// Unused icons removed
 
 export function SpeakerFooter() {
   const [email, setEmail] = useState("");
@@ -93,7 +78,7 @@ export function SpeakerFooter() {
                   </button>
                 </form>
                 <p className="text-xs text-slate-500 mt-3 leading-relaxed">
-                  I'd like to receive event news and updates from{" "}
+                  I&apos;d like to receive event news and updates from{" "}
                   <strong className="text-slate-700">Reinvent Africa Network</strong> and the{" "}
                   <strong className="text-slate-700">From Go To Goal Summit</strong>. By signing up, you agree to our{" "}
                   <Link href="/privacy" className="text-[#af2122] hover:underline">Privacy Policy</Link>.

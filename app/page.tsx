@@ -102,7 +102,6 @@ export default function Home() {
   };
   
   // Calculate CardStack dimensions based on breakpoints
-  const isTablet = windowWidth >= 640 && windowWidth < 1024;
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
