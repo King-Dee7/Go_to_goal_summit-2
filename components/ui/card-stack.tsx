@@ -17,6 +17,7 @@ export type CardStackItem = {
   href?: string;
   ctaLabel?: string;
   tag?: string;
+  objectPosition?: string;
 };
 
 export type CardStackProps<T extends CardStackItem> = {
@@ -376,6 +377,7 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
             src={item.imageSrc}
             alt={item.title}
             className="h-full w-full object-cover"
+            style={{ objectPosition: item.objectPosition || "center 15%" }}
             draggable={false}
             loading="eager"
           />
@@ -385,9 +387,6 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
           </div>
         )}
       </div>
-
-      {/* subtle gradient overlay at bottom for text readability */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
       {/* Circular diagonal arrow — only on active card with a link */}
       {active && item.href && (
@@ -402,13 +401,36 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
         </a>
       )}
 
-      {/* content */}
-      <div className="relative z-10 flex h-full flex-col justify-end p-5">
-        <div className="truncate text-lg font-semibold text-white">
+      {/* TEDAI-Inspired Blurry Fade Overlay */}
+      <div 
+        className="absolute bottom-0 inset-x-0 z-10 h-[42%] p-5 flex flex-col justify-end gap-1"
+        style={{
+          background: "linear-gradient(to top, rgba(15, 17, 23, 0.98) 0%, rgba(15, 17, 23, 0.5) 60%, rgba(15, 17, 23, 0) 100%)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          maskImage: "linear-gradient(to top, black 25%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to top, black 25%, transparent 100%)",
+        }}
+      >
+        <div 
+          className="text-white tracking-tight leading-tight"
+          style={{
+            fontSize: "1.35rem",
+            fontWeight: 500,
+          }}
+        >
           {item.title}
         </div>
         {item.description ? (
-          <div className="mt-1 line-clamp-2 text-sm text-white/80">
+          <div 
+            className="line-clamp-2 leading-normal"
+            style={{
+              color: "rgba(255, 255, 255, 0.8)",
+              fontSize: "0.95rem",
+              fontWeight: 400,
+              marginTop: "4px",
+            }}
+          >
             {item.description}
           </div>
         ) : null}

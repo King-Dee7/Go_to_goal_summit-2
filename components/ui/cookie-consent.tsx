@@ -74,14 +74,15 @@ export default function CookieConsent() {
         <div className="flex items-center justify-between mt-6 gap-3 w-full">
           <button
             onClick={() => handleConsent("declined")}
-            className="underline text-gray-500 hover:text-gray-800 transition-colors"
+            className="underline text-gray-500 hover:text-gray-800 transition-colors uppercase text-sm"
           >
             Decline
           </button>
           <button
             type="button"
             onClick={() => handleConsent("accepted")}
-            className="bg-black px-6 py-2 rounded text-white font-medium active:scale-95 transition hover:bg-gray-900 shadow-sm"
+            className="bg-black px-6 py-2 rounded text-white font-medium active:scale-95 transition hover:bg-gray-900 shadow-sm uppercase text-sm"
+            style={{ fontFamily: 'var(--font-helvetica-custom)' }}
           >
             Accept
           </button>

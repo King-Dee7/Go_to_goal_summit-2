@@ -2,42 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { speakerCards } from "@/lib/data/speakers";
-import { ArrowLeft } from "lucide-react";
+import { Navbar } from "@/components/ui/Navbar";
+import { SpeakerFooter } from "@/components/ui/SpeakerFooter";
 import type { Metadata } from "next";
 
-function LinkedinIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect width="4" height="12" x="2" y="9" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  );
-}
-
-function TwitterIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-    </svg>
-  );
-}
+// Icons were removed as they are unused in this file.
 
 interface SpeakerPageProps {
   params: {
@@ -86,90 +55,80 @@ export default function SpeakerProfile({ params }: SpeakerPageProps) {
     notFound();
   }
 
-  return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans">
-      {/* Header / Nav */}
-      <nav className="w-full border-b border-slate-100 py-6">
-        <div className="max-w-6xl mx-auto px-6">
-          <Link
-            href="/#speakers"
-            className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Summit
-          </Link>
-        </div>
-      </nav>
+  const firstName = speaker.title.split(" ")[0].toUpperCase();
 
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6 py-12 md:py-20">
-        <div className="flex flex-col md:flex-row gap-12 lg:gap-20">
-          
-          {/* Left Column: Portrait */}
-          <div className="w-full md:w-5/12 lg:w-1/2 flex-shrink-0">
-            <div className="sticky top-12 rounded-2xl overflow-hidden aspect-[4/5] bg-slate-100 shadow-xl border border-slate-100">
+  const bioParagraphs = speaker.bio.split("\n\n");
+
+  return (
+    <div className="min-h-screen bg-white text-slate-900 font-sans flex flex-col pt-[98px]">
+      {/* Global Header / Nav */}
+      <Navbar forceLight />
+
+      {/* Main Content - Sticky Sidebar layout */}
+      <main className="flex-1 w-full">
+        <div className="flex flex-col md:flex-row w-full min-h-0">
+
+          {/* Left: Image Column — stretches to match right column height */}
+          <div className="w-full md:w-[35%] lg:w-[30%] flex-shrink-0 md:self-stretch">
+            <div className="relative w-full h-full min-h-[400px]">
               <Image
                 src={speaker.imageSrc}
                 alt={speaker.title}
                 fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 35vw"
                 priority
               />
             </div>
           </div>
 
-          {/* Right Column: Bio & Info */}
-          <div className="w-full md:w-7/12 lg:w-1/2 flex flex-col justify-center py-2 md:py-8">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#af2122] uppercase mb-4">
-              {speaker.title}
-            </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6" style={{ fontFamily: "var(--font-display), serif" }}>
-              {speaker.description}
-            </h1>
-            
-            <div className="flex items-center gap-4 mb-10">
-              {speaker.socials.linkedin && (
-                <a 
-                  href={speaker.socials.linkedin} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 hover:text-slate-900 transition-colors"
-                >
-                  <LinkedinIcon className="w-4 h-4" />
-                </a>
-              )}
-              {speaker.socials.twitter && (
-                <a 
-                  href={speaker.socials.twitter} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-slate-200 hover:text-slate-900 transition-colors"
-                >
-                  <TwitterIcon className="w-4 h-4" />
-                </a>
-              )}
+          {/* Right: Scrollable Content Column */}
+          <div className="flex-1 flex flex-col min-h-[420px]">
+
+            {/* Right Top: Title Box (White) */}
+            <div className="px-8 md:px-12 lg:px-20 pt-8 md:pt-12 pb-6 bg-white">
+              <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-normal tracking-tight text-slate-900 mb-2 font-sans leading-none">
+                {speaker.title}
+              </h1>
+              <p className="text-xl md:text-2xl text-slate-800 font-sans">
+                {speaker.description}
+              </p>
             </div>
 
-            <div className="text-lg text-slate-600 leading-[1.8] space-y-6">
-              {speaker.bio.split("\n\n").map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
+            {/* Right Bottom: Bio Box (Grey) */}
+            <div className="bg-[#f5f5f5] px-8 md:px-12 lg:px-20 py-8 md:py-10 flex flex-col flex-grow">
+              <div className="text-[17px] text-slate-800 leading-[1.7] space-y-6">
+                {bioParagraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+
+              <div className="mt-6 pt-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative w-full max-w-4xl">
+                {/* Divider line */}
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-slate-300"></div>
+                
+                <Link 
+                  href="/#speakers"
+                  className="text-slate-800 font-medium underline underline-offset-4 hover:text-black transition-colors"
+                >
+                  See lineup
+                </Link>
+                
+                <Link 
+                  href="/apply"
+                  className="inline-flex items-center justify-center px-6 py-4 text-[13px] font-bold text-[#af2122] bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 transition-colors uppercase tracking-widest"
+                >
+                  Meet {firstName} At The Summit
+                </Link>
+              </div>
             </div>
 
-            <div className="mt-16 pt-10 border-t border-slate-200">
-              <h3 className="text-lg font-bold text-slate-900 mb-6">See this speaker in action</h3>
-              <Link 
-                href="/apply"
-                className="inline-flex items-center justify-center px-8 py-4 text-sm font-bold text-white bg-slate-900 rounded-full hover:bg-slate-800 transition-transform hover:scale-[1.02] shadow-lg shadow-slate-900/20"
-              >
-                Apply to Attend
-              </Link>
-            </div>
           </div>
 
         </div>
       </main>
+
+      <SpeakerFooter />
     </div>
   );
 }

@@ -1,38 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { CardStack } from "@/components/ui/card-stack";
+import { useEffect, useState } from "react";
+import { SpeakerDesktopFilmstrip } from "@/components/ui/speaker-layouts";
 import { speakerCards } from "@/lib/data/speakers";
 import { subscribeToUpdates } from "@/app/actions/subscribe";
+import { Navbar } from "@/components/ui/Navbar";
 
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: typeof window !== "undefined" ? window.innerWidth : 1200,
-    height: typeof window !== "undefined" ? window.innerHeight : 800,
-  });
-
-  useEffect(() => {
-    let lastWidth: number | null = null;
-    
-    function handleResize() {
-      const newWidth = window.innerWidth;
-      if (lastWidth === null || newWidth !== lastWidth) {
-        lastWidth = newWidth;
-        setWindowSize({
-          width: newWidth,
-          height: window.innerHeight,
-        });
-      }
-    }
-    
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Call at mount
-    
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  return windowSize;
-}
 
 
 const SPONSOR_LOGOS = [
@@ -60,12 +34,7 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(false);
   const [splashExiting, setSplashExiting] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
-  const [navScrolled, setNavScrolled] = useState(false);
-  const [navHidden, setNavHidden] = useState(false);
-  const [navLightTheme, setNavLightTheme] = useState(false);
-  const lastScrollYRef = useRef(0);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const { width: windowWidth } = useWindowSize();
+
 
   // Signup form states
   const [signupEmail, setSignupEmail] = useState("");
@@ -106,7 +75,6 @@ export default function Home() {
   };
   
   // Calculate CardStack dimensions based on breakpoints
-  const isTablet = windowWidth >= 640 && windowWidth < 1024;
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -236,53 +204,10 @@ export default function Home() {
 
     document.querySelectorAll(".audience-role-row").forEach((el) => audienceObserver.observe(el));
 
-    // Nav scroll effect
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      const lastY = lastScrollYRef.current;
-      const isMobileViewport = window.innerWidth <= 768;
-      const navElement = document.getElementById("nav");
-      const heroSection = document.getElementById("home");
-      const navHeight = navElement?.offsetHeight ?? 80;
-      const heroBottom = heroSection ? heroSection.offsetTop + heroSection.offsetHeight : 0;
-      const inHeroSection = currentY + navHeight < heroBottom;
-
-      setNavLightTheme(!inHeroSection);
-      setNavScrolled(currentY > 60);
-
-      if (isMobileViewport) {
-        setNavHidden(false);
-      } else if (currentY <= 48) {
-        setNavHidden(false);
-      } else if (currentY > lastY) {
-        setNavHidden(true);
-      } else if (currentY < lastY) {
-        setNavHidden(false);
-      }
-
-      lastScrollYRef.current = currentY;
-    };
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
-    handleScroll();
-
     return () => {
       observer.disconnect();
       audienceObserver.disconnect();
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const onEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setMobileNavOpen(false);
-      }
-    };
-
-    window.addEventListener("keydown", onEscape);
-    return () => window.removeEventListener("keydown", onEscape);
   }, []);
 
 
@@ -321,49 +246,7 @@ export default function Home() {
 
 
         {/*  ========== NAVIGATION ==========  */}
-        <nav className={`nav ${navLightTheme ? 'light-theme' : ''} ${navScrolled ? 'scrolled' : ''} ${navHidden ? 'nav-hidden' : ''}`} id="nav">
-          <div className="nav-inner">
-            <a href="#" className="nav-logo">
-              <Image
-                src={navLightTheme ? "/reinvent-logo.png" : "/reinvent-logo-white.png"}
-                alt="Reinvent Africa Network"
-                width={250}
-                height={62}
-                unoptimized
-                priority
-              />
-            </a>
-            <ul
-              className={`nav-links ${mobileNavOpen ? 'mobile-open' : ''}`}
-              id="nav-menu"
-              onClick={(event) => {
-                const target = event.target as HTMLElement;
-                if (target.closest("a")) {
-                  setMobileNavOpen(false);
-                }
-              }}
-            >
-              <li><a href="#story">About</a></li>
-              <li><a href="#experience">Experience</a></li>
-              <li><a href="#agenda">Agenda</a></li>
-              <li><a href="#speakers">Speakers</a></li>
-              <li><a href="#sponsors">Partners</a></li>
-              <li><a href="#faq">FAQ</a></li>
-              <li><a href="/apply" className="nav-cta">Apply to Attend</a></li>
-            </ul>
-            <button
-              className="nav-hamburger"
-              id="hamburger"
-              type="button"
-              aria-label={mobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
-              aria-expanded={mobileNavOpen}
-              aria-controls="nav-menu"
-              onClick={() => setMobileNavOpen(!mobileNavOpen)}
-            >
-              <span></span><span></span><span></span>
-            </button>
-          </div>
-        </nav>
+        <Navbar />
 
         {/*  ========== 01. HERO ==========  */}
         <section className="hero" id="home">
@@ -549,56 +432,37 @@ export default function Home() {
               </article>
             </div>
 
-            <div className="agenda-cta reveal">
-              <a href="/apply" className="btn-primary">Apply to Attend</a>
-            </div>
+
           </div>
         </section>
 
         {/*  ========== 05. SPEAKERS ==========  */}
-        <section className="speakers" id="speakers" style={{ overflow: "hidden", padding: "80px 0" }}>
-          <div className="container">
-            <div className="speakers-header" style={{ marginBottom: "60px" }}>
+        <section className="speakers" id="speakers" style={{ overflow: "hidden", padding: "80px 0", position: "relative" }}>
+          
+          {/* Creative Background Layers - Hardcoded to Neon & Grid */}
+          <div className="speakers-bg-container" style={{ background: `var(--speakers-theme-neon)` }}>
+            <div className="speakers-pattern pattern-grid"></div>
+            <div className="speakers-noise"></div>
+          </div>
+
+          <div className="container" style={{ position: "relative", zIndex: 10 }}>
+            <div className="speakers-header" style={{ marginBottom: "20px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
               <h2 className="speakers-title reveal">Speakers &amp; Contributors</h2>
-              <a href="#" className="btn-secondary speakers-nominate reveal" style={{ "display": "inline-flex", "padding": "10px 24px", "fontSize": "13px" }}>Nominate a Speaker</a>
+              <p className="speakers-subtitle reveal" style={{ maxWidth: "900px", margin: "8px auto 0", fontSize: "1.25rem", lineHeight: "1.6", color: "#000", fontWeight: 400, opacity: 0.9 }}>
+                Hear from the brightest minds and leading experts driving change across the continent.
+              </p>
             </div>
             
-            {/* Desktop/Tablet CardStack: visible only on larger viewports */}
-            <div className="reveal hidden sm:flex" style={{ justifyContent: "center" }}>
-              <CardStack
-                items={speakerCards}
-                initialIndex={0}
-                autoAdvance
-                intervalMs={3000}
-                pauseOnHover
-                showDots
-                cardWidth={isTablet ? 400 : 520}
-                cardHeight={320}
-                overlap={0.48}
-                perspectivePx={1100}
-              />
-            </div>
-            
-            {/* Mobile CardStack: visible only on small viewports */}
-            <div className="reveal flex sm:hidden" style={{ justifyContent: "center" }}>
-              <CardStack
-                items={speakerCards}
-                initialIndex={0}
-                autoAdvance
-                intervalMs={3000}
-                pauseOnHover
-                showDots
-                cardWidth={280}
-                cardHeight={360}
-                overlap={0.6}
-                perspectivePx={800}
-              />
+            {/* Unified Responsive Filmstrip for all viewports */}
+            <div className="reveal flex w-full justify-center overflow-hidden">
+              <SpeakerDesktopFilmstrip items={speakerCards} />
             </div>
 
-            <div className="speaker-cta-row reveal" style={{ marginTop: "60px" }}>
-              <p style={{ "color": "rgba(255,255,255,0.88)", "fontSize": "20px", "lineHeight": "1.4", "marginBottom": "14px" }}>Speaker lineup will be announced soon. Want to be part of it?</p>
-              <a href="mailto:hello@reinventafrica.org" className="speakers-contact-btn" style={{ "display": "inline-flex", "padding": "12px 28px", "fontSize": "14px" }}>Get in Touch &rarr;</a>
+            <div className="reveal" style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
+              <a href="/apply" className="btn-primary">Apply to Attend</a>
             </div>
+
+
           </div>
         </section>
 
@@ -840,7 +704,7 @@ export default function Home() {
               FROM GO TO GOAL SUMMIT is more than an event. It is a movement toward intentional ambition. Will you be part of it?
             </p>
             <div className="reveal">
-              <a href="/apply" className="btn-primary" style={{ "fontSize": "17px", "padding": "18px 44px" }}>Apply to Attend</a>
+              <a href="/apply" className="btn-primary" style={{ "fontSize": "17px", "padding": "18px 24px" }}>Apply to Attend</a>
             </div>
           </div>
         </section>
