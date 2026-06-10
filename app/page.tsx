@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { CardStack } from "@/components/ui/card-stack";
+import { useEffect, useState } from "react";
 import { SpeakerDesktopFilmstrip } from "@/components/ui/speaker-layouts";
 import { speakerCards } from "@/lib/data/speakers";
 import { subscribeToUpdates } from "@/app/actions/subscribe";
