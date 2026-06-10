@@ -6,8 +6,6 @@ import { Navbar } from "@/components/ui/Navbar";
 import { SpeakerFooter } from "@/components/ui/SpeakerFooter";
 import type { Metadata } from "next";
 
-// Icons were removed as they are unused in this file.
-
 interface SpeakerPageProps {
   params: {
     id: string;
@@ -65,28 +63,30 @@ export default function SpeakerProfile({ params }: SpeakerPageProps) {
       <Navbar forceLight />
 
       {/* Main Content - Sticky Sidebar layout */}
-      <main className="flex-1 w-full">
-        <div className="flex flex-col md:flex-row w-full min-h-0">
+      <main className="flex-1 w-full flex flex-col">
+        <div className="grid grid-cols-1 md:grid-cols-[30%_1fr] w-full flex-1">
 
-          {/* Left: Image Column — stretches to match right column height */}
-          <div className="w-full md:w-[35%] lg:w-[30%] flex-shrink-0 md:self-stretch">
-            <div className="relative w-full h-full min-h-[400px]">
-              <Image
-                src={speaker.imageSrc}
-                alt={speaker.title}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 768px) 100vw, 35vw"
-                priority
-              />
-            </div>
+          {/* Left: Image Column — height always matches right column via grid */}
+          <div className="flex min-h-[300px] w-full bg-slate-100">
+            <Image
+              src={speaker.imageSrc}
+              alt={speaker.title}
+              width={1200}
+              height={1600}
+              className="w-full h-full object-cover object-center"
+              sizes="(max-width: 768px) 100vw, 35vw"
+              priority
+            />
           </div>
 
           {/* Right: Scrollable Content Column */}
-          <div className="flex-1 flex flex-col min-h-[420px]">
+          <div className="flex flex-col h-full">
 
             {/* Right Top: Title Box (White) */}
-            <div className="px-8 md:px-12 lg:px-20 pt-8 md:pt-12 pb-6 bg-white">
+            <div className={`px-8 md:px-12 lg:px-20 pt-8 md:pt-12 bg-white ${
+              speaker.id === 'alfred-eli-k-dei' ? 'pb-16 md:pb-32' :
+              ['kuukua-eshun', 'richard-dick-darkey', 'carlos-idun-tawiah', 'cyril-alex-gockel', 'anthony-shaw'].includes(speaker.id) ? 'pb-12 md:pb-24' : 'pb-6'
+            }`}>
               <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-normal tracking-tight text-slate-900 mb-2 font-sans leading-none">
                 {speaker.title}
               </h1>
@@ -96,7 +96,7 @@ export default function SpeakerProfile({ params }: SpeakerPageProps) {
             </div>
 
             {/* Right Bottom: Bio Box (Grey) */}
-            <div className="bg-[#f5f5f5] px-8 md:px-12 lg:px-20 py-8 md:py-10 flex flex-col flex-grow">
+            <div className="bg-[#f5f5f5] px-8 md:px-12 lg:px-20 py-8 md:py-10 flex flex-col flex-1">
               <div className="text-[17px] text-slate-800 leading-[1.7] space-y-6">
                 {bioParagraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
