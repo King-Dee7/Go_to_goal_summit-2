@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { CardStackItem } from "@/components/ui/card-stack";
@@ -10,6 +10,9 @@ export function SpeakerDesktopFilmstrip({ items }: { items: CardStackItem[] }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
+
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, amount: 0.1 });
 
   // For 3D Tilt (always applied to active card)
   const x = useMotionValue(0);
@@ -38,15 +41,15 @@ export function SpeakerDesktopFilmstrip({ items }: { items: CardStackItem[] }) {
 
   // Auto-advance logic
   useEffect(() => {
-    if (isHovered) return;
+    if (isHovered || !isInView) return;
     const interval = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % items.length);
     }, 2000); // 2 seconds
     return () => clearInterval(interval);
-  }, [items.length, isHovered]);
+  }, [items.length, isHovered, isInView]);
 
   return (
-    <div className="w-full flex flex-col items-center py-4 overflow-hidden">
+    <div ref={ref} className="w-full flex flex-col items-center py-4 overflow-hidden">
       <div 
         className="w-full mx-auto flex items-center justify-center relative"
         onMouseEnter={() => setIsHovered(true)}
@@ -103,7 +106,7 @@ export function SpeakerDesktopFilmstrip({ items }: { items: CardStackItem[] }) {
                       animate={{ opacity: 1, y: 0 }} 
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ delay: 0.1, duration: 0.4 }}
-                      className="absolute bottom-0 inset-x-0 p-8 pt-32 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent flex flex-col justify-end"
+                      className="absolute bottom-0 inset-x-0 p-8 pt-16 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent flex flex-col justify-end"
                     >
                       <h3 className="text-white text-4xl font-medium tracking-tight mb-2 leading-tight">{item.title}</h3>
                       <p className="!text-white opacity-90 leading-relaxed text-sm line-clamp-3">{item.description}</p>
@@ -129,21 +132,55 @@ export function SpeakerMobileFilmstrip({ items }: { items: CardStackItem[] }) {
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, amount: 0.1 });
+
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsHovered(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    setIsHovered(false);
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      setActiveIdx((prev) => (prev + 1) % items.length);
+    }
+    if (isRightSwipe) {
+      setActiveIdx((prev) => (prev - 1 + items.length) % items.length);
+    }
+  };
+
   // Auto-advance logic
   useEffect(() => {
-    if (isHovered) return;
+    if (isHovered || !isInView) return;
     const interval = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % items.length);
     }, 2000); // 2 seconds
     return () => clearInterval(interval);
-  }, [items.length, isHovered]);
+  }, [items.length, isHovered, isInView]);
 
   return (
-    <div className="w-full flex flex-col items-center py-4 overflow-hidden">
+    <div ref={ref} className="w-full flex flex-col items-center py-4 overflow-hidden">
       <div 
-        className="w-full mx-auto flex items-center justify-center relative"
-        onTouchStart={() => setIsHovered(true)}
-        onTouchEnd={() => setIsHovered(false)}
+        className="w-full mx-auto flex items-center justify-center relative touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -206,7 +243,7 @@ export function SpeakerMobileFilmstrip({ items }: { items: CardStackItem[] }) {
                         animate={{ opacity: 1, y: 0 }} 
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ delay: 0.1, duration: 0.4 }}
-                        className="absolute bottom-0 inset-x-0 p-5 pt-12 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent flex flex-col justify-end"
+                        className="absolute bottom-0 inset-x-0 p-5 pt-8 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent flex flex-col justify-end"
                       >
                         <h3 className="text-white text-2xl font-medium tracking-tight mb-1 leading-tight">{item.title}</h3>
                         <p className="!text-white opacity-90 leading-relaxed text-xs line-clamp-3">{item.description}</p>
