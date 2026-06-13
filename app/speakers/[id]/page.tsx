@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: SpeakerPageProps): Promise<Me
     };
   }
 
-  const title = `${speaker.description} | Speaker | Go To Goal Summit`;
-  const description = `Meet ${speaker.description}, speaking at the From Go To Goal Summit 2026. Read their bio, career accomplishments, and session insights.`;
+  const title = `${speaker.title} - ${speaker.description} | From Go To Goal Summit`;
+  const description = `Meet ${speaker.title}, ${speaker.description}, speaking at the From Go To Goal Summit 2026. Read their bio, career accomplishments, and session insights.`;
 
   return {
     title,
