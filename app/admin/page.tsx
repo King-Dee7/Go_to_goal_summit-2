@@ -12,7 +12,9 @@ import {
   fetchApplications, 
   fetchInviteCodes,
   generateInviteCode,
-  toggleInviteCodeStatus
+  toggleInviteCodeStatus,
+  deleteApplication,
+  deleteInviteCode
 } from "@/app/actions/admin-actions";
 
 type Tab = 'dashboard' | 'applications' | 'codes';
@@ -132,6 +134,30 @@ export default function AdminDashboard() {
   const onToggleCode = async (id: string, currentStatus: string) => {
     setProcessingId(id);
     const res = await toggleInviteCodeStatus(id, currentStatus);
+    if (res.success) {
+      loadData();
+    } else {
+      alert(res.error);
+    }
+    setProcessingId(null);
+  };
+
+  const onDeleteApplication = async (id: string) => {
+    if (!confirm("Are you sure you want to DELETE this applicant permanently?")) return;
+    setProcessingId(id);
+    const res = await deleteApplication(id);
+    if (res.success) {
+      loadData();
+    } else {
+      alert(res.error);
+    }
+    setProcessingId(null);
+  };
+
+  const onDeleteCode = async (id: string) => {
+    if (!confirm("Are you sure you want to DELETE this invite code permanently?")) return;
+    setProcessingId(id);
+    const res = await deleteInviteCode(id);
     if (res.success) {
       loadData();
     } else {
@@ -471,7 +497,7 @@ export default function AdminDashboard() {
                         const barColor = colors[idx % colors.length];
                         return (
                           <div key={cat} className="flex flex-col items-center gap-3 w-16 group">
-                            <span className="text-xs font-bold text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity">{count}</span>
+                            <span className="text-xs font-bold text-slate-600 transition-opacity">{count}</span>
                             <div 
                               className={`w-full rounded-t-lg ${barColor} shadow-sm transition-all duration-700 ease-out`}
                               style={{ height: `${Math.max(pct, 10)}%` }}
@@ -643,26 +669,35 @@ export default function AdminDashboard() {
                               </span>
                             </td>
                             <td className="px-6 py-4 text-right">
-                              {app.status === 'Under Review' ? (
-                                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <button 
-                                    onClick={(e) => { e.stopPropagation(); onDecline(app.id); }}
-                                    disabled={processingId !== null}
-                                    className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 text-xs font-bold transition-all disabled:opacity-50"
-                                  >
-                                    Decline
-                                  </button>
-                                  <button 
-                                    onClick={(e) => { e.stopPropagation(); onApprove(app.id); }}
-                                    disabled={processingId !== null}
-                                    className="px-3 py-1.5 rounded-lg bg-[#5347CE] text-white hover:bg-[#4337b5] text-xs font-bold transition-all shadow-sm hover:shadow disabled:opacity-50"
-                                  >
-                                    Approve
-                                  </button>
-                                </div>
-                              ) : (
-                                <span className="text-slate-400 text-xs font-medium italic">Reviewed</span>
-                              )}
+                              <div className="flex justify-end gap-2 transition-opacity">
+                                {app.status === 'Under Review' ? (
+                                  <>
+                                    <button 
+                                      onClick={(e) => { e.stopPropagation(); onDecline(app.id); }}
+                                      disabled={processingId !== null}
+                                      className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 text-xs font-bold transition-all disabled:opacity-50"
+                                    >
+                                      Decline
+                                    </button>
+                                    <button 
+                                      onClick={(e) => { e.stopPropagation(); onApprove(app.id); }}
+                                      disabled={processingId !== null}
+                                      className="px-3 py-1.5 rounded-lg bg-[#5347CE] text-white hover:bg-[#4337b5] text-xs font-bold transition-all shadow-sm hover:shadow disabled:opacity-50"
+                                    >
+                                      Approve
+                                    </button>
+                                  </>
+                                ) : (
+                                  <span className="text-slate-400 text-xs font-medium italic mt-1.5 mr-2">Reviewed</span>
+                                )}
+                                <button 
+                                  onClick={(e) => { e.stopPropagation(); onDeleteApplication(app.id); }}
+                                  disabled={processingId !== null}
+                                  className="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-500 hover:text-white hover:bg-rose-500 text-xs font-bold transition-all disabled:opacity-50"
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         );
@@ -711,19 +746,28 @@ export default function AdminDashboard() {
                             {item.claimed_by_email || <span className="text-slate-300">-</span>}
                           </td>
                           <td className="px-6 py-4 text-right">
-                            {item.status !== 'Claimed' && (
+                            <div className="flex justify-end gap-2">
+                              {item.status !== 'Claimed' && (
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); onToggleCode(item.id, item.status); }}
+                                  disabled={processingId !== null}
+                                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-50 ${
+                                    item.status === 'Active' 
+                                      ? 'bg-rose-50 text-rose-500 hover:bg-rose-100' 
+                                      : 'bg-[#5347CE]/10 text-[#5347CE] hover:bg-[#5347CE]/20'
+                                  }`}
+                                >
+                                  {processingId === item.id ? "..." : item.status === 'Active' ? "Deactivate" : "Activate"}
+                                </button>
+                              )}
                               <button
-                                onClick={() => onToggleCode(item.id, item.status)}
+                                onClick={(e) => { e.stopPropagation(); onDeleteCode(item.id); }}
                                 disabled={processingId !== null}
-                                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-50 ${
-                                  item.status === 'Active' 
-                                    ? 'bg-rose-50 text-rose-500 hover:bg-rose-100' 
-                                    : 'bg-[#5347CE]/10 text-[#5347CE] hover:bg-[#5347CE]/20'
-                                }`}
+                                className="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-500 hover:text-white hover:bg-rose-500 text-xs font-bold transition-all disabled:opacity-50"
                               >
-                                {processingId === item.id ? "..." : item.status === 'Active' ? "Deactivate" : "Activate"}
+                                Delete
                               </button>
-                            )}
+                            </div>
                           </td>
                         </tr>
                       ))

@@ -81,7 +81,7 @@ export default function ApplyClient() {
             alt="From Go To Goal Summit"
             fill
             className="object-cover object-center absolute inset-0 z-0"
-            unoptimized
+            priority={true}
           />
           <div className="absolute inset-0 z-0" style={{ background: "linear-gradient(to top, rgba(5,11,20,1) 0%, rgba(5,11,20,0.8) 40%, rgba(5,11,20,0.3) 100%)" }} />
 
@@ -177,11 +177,93 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateStep = () => {
+    setError(null);
+    if (step === 1) {
+      if (!formData.firstName.trim() || !formData.lastName.trim()) {
+        setError("First and last name are required.");
+        return false;
+      }
+      
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        setError("Please enter a valid email address.");
+        return false;
+      }
+
+      if (formData.phone) {
+        const phoneDigits = formData.phone.replace(/[\s\-\(\)\+]/g, '');
+        if (phoneDigits.length < 7 || phoneDigits.length > 15 || !/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
+          setError("Please enter a valid phone number.");
+          return false;
+        }
+      }
+
+      const handle = formData.socialHandle.trim();
+      const platform = formData.socialPlatform;
+      
+      if (!handle) {
+        setError("Please provide a profile link or handle.");
+        return false;
+      }
+
+      const isValidUrl = (url: string) => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(url);
+      const isHandle = (h: string) => h.startsWith('@');
+      const hLower = handle.toLowerCase();
+
+      if (platform === "LinkedIn") {
+        if (!hLower.includes("linkedin.com/")) {
+          setError("Please enter a valid LinkedIn URL (e.g., linkedin.com/in/username).");
+          return false;
+        }
+      } else if (platform === "Instagram") {
+        if (!hLower.includes("instagram.com/") && !isHandle(handle)) {
+          setError("Please enter a valid Instagram URL or a handle starting with @.");
+          return false;
+        }
+      } else if (platform === "TikTok") {
+        if (!hLower.includes("tiktok.com/") && !isHandle(handle)) {
+          setError("Please enter a valid TikTok URL or a handle starting with @.");
+          return false;
+        }
+      } else if (platform === "X (Twitter)") {
+        if (!hLower.includes("twitter.com/") && !hLower.includes("x.com/") && !isHandle(handle)) {
+          setError("Please enter a valid X (Twitter) URL or a handle starting with @.");
+          return false;
+        }
+      } else if (platform === "Facebook") {
+         if (!hLower.includes("facebook.com/")) {
+          setError("Please enter a valid Facebook URL.");
+          return false;
+        }
+      } else {
+        if (!isValidUrl(handle) && !isHandle(handle)) {
+           setError("Please enter a valid URL or a handle starting with @.");
+           return false;
+        }
+      }
+    }
+    
+    if (step === 2) {
+      if (!formData.category) {
+        setError("Please select a category.");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleNext = () => setStep((s) => Math.min(s + 1, 7));
-  const handlePrev = () => setStep((s) => Math.max(s - 1, 1));
+  const handlePrev = () => {
+    setError(null);
+    setStep((s) => Math.max(s - 1, 1));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateStep()) return;
+
     if (step < 7) {
       handleNext();
       return;
@@ -261,7 +343,7 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
               <div>
                 <label className="block text-sm font-medium mb-1.5" style={{ color: "#111827" }}>Platform</label>
                 <div className="relative group">
-                  <select name="socialPlatform" value={formData.socialPlatform} onChange={handleChange} className="w-full border rounded-2xl px-4 py-3.5 text-base focus:outline-none transition-all duration-300 focus:ring-1 focus:ring-[#af2122] focus:border-[#af2122] appearance-none" style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#111827" }} required>
+                  <select name="socialPlatform" value={formData.socialPlatform} onChange={handleChange} className="w-full border rounded-2xl px-4 py-3.5 text-base focus:outline-none transition-all duration-300 focus:ring-1 focus:ring-slate-900 focus:border-slate-900 appearance-none" style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#111827" }} required>
                     <option value="LinkedIn">LinkedIn</option>
                     <option value="Instagram">Instagram</option>
                     <option value="X (Twitter)">X (Twitter)</option>
@@ -280,7 +362,7 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 flex-1 flex flex-col justify-center">
             <div>
               <label className="block text-sm font-medium mb-2" style={{ color: "#111827" }}>Which category best describes you?</label>
-              <select name="category" value={formData.category} onChange={handleChange} className="w-full border rounded-2xl px-4 py-3.5 text-base focus:outline-none transition-all duration-300 focus:ring-1 focus:ring-[#af2122] focus:border-[#af2122] appearance-none" style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#111827" }} required>
+              <select name="category" value={formData.category} onChange={handleChange} className="w-full border rounded-2xl px-4 py-3.5 text-base focus:outline-none transition-all duration-300 focus:ring-1 focus:ring-slate-900 focus:border-slate-900 appearance-none" style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#111827" }} required>
                 <option value="" disabled>Select one...</option>
                 <option value="Student">Student</option>
                 <option value="Young Professional">Young Professional</option>
@@ -473,7 +555,7 @@ function InviteForm({ onBack }: { onBack: () => void }) {
                   value={code}
                   onChange={(e) => setCode(e.target.value.toUpperCase())}
                   placeholder="RAN-XXXX"
-                  className="w-full border rounded-2xl px-4 py-5 text-center text-2xl font-mono focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-[#af2122]/20 focus:border-[#af2122] uppercase placeholder:normal-case placeholder:tracking-normal placeholder:font-sans placeholder:text-sm"
+                  className="w-full border rounded-2xl px-4 py-5 text-center text-2xl font-mono focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-slate-900/20 focus:border-slate-900 uppercase placeholder:normal-case placeholder:tracking-normal placeholder:font-sans placeholder:text-sm"
                   style={{ backgroundColor: "#f4f5f7", borderColor: "#f3f4f6", color: "#111827" }}
                   required
                   autoFocus
@@ -539,12 +621,12 @@ const Input = ({ label, icon, ...props }: InputProps) => (
     <label className="block text-sm font-medium mb-1.5" style={{ color: "#111827" }}>{label}</label>
     <div className="relative group">
       {icon && (
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#af2122] transition-colors">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-slate-900 transition-colors">
           {icon}
         </div>
       )}
       <input 
-        className={`w-full border rounded-2xl ${icon ? 'pl-11' : 'px-4'} py-3.5 text-base focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-[#af2122]/20 focus:border-[#af2122]`} 
+        className={`w-full border rounded-2xl ${icon ? 'pl-11' : 'px-4'} py-3.5 text-base focus:outline-none transition-all duration-300 focus:ring-2 focus:ring-slate-900/20 focus:border-slate-900`} 
         style={{ backgroundColor: "#ffffff", borderColor: "#e5e7eb", color: "#111827" }} 
         {...props} 
       />

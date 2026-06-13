@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
@@ -51,10 +52,12 @@ export default function CookieConsent() {
       <div className="flex flex-col items-center w-full md:w-80 bg-white text-gray-500 p-4 md:p-6 rounded-lg border border-gray-500/30 text-sm shadow-2xl relative mt-12">
         {/* Absolute positioned cookie image */}
         <div className="flex items-center justify-center relative w-full gap-2 pb-3">
-          <img
+          <Image
             className="absolute -top-10 w-16 h-16 md:-top-16 md:w-24 md:h-24 pointer-events-none select-none"
             src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/cookies/cookieImage2.svg"
             alt="Cookie"
+            width={96}
+            height={96}
           />
           <h2 className="text-gray-800 text-xl font-medium text-left w-full pt-6 md:pt-8">
             Your privacy is important to us
