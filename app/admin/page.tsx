@@ -57,7 +57,15 @@ export default function AdminDashboard() {
   const [newCodeCategory, setNewCodeCategory] = useState('VIP');
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
-  
+  const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
+
+  const handleCopyCode = (code: string, id: string) => {
+    navigator.clipboard.writeText(code);
+    setCopiedCodeId(id);
+    setTimeout(() => setCopiedCodeId(null), 2000);
+  };
+
   const router = useRouter();
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
@@ -669,34 +677,58 @@ export default function AdminDashboard() {
                               </span>
                             </td>
                             <td className="px-6 py-4 text-right">
-                              <div className="flex justify-end gap-2 transition-opacity">
-                                {app.status === 'Under Review' ? (
-                                  <>
-                                    <button 
-                                      onClick={(e) => { e.stopPropagation(); onDecline(app.id); }}
-                                      disabled={processingId !== null}
-                                      className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 text-xs font-bold transition-all disabled:opacity-50"
-                                    >
-                                      Decline
-                                    </button>
-                                    <button 
-                                      onClick={(e) => { e.stopPropagation(); onApprove(app.id); }}
-                                      disabled={processingId !== null}
-                                      className="px-3 py-1.5 rounded-lg bg-[#5347CE] text-white hover:bg-[#4337b5] text-xs font-bold transition-all shadow-sm hover:shadow disabled:opacity-50"
-                                    >
-                                      Approve
-                                    </button>
-                                  </>
-                                ) : (
-                                  <span className="text-slate-400 text-xs font-medium italic mt-1.5 mr-2">Reviewed</span>
+                              <div className="flex justify-end items-center gap-3">
+                                {app.status !== 'Under Review' && (
+                                  <span className="text-slate-400 text-[11px] font-medium italic mt-0.5">Reviewed</span>
                                 )}
-                                <button 
-                                  onClick={(e) => { e.stopPropagation(); onDeleteApplication(app.id); }}
-                                  disabled={processingId !== null}
-                                  className="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-500 hover:text-white hover:bg-rose-500 text-xs font-bold transition-all disabled:opacity-50"
-                                >
-                                  Delete
-                                </button>
+                                <div className="relative">
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); setOpenDropdownId(openDropdownId === app.id ? null : app.id); }}
+                                    className={`p-1.5 rounded-lg transition-colors ${openDropdownId === app.id ? 'bg-slate-100 text-slate-800' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-100'}`}
+                                  >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                                  </button>
+                                  <AnimatePresence>
+                                    {openDropdownId === app.id && (
+                                      <>
+                                        <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenDropdownId(null); }} />
+                                        <motion.div
+                                          initial={{ opacity: 0, y: -5, scale: 0.95 }}
+                                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                                          exit={{ opacity: 0, y: -5, scale: 0.95 }}
+                                          className="absolute right-0 top-full mt-1 w-36 bg-white border border-slate-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] z-50 py-1.5 overflow-hidden"
+                                        >
+                                          {app.status === 'Under Review' && (
+                                            <>
+                                              <button 
+                                                onClick={(e) => { e.stopPropagation(); onApprove(app.id); setOpenDropdownId(null); }}
+                                                disabled={processingId !== null}
+                                                className="w-full flex items-center gap-2 px-4 py-2 text-[13px] font-bold text-slate-700 hover:bg-slate-50 hover:text-[#5347CE] transition-colors"
+                                              >
+                                                Approve
+                                              </button>
+                                              <button 
+                                                onClick={(e) => { e.stopPropagation(); onDecline(app.id); setOpenDropdownId(null); }}
+                                                disabled={processingId !== null}
+                                                className="w-full flex items-center gap-2 px-4 py-2 text-[13px] font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+                                              >
+                                                Decline
+                                              </button>
+                                              <div className="h-px bg-slate-100 my-1"></div>
+                                            </>
+                                          )}
+                                          <button 
+                                            onClick={(e) => { e.stopPropagation(); onDeleteApplication(app.id); setOpenDropdownId(null); }}
+                                            disabled={processingId !== null}
+                                            className="w-full flex items-center gap-2 px-4 py-2 text-[13px] font-bold text-rose-500 hover:bg-rose-50 transition-colors"
+                                          >
+                                            Delete
+                                          </button>
+                                        </motion.div>
+                                      </>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
                               </div>
                             </td>
                           </tr>
@@ -729,7 +761,22 @@ export default function AdminDashboard() {
                     ) : (
                       inviteCodes.map((item) => (
                         <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                          <td className="px-6 py-4 font-mono font-bold text-slate-700 text-[13px]">{item.code}</td>
+                          <td className="px-6 py-4 font-mono font-bold text-slate-700 text-[13px]">
+                            <div className="flex items-center gap-2 group">
+                              <span>{item.code}</span>
+                              <button
+                                onClick={(e) => { e.stopPropagation(); handleCopyCode(item.code, item.id); }}
+                                className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-md hover:bg-slate-100 text-slate-400 hover:text-slate-600"
+                                title="Copy Code"
+                              >
+                                {copiedCodeId === item.id ? (
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                ) : (
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                )}
+                              </button>
+                            </div>
+                          </td>
                           <td className="px-6 py-4 text-slate-600 text-[13px] font-bold">{item.category}</td>
                           <td className="px-6 py-4">
                             <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider ${
