@@ -200,3 +200,39 @@ export async function toggleInviteCodeStatus(id: string, currentStatus: string) 
     return { success: false, error: 'Failed to toggle status' };
   }
 }
+
+export async function deleteApplication(id: string) {
+  try {
+    await verifyAdminSession();
+    const supabase = getSupabaseAdmin();
+
+    const { error } = await supabase
+      .from('applications')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw new Error(`Database error: ${error.message}`);
+    return { success: true };
+  } catch (error: any) {
+    console.error('Error deleting application:', error);
+    return { success: false, error: error.message || 'Failed to delete application' };
+  }
+}
+
+export async function deleteInviteCode(id: string) {
+  try {
+    await verifyAdminSession();
+    const supabase = getSupabaseAdmin();
+
+    const { error } = await supabase
+      .from('invite_codes')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw new Error(`Database error: ${error.message}`);
+    return { success: true };
+  } catch (error: any) {
+    console.error('Error deleting invite code:', error);
+    return { success: false, error: error.message || 'Failed to delete invite code' };
+  }
+}

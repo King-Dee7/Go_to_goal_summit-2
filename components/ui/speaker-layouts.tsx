@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -91,12 +92,15 @@ export function SpeakerDesktopFilmstrip({ items }: { items: CardStackItem[] }) {
                 }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
-                <img
-                  src={item.imageSrc}
-                  alt={item.title}
-                  className="w-full h-full object-cover absolute inset-0"
-                  style={{ objectPosition: item.objectPosition || "center 15%" }}
-                />
+                {item.imageSrc && (
+                  <Image
+                    src={item.imageSrc}
+                    alt={item.title}
+                    fill
+                    className="object-cover absolute inset-0"
+                    style={{ objectPosition: item.objectPosition || "center 15%" }}
+                  />
+                )}
                 <div className="absolute inset-0 border border-white/10 rounded-[2rem] pointer-events-none" />
                 
                 <AnimatePresence>
@@ -213,12 +217,15 @@ export function SpeakerMobileFilmstrip({ items }: { items: CardStackItem[] }) {
                 }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
-                <img
-                  src={item.imageSrc}
-                  alt={item.title}
-                  className="w-full h-full object-cover absolute inset-0"
-                  style={{ objectPosition: item.objectPosition || "center 15%" }}
-                />
+                {item.imageSrc && (
+                  <Image
+                    src={item.imageSrc}
+                    alt={item.title}
+                    fill
+                    className="object-cover absolute inset-0"
+                    style={{ objectPosition: item.objectPosition || "center 15%" }}
+                  />
+                )}
                 <div className="absolute inset-0 border border-white/10 rounded-[1.5rem] pointer-events-none" />
                 
                 <AnimatePresence>
