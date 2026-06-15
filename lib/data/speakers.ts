@@ -41,6 +41,15 @@ export const speakerCards: Speaker[] = [
     socials: {}
   },
   {
+    id: "mimi-kufuor",
+    title: "Mimi Kufuor",
+    description: "Digital Assets and Blockchain Executive, CDABI-Ghana & Group COO, KoinKoin",
+    imageSrc: "/speakers/Mimi Kufuor.jpg",
+    href: "/speakers/mimi-kufuor",
+    bio: "Mimi Kufuor is a Digital Assets Executive shaping the infrastructure behind Africa’s next phase of economic growth. As Group COO of KoinKoin, she leads the only African-built exchange with a live regulatory footprint in Ghana and Nigeria. An INSEAD alumna with senior experience spanning Credit Suisse, BlackRock, the ECB, and Meta, she brings institutional depth to next-generation financial systems. She also serves as Strategic Advisor to the Chamber of Digital Assets and Blockchain Innovation in Ghana, shaping continent-wide policy and speaking at global stages like the UK Parliament.",
+    socials: {}
+  },
+  {
     id: "richard-dick-darkey",
     title: "Richard (Dick) Darkey",
     description: "Business Development Executive & Media Consultant",
@@ -59,6 +68,15 @@ export const speakerCards: Speaker[] = [
     socials: {}
   },
   {
+    id: "tatiauna-holland",
+    title: "Attorney Tatiauna Holland",
+    description: "Principal Attorney, Holland Global Law",
+    imageSrc: "/speakers/Tatiauna Holland.jpg",
+    href: "/speakers/tatiauna-holland",
+    bio: "Tatiauna Holland is a U.S. immigration and estate planning attorney, and global legal strategist helping families preserve what matters across generations, borders, and time. As the Principal Attorney of Holland Global Law, she leads a practice that integrates immigration law, cross-border succession planning, and legacy protection for the African diaspora. With a unique dual-continent perspective, Tatiauna leverages her legal expertise to empower clients to preserve wealth and navigate global mobility.",
+    socials: {}
+  },
+  {
     id: "cyril-alex-gockel",
     title: "Cyril-Alex Gockel",
     description: "Brands & Marketing Manager, 3Music Networks",
@@ -74,24 +92,6 @@ export const speakerCards: Speaker[] = [
     imageSrc: "/speakers/Anthony Shaw.jpeg",
     href: "/speakers/anthony-shaw",
     bio: "Anthony Shaw is a 39-year-old business leader, marketing executive, and entrepreneur with over 15 years of combined international and local experience. His career spans luxury retail, education management, telecommunications, and brand development, and he is recognized for his ability to align commercial success with social impact.",
-    socials: {}
-  },
-  {
-    id: "tatiauna-holland",
-    title: "Attorney Tatiauna Holland",
-    description: "Principal Attorney, Holland Global Law",
-    imageSrc: "/speakers/Tatiauna Holland.jpg",
-    href: "/speakers/tatiauna-holland",
-    bio: "Tatiauna Holland is a U.S. immigration and estate planning attorney, and global legal strategist helping families preserve what matters across generations, borders, and time. As the Principal Attorney of Holland Global Law, she leads a practice that integrates immigration law, cross-border succession planning, and legacy protection for the African diaspora. With a unique dual-continent perspective, Tatiauna leverages her legal expertise to empower clients to preserve wealth and navigate global mobility.",
-    socials: {}
-  },
-  {
-    id: "mimi-kufuor",
-    title: "Mimi Kufuor",
-    description: "Group COO, KoinKoin & CEO, KoinKoin Ghana",
-    imageSrc: "/speakers/Mimi Kufuor.jpg",
-    href: "/speakers/mimi-kufuor",
-    bio: "Mimi Kufuor is a Digital Assets Executive shaping the infrastructure behind Africa’s next phase of economic growth. As Group COO of KoinKoin, she leads the only African-built exchange with a live regulatory footprint in Ghana and Nigeria. An INSEAD alumna with senior experience spanning Credit Suisse, BlackRock, the ECB, and Meta, she brings institutional depth to next-generation financial systems. She also serves as Strategic Advisor to the Chamber of Digital Assets and Blockchain Innovation in Ghana, shaping continent-wide policy and speaking at global stages like the UK Parliament.",
     socials: {}
   }
 ];
