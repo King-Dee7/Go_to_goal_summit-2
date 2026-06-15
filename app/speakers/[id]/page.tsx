@@ -53,7 +53,9 @@ export default function SpeakerProfile({ params }: SpeakerPageProps) {
     notFound();
   }
 
-  const firstName = speaker.title.split(" ")[0].toUpperCase();
+  const titleParts = speaker.title.split(/[\s\u00a0]+/);
+  const firstWord = titleParts[0];
+  const firstName = (["ATTORNEY", "ATTY."].includes(firstWord.toUpperCase()) ? titleParts[1] : firstWord).toUpperCase();
 
   const bioParagraphs = speaker.bio.split("\n\n");
 
@@ -88,7 +90,7 @@ export default function SpeakerProfile({ params }: SpeakerPageProps) {
               ['kuukua-eshun', 'richard-dick-darkey', 'carlos-idun-tawiah', 'cyril-alex-gockel', 'anthony-shaw'].includes(speaker.id) ? 'pb-12 md:pb-24' : 'pb-6'
             }`}>
               <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-normal tracking-tight text-slate-900 mb-2 font-sans leading-none">
-                {speaker.title}
+                {speaker.id === "tatiauna-holland" ? "Atty. Tatiauna\u00A0Holland" : speaker.title}
               </h1>
               <p className="text-xl md:text-2xl text-slate-800 font-sans">
                 {speaker.description}
