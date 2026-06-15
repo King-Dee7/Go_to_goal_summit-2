@@ -45,16 +45,21 @@ export function SpeakerDesktopFilmstrip({ items }: { items: CardStackItem[] }) {
     if (isHovered || !isInView) return;
     const interval = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % items.length);
-    }, 2000); // 2 seconds
+    }, 4000); // 4 seconds
     return () => clearInterval(interval);
   }, [items.length, isHovered, isInView]);
 
   return (
-    <div ref={ref} className="w-full flex flex-col items-center py-4 overflow-hidden">
+    <div 
+      ref={ref} 
+      className="w-full flex flex-col items-center py-4 overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
+    >
       <div 
         className="w-full mx-auto flex items-center justify-center relative"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         <motion.div 
           className="flex items-center gap-4 lg:gap-6 px-4 h-[520px] w-full justify-center"
@@ -174,19 +179,24 @@ export function SpeakerMobileFilmstrip({ items }: { items: CardStackItem[] }) {
     if (isHovered || !isInView) return;
     const interval = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % items.length);
-    }, 2000); // 2 seconds
+    }, 4000); // 4 seconds
     return () => clearInterval(interval);
   }, [items.length, isHovered, isInView]);
 
   return (
-    <div ref={ref} className="w-full flex flex-col items-center py-4 overflow-hidden">
+    <div 
+      ref={ref} 
+      className="w-full flex flex-col items-center py-4 overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
+    >
       <div 
         className="w-full mx-auto flex items-center justify-center relative touch-pan-y"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         <motion.div 
           className="flex items-center gap-2 px-2 h-[360px] w-full justify-center"
