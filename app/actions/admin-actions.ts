@@ -3,7 +3,7 @@
 
 import { getSupabaseAdmin, verifyAdminSession } from '@/lib/supabase';
 import { sendEmail } from '@/lib/email';
-import { getApprovedEmail, getDeclinedEmail } from '@/lib/email-templates';
+import { getApprovedEmail, getDeclinedEmail, getVirtualConfirmedEmail } from '@/lib/email-templates';
 
 export async function approveApplication(id: string) {
   try {
@@ -133,6 +133,55 @@ export async function declineApplication(id: string) {
     return { 
       success: false, 
       error: error.message || 'Failed to decline application' 
+    };
+  }
+}
+
+export async function markAsVirtual(id: string) {
+  try {
+    await verifyAdminSession();
+    const supabase = getSupabaseAdmin();
+
+    // 1. Get application details
+    const { data: application, error: getError } = await supabase
+      .from('applications')
+      .select('first_name, email')
+      .eq('id', id)
+      .single();
+
+    if (getError) throw new Error(`Database error: ${getError.message}`);
+    if (!application) throw new Error('Application not found');
+
+    // 2. Update status in Supabase
+    const { error: updateError } = await supabase
+      .from('applications')
+      .update({ status: 'Virtual' })
+      .eq('id', id);
+
+    if (updateError) throw new Error(`Update error: ${updateError.message}`);
+
+    // 3. Send virtual confirmation email
+    const emailHtml = getVirtualConfirmedEmail(application.first_name);
+    const emailResult = await sendEmail({
+      to: application.email,
+      subject: "Your Virtual Spot is Confirmed: From Go To Goal Summit",
+      html: emailHtml,
+    });
+
+    if (!emailResult.success) {
+      console.error('Email failed but application was updated:', emailResult.error);
+      return { 
+        success: false, 
+        error: `Application marked as virtual, but confirmation email failed to send: ${JSON.stringify(emailResult.error)}` 
+      };
+    }
+
+    return { success: true };
+  } catch (error: any) {
+    console.error('Error marking application as virtual:', error);
+    return { 
+      success: false, 
+      error: error.message || 'Failed to mark application as virtual' 
     };
   }
 }

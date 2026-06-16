@@ -8,18 +8,8 @@ import { subscribeToUpdates } from "@/app/actions/subscribe";
 import { Navbar } from "@/components/ui/Navbar";
 
 const SPONSOR_LOGOS = [
-  { src: "/sponsors/pwc.svg", alt: "PWC logo" },
-  { src: "/sponsors/foley.svg", alt: "Foley logo" },
-  { src: "/sponsors/xero.svg", alt: "Xero logo" },
-  { src: "/sponsors/dataiku.svg", alt: "Dataiku logo" },
-  { src: "/sponsors/shack15.svg", alt: "Shack15 logo" },
-  { src: "/sponsors/hpe.svg", alt: "HPE logo" },
-  { src: "/sponsors/udemy.svg", alt: "Udemy logo" },
-  { src: "/sponsors/xai-labs.svg", alt: "XAI Labs logo" },
-  { src: "/sponsors/oracle.svg", alt: "Oracle logo" },
-  { src: "/sponsors/commtel.svg", alt: "Commtel logo" },
-  { src: "/sponsors/vectara.svg", alt: "Vectara logo" },
-  { src: "/sponsors/fetch-ai.svg", alt: "Fetch.ai logo" },
+  { src: "/sponsors/bestellar-1503.svg", alt: "BeStellar 1503 logo" },
+  { src: "/sponsors/neon-5015.svg", alt: "NEON 5015 logo" },
 ];
 const SITE_URL = "https://reinventaf.com";
 const EVENT_START_DATE = "2026-07-17T09:00:00+00:00";
@@ -550,7 +540,7 @@ export default function Home() {
             <div className="sponsor-logo-grid reveal">
               {SPONSOR_LOGOS.map((logo) => (
                 <div className="sponsor-logo-item" key={logo.src}>
-                  <Image src={logo.src} alt={logo.alt} width={160} height={46} />
+                  <Image src={logo.src} alt={logo.alt} width={480} height={138} />
                 </div>
               ))}
             </div>

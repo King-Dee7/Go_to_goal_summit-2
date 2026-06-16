@@ -105,3 +105,20 @@ export const getDeclinedEmail = (firstName: string) => wrapEmail(`
   <p>Wishing you the very best in your current endeavors.</p>
   <p style="margin-top: 30px;">Warm regards,<br /><strong>The Reinvent Africa Team</strong></p>
 `);
+
+export const getVirtualConfirmedEmail = (firstName: string) => wrapEmail(`
+  <h1 style="font-size: 26px; color: #050505; margin-bottom: 20px; font-weight: 700;">Your Virtual Spot is Confirmed!</h1>
+  <p>Hi ${firstName},</p>
+  <p>We've successfully updated your ticket for the <strong>From Go To Goal Summit</strong> to <strong>Virtual Attendance</strong>.</p>
+  <p>While we won't be seeing you in person at the Google AI Office, we are excited to have you join our global community online. You will have full access to the live stream, keynote sessions, and interactive virtual components.</p>
+  
+  <div style="background-color: ${GRAY_COLOR}; padding: 25px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #0B56A0;">
+    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; color: ${DARK_COLOR};">Virtual Attendance Details:</h3>
+    <p style="margin: 8px 0;">📅 <strong>Date:</strong> July 17, 2026</p>
+    <p style="margin: 8px 0;">📍 <strong>Access:</strong> Online Stream (Link to be sent closer to the date)</p>
+  </div>
+
+  <p>We will share the official live streaming link and virtual schedule with you as we get closer to the event date. If you have any other questions, feel free to reply directly to this email.</p>
+  <p>Looking forward to connecting with you online!</p>
+  <p style="margin-top: 30px;">Warm regards,<br /><strong>The Reinvent Africa Team</strong></p>
+`);

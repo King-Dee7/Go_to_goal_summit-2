@@ -16,7 +16,8 @@ import {
   generateInviteCode,
   toggleInviteCodeStatus,
   deleteApplication,
-  deleteInviteCode
+  deleteInviteCode,
+  markAsVirtual
 } from "@/app/actions/admin-actions";
 
 /* ─────────────────────────────────────────────────────────────
@@ -428,6 +429,18 @@ export default function AdminDashboard() {
     setProcessingId(null);
   };
 
+  const onMarkAsVirtual = async (id: string) => {
+    if (!confirm("Are you sure you want to mark this applicant as VIRTUAL? This will send them a confirmation email for online attendance.")) return;
+    setProcessingId(id);
+    const res = await markAsVirtual(id);
+    if (res.success) {
+      loadData();
+    } else {
+      alert(res.error);
+    }
+    setProcessingId(null);
+  };
+
   const onGenerateCode = async () => {
     setIsGenerating(true);
     try {
@@ -516,6 +529,7 @@ export default function AdminDashboard() {
   const safeCodes = inviteCodes || [];
   const pendingCount = safeApps.filter(a => a.status === 'Under Review').length;
   const approvedCount = safeApps.filter(a => a.status === 'Accepted').length;
+  const virtualCount = safeApps.filter(a => a.status === 'Virtual').length;
   const totalApps = safeApps.length;
   const claimedCodes = safeCodes.filter(c => c.status === 'Claimed').length;
   const acceptanceRate = totalApps > 0 ? Math.round((approvedCount / totalApps) * 100) : 0;
@@ -547,7 +561,8 @@ export default function AdminDashboard() {
       statusFilter === "All" || 
       (statusFilter === "Under Review" && app.status === "Under Review") ||
       (statusFilter === "Accepted" && app.status === "Accepted") ||
-      (statusFilter === "Rejected" && app.status === "Rejected");
+      (statusFilter === "Rejected" && app.status === "Rejected") ||
+      (statusFilter === "Virtual" && app.status === "Virtual");
       
     return matchesSearch && matchesFilter;
   });
@@ -583,6 +598,7 @@ export default function AdminDashboard() {
   const statusBadge = (status: string): React.CSSProperties => {
     if (status === 'Accepted' || status === 'Active') return { backgroundColor: t.successSoft, color: t.success };
     if (status === 'Rejected') return { backgroundColor: t.dangerSoft, color: t.danger };
+    if (status === 'Virtual') return { backgroundColor: t.accentSoft, color: t.accent };
     if (status === 'Claimed') return { backgroundColor: t.infoSoft, color: t.info };
     if (status === 'Under Review') return { backgroundColor: t.pendingSoft, color: t.pending };
     return { backgroundColor: t.accentSoft, color: t.textMuted };
@@ -876,7 +892,7 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             
             {/* Top Metric Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
               
               {/* Total Applications */}
               <div className="themed-card p-6" style={cardStyle}>
@@ -894,6 +910,25 @@ export default function AdminDashboard() {
                     style={{ backgroundColor: t.successSoft, color: t.success }}
                   >
                     +15.8% <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7h-10M17 7v10" /></svg>
+                  </span>
+                </div>
+              </div>
+
+              {/* Virtual Attendees */}
+              <div className="themed-card p-6" style={cardStyle}>
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex items-center gap-2 font-medium text-[13px]" style={{ color: t.textMuted }}>
+                    <Icons.Globe className="w-4 h-4" />
+                    Virtual
+                  </div>
+                </div>
+                <div className="flex items-baseline gap-3">
+                  <h3 className="text-[32px] font-bold tracking-tight leading-none" style={{ color: t.textHeading, fontFeatureSettings: '"tnum"' }}>{virtualCount}</h3>
+                  <span
+                    className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[11px] font-bold"
+                    style={{ backgroundColor: t.accentSoft, color: t.accent }}
+                  >
+                    Online
                   </span>
                 </div>
               </div>
@@ -1109,6 +1144,7 @@ export default function AdminDashboard() {
                         <option value="All">All Statuses</option>
                         <option value="Under Review">Under Review</option>
                         <option value="Accepted">Approved</option>
+                        <option value="Virtual">Virtual</option>
                         <option value="Rejected">Rejected</option>
                       </select>
                       <svg className="w-3.5 h-3.5 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" style={{ color: t.textMuted }}>
@@ -1241,6 +1277,16 @@ export default function AdminDashboard() {
                                               </button>
                                               <div className="h-px my-1" style={{ backgroundColor: t.border }}></div>
                                             </>
+                                          )}
+                                          {app.status !== 'Virtual' && (
+                                            <button 
+                                              onClick={(e) => { e.stopPropagation(); onMarkAsVirtual(app.id); setOpenDropdownId(null); }}
+                                              disabled={processingId !== null}
+                                              className="w-full flex items-center gap-2 px-4 py-2 text-[13px] font-bold themed-sidebar-item"
+                                              style={{ color: t.textHeading }}
+                                            >
+                                              Mark as Virtual
+                                            </button>
                                           )}
                                           <button 
                                             onClick={(e) => { e.stopPropagation(); onDeleteApplication(app.id); setOpenDropdownId(null); }}
@@ -1493,6 +1539,22 @@ export default function AdminDashboard() {
                 {/* Action Footer */}
                 {selectedApplicant.status === 'Under Review' && (
                   <div className="p-5 flex gap-3 shrink-0" style={{ backgroundColor: t.bgCard, borderTop: `1px solid ${t.border}` }}>
+                    <button 
+                      onClick={() => {
+                        onMarkAsVirtual(selectedApplicant.id);
+                        setSelectedApplicant(null);
+                      }}
+                      disabled={processingId !== null}
+                      className="flex-1 py-3 text-sm font-bold themed-btn disabled:opacity-50"
+                      style={{
+                        border: `2px solid ${t.border}`,
+                        borderRadius: t.btnRadius,
+                        color: t.textBody,
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      Mark Virtual
+                    </button>
                     <button 
                       onClick={() => {
                         onDecline(selectedApplicant.id);
