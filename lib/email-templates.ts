@@ -79,6 +79,7 @@ export const getApprovedEmail = (firstName: string) => wrapEmail(`
     <div style="margin: 25px 0;">
       <p style="margin: 10px 0; font-size: 20px; font-weight: 600;">📅 July 17, 2026</p>
       <p style="margin: 10px 0; font-size: 18px;">📍 Google AI Office, Accra, Ghana</p>
+      <p style="margin: 10px 0; font-size: 18px;">🕒 Starts at 5:00 PM GMT</p>
     </div>
     <div style="width: 50px; height: 2px; background-color: rgba(255,255,255,0.2); margin: 0 auto 20px auto;"></div>
     <p style="font-size: 14px; opacity: 0.8; margin-bottom: 0;">Your name has been added to our automatic check-in system at the venue.</p>

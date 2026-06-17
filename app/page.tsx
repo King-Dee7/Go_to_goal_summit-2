@@ -8,8 +8,8 @@ import { subscribeToUpdates } from "@/app/actions/subscribe";
 import { Navbar } from "@/components/ui/Navbar";
 
 const SPONSOR_LOGOS = [
-  { src: "/sponsors/bestellar-1503.svg", alt: "BeStellar 1503 logo" },
-  { src: "/sponsors/neon-5015.svg", alt: "NEON 5015 logo" },
+  { src: "/sponsors/bestellar-black.svg", alt: "BeStellar logo" },
+  { src: "/sponsors/neon-black.svg", alt: "NEON logo" },
 ];
 const SITE_URL = "https://reinventaf.com";
 const EVENT_START_DATE = "2026-07-17T09:00:00+00:00";
