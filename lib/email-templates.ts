@@ -123,3 +123,18 @@ export const getVirtualConfirmedEmail = (firstName: string) => wrapEmail(`
   <p>Looking forward to connecting with you online!</p>
   <p style="margin-top: 30px;">Warm regards,<br /><strong>The Reinvent Africa Team</strong></p>
 `);
+
+export const getUpdateTimeEmail = (firstName: string) => wrapEmail(`
+  <h1 style="font-size: 24px; color: #050505; margin-bottom: 20px; font-weight: 700;">Event Time Update: From Go To Goal Summit</h1>
+  <p>Hi ${firstName},</p>
+  <p>We are reaching out with an important update regarding the <strong>From Go To Goal Summit</strong> on July 17, 2026.</p>
+  <p>Please note that the event will officially start at <strong>5:00 PM GMT</strong>.</p>
+  <div style="background-color: #f8f9fa; padding: 25px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #F6C10E;">
+    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; color: #050505;">Event Reminder</h3>
+    <p style="margin: 8px 0;">📅 <strong>Date:</strong> July 17, 2026</p>
+    <p style="margin: 8px 0;">🕒 <strong>Time:</strong> 5:00 PM GMT</p>
+    <p style="margin: 8px 0;">📍 <strong>Venue:</strong> Google AI Office, Accra (or Online Stream for Virtual attendees)</p>
+  </div>
+  <p>We look forward to seeing you there!</p>
+  <p style="margin-top: 30px;">Best regards,<br /><strong>The Reinvent Africa Team</strong></p>
+`);

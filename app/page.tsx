@@ -22,6 +22,7 @@ export default function Home() {
   const [showSplash, setShowSplash] = useState(false);
   const [splashExiting, setSplashExiting] = useState(false);
   const [siteReady, setSiteReady] = useState(false);
+  const [isSponsorModalOpen, setIsSponsorModalOpen] = useState(false);
   // Signup form states
   const [signupEmail, setSignupEmail] = useState("");
   const [signupFirstName, setSignupFirstName] = useState("");
@@ -546,7 +547,7 @@ export default function Home() {
             </div>
 
             <div className="sponsor-cta reveal">
-              <a href="mailto:partnerships@reinventafrica.org" className="sponsor-cta-btn">Become a Sponsor</a>
+              <button onClick={() => setIsSponsorModalOpen(true)} className="sponsor-cta-btn">Become a Sponsor</button>
             </div>
           </div>
         </section>
@@ -810,6 +811,54 @@ export default function Home() {
         {/*  ========== SCRIPTS ==========  */}
 
       </main>
+
+      {/* Sponsor Modal */}
+      {isSponsorModalOpen && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" 
+          onClick={() => setIsSponsorModalOpen(false)}
+        >
+          <div 
+            className="bg-white rounded-xl shadow-2xl p-6 md:p-8 max-w-sm w-full relative" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setIsSponsorModalOpen(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-black transition-colors"
+              aria-label="Close"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <h3 className="font-syne text-2xl font-bold text-center mb-2 text-black">Sponsor Us</h3>
+            <p className="text-gray-600 text-center mb-6">Choose how you&apos;d like to get in touch with our team.</p>
+            
+            <div className="flex flex-col gap-4">
+              <a 
+                href="mailto:s.sena@reinventaf.com" 
+                className="flex items-center justify-center gap-3 w-full py-3 px-4 bg-[#af2122] hover:bg-[#8f1a1b] text-white rounded-lg font-medium transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                s.sena@reinventaf.com
+              </a>
+              <a 
+                href="tel:+233545352770" 
+                className="flex items-center justify-center gap-3 w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-black border border-gray-200 rounded-lg font-medium transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                +233 545 352 770
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
