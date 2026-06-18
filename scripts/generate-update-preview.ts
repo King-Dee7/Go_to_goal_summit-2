@@ -1,0 +1,73 @@
+import fs from 'fs';
+
+const wrapEmail = (content: string) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @media only screen and (max-width: 600px) {
+      .email-container {
+        border-left: none !important;
+        border-right: none !important;
+        border-radius: 0 !important;
+        width: 100% !important;
+      }
+      .content-padding {
+        padding: 30px 20px !important;
+      }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #ffffff;">
+  <div style="background-color: #ffffff; padding: 20px 0;">
+    <div class="email-container" style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #ffffff; border: 4px solid #000000; box-sizing: border-box; text-align: left;">
+      <!-- Colorful top bar -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <td width="25%" height="12" style="background-color: #F6C10E; font-size: 1px; line-height: 1px;">&nbsp;</td>
+          <td width="25%" height="12" style="background-color: #0B56A0; font-size: 1px; line-height: 1px;">&nbsp;</td>
+          <td width="25%" height="12" style="background-color: #2F8E49; font-size: 1px; line-height: 1px;">&nbsp;</td>
+          <td width="25%" height="12" style="background-color: #DE0510; font-size: 1px; line-height: 1px;">&nbsp;</td>
+        </tr>
+      </table>
+      
+      <!-- Main Content -->
+      <div class="content-padding" style="padding: 40px;">
+        <div style="margin-bottom: 30px;">
+          <img src="https://reinventaf.com/reinvent-logo.png" alt="Reinvent Africa Network" style="width: 200px; height: auto;" />
+        </div>
+        <div style="color: #333; line-height: 1.6; font-size: 16px; min-height: 350px;">
+          ${content}
+        </div>
+        <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee; font-size: 12px; color: #888; text-align: left;">
+          © 2026 Reinvent Africa Network. All rights reserved.<br />
+          6th March, Ave,<br />
+          Tantra, Accra, Ghana.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+export const getUpdateTimeEmail = (firstName: string) => wrapEmail(`
+  <h1 style="font-size: 24px; color: #050505; margin-bottom: 20px; font-weight: 700;">Event Time Update: From Go To Goal Summit</h1>
+  <p>Hi ${firstName},</p>
+  <p>We are reaching out with an important update regarding the <strong>From Go To Goal Summit</strong> on July 17, 2026.</p>
+  <p>Please note that the event will officially start at <strong>5:00 PM GMT</strong>.</p>
+  <div style="background-color: #f8f9fa; padding: 25px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #F6C10E;">
+    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; color: #050505;">Event Reminder</h3>
+    <p style="margin: 8px 0;">📅 <strong>Date:</strong> July 17, 2026</p>
+    <p style="margin: 8px 0;">🕒 <strong>Time:</strong> 5:00 PM GMT</p>
+    <p style="margin: 8px 0;">📍 <strong>Venue:</strong> Google AI Office, Accra</p>
+  </div>
+  <p>We look forward to seeing you there!</p>
+  <p style="margin-top: 30px;">Best regards,<br /><strong>The Reinvent Africa Team</strong></p>
+`);
+
+const html = getUpdateTimeEmail('John Doe');
+fs.writeFileSync('preview-update-email.html', html);
+console.log('Preview generated at preview-update-email.html');
