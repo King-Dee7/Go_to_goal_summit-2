@@ -288,14 +288,14 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
   if (isSuccess) {
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col justify-center text-center">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: "#af2122" }}>
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: "#16A34A" }}>
           <svg className="w-8 h-8" style={{ color: "#ffffff" }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
         </div>
         <h2 className="text-3xl font-bold mb-4" style={{ color: "#111827" }}>Application Received</h2>
         <p className="text-sm max-w-sm mx-auto mb-8 leading-relaxed" style={{ color: "#6b7280" }}>
           Thank you for applying. Your profile is now under review by our curation committee. We will notify you via email regarding your status.
         </p>
-        <Link href="/" className="inline-block px-8 py-3.5 font-semibold rounded-lg hover:bg-[#8f1b1c] hover:shadow-md transition-all text-sm shadow-sm" style={{ backgroundColor: "#af2122", color: "#ffffff" }}>
+        <Link href="/" className="inline-block px-8 py-3.5 font-semibold rounded-lg hover:bg-[#15803D] hover:shadow-md transition-all text-sm shadow-sm" style={{ backgroundColor: "#16A34A", color: "#ffffff" }}>
           Return to Website
         </Link>
       </motion.div>
@@ -494,14 +494,14 @@ function InviteForm({ onBack }: { onBack: () => void }) {
   if (isSuccess) {
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col justify-center text-center">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: "#af2122" }}>
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: "#16A34A" }}>
           <svg className="w-8 h-8" style={{ color: "#ffffff" }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
         </div>
         <h2 className="text-3xl font-bold mb-4" style={{ color: "#111827" }}>Invitation Unlocked</h2>
         <p className="text-sm max-w-sm mx-auto mb-8 leading-relaxed" style={{ color: "#6b7280" }}>
           Welcome to the Summit, {userData.firstName}! Your invitation has been confirmed. You will receive an email shortly with your QR code and event details.
         </p>
-        <Link href="/" className="inline-block px-8 py-3.5 font-semibold rounded-lg hover:bg-[#8f1b1c] hover:shadow-md transition-all text-sm shadow-sm" style={{ backgroundColor: "#af2122", color: "#ffffff" }}>
+        <Link href="/" className="inline-block px-8 py-3.5 font-semibold rounded-lg hover:bg-[#15803D] hover:shadow-md transition-all text-sm shadow-sm" style={{ backgroundColor: "#16A34A", color: "#ffffff" }}>
           Return to Website
         </Link>
       </motion.div>
