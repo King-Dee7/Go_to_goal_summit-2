@@ -69,10 +69,8 @@ export default function Home() {
     url: SITE_URL,
     logo: `${SITE_URL}/reinvent-logo.png`,
     sameAs: [
-      "https://www.linkedin.com",
-      "https://www.instagram.com",
-      "https://twitter.com",
-      "https://www.youtube.com",
+      "https://www.linkedin.com/company/reinvent-africa-network/",
+      "https://www.instagram.com/reinventafrica54/",
     ],
   };
   const eventJsonLd = {
@@ -81,7 +79,7 @@ export default function Home() {
     name: "From Go To Goal Summit 2026",
     description:
       "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
-    image: [`${SITE_URL}/Og%20image.png`],
+    image: [`${SITE_URL}/og-image.png`],
     startDate: EVENT_START_DATE,
     endDate: EVENT_END_DATE,
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",

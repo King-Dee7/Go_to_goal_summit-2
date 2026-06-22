@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   title: "RAN'26 - From Go To Goal Summit",
   description:
     "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
-  metadataBase: new URL("https://www.reinventaf.com"),
+  metadataBase: new URL("https://reinventaf.com"),
   alternates: {
     canonical: "/",
   },
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/Og%20image.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Go To Goal Summit by Reinvent Africa Network",
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     title: "RAN'26 - From Go To Goal Summit",
     description:
       "Join us on July 17 for RAN 2026, a defining summit in Accra equipping the next generation of African builders, entrepreneurs, and creators to turn ambition into action.",
-    images: ["/Og%20image.png"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
