@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     description: "Apply to attend the From Go To Goal Summit 2026 in Accra, Ghana. Submit your application to join Africa's leading builders and entrepreneurs.",
     images: [
       {
-        url: "/Og%20image.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Apply to Attend From Go To Goal Summit",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Apply to Attend | From Go To Goal Summit",
     description: "Apply to attend the From Go To Goal Summit 2026 in Accra, Ghana. Submit your application to join Africa's leading builders and entrepreneurs.",
-    images: ["/Og%20image.png"],
+    images: ["/og-image.png"],
   },
 };
 

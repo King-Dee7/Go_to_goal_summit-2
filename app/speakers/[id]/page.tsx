@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: SpeakerPageProps): Promise<Me
       type: "profile",
       images: [
         {
-          url: speaker.imageSrc,
+          url: encodeURI(speaker.imageSrc),
           alt: `${speaker.description} at Go To Goal Summit`,
         },
       ],
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: SpeakerPageProps): Promise<Me
       card: "summary_large_image",
       title,
       description,
-      images: [speaker.imageSrc],
+      images: [encodeURI(speaker.imageSrc)],
     },
   };
 }

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { speakerCards } from "@/lib/data/speakers";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://www.reinventaf.com";
+  const baseUrl = "https://reinventaf.com";
   const now = new Date();
 
   // Dynamically map all speakers' profile paths
@@ -25,6 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.3,
     },
     ...speakerUrls,
   ];

@@ -89,7 +89,7 @@ export function SpeakerFooter() {
         {/* Social Icons Row */}
         <div className="flex gap-5 mt-12 pt-8 border-t border-slate-200">
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/reinventafrica54/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -98,7 +98,7 @@ export function SpeakerFooter() {
             <InstagramIcon />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/company/reinvent-africa-network/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
