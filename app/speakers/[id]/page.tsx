@@ -87,7 +87,7 @@ export default function SpeakerProfile({ params }: SpeakerPageProps) {
             {/* Right Top: Title Box (White) */}
             <div className={`px-8 md:px-12 lg:px-20 pt-8 md:pt-12 bg-white ${
               speaker.id === 'alfred-eli-k-dei' ? 'pb-16 md:pb-32' :
-              ['kuukua-eshun', 'richard-dick-darkey', 'carlos-idun-tawiah', 'cyril-alex-gockel', 'anthony-shaw'].includes(speaker.id) ? 'pb-12 md:pb-24' : 'pb-6'
+              ['kuukua-eshun', 'dick-darkey', 'carlos-idun-tawiah', 'cyril-alex-gockel', 'anthony-shaw'].includes(speaker.id) ? 'pb-12 md:pb-24' : 'pb-6'
             }`}>
               <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-normal tracking-tight text-slate-900 mb-2 font-sans leading-none">
                 {speaker.id === "tatiauna-holland" ? "Atty. Tatiauna\u00A0Holland" : speaker.title}

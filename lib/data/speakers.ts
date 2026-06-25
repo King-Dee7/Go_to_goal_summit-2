@@ -50,12 +50,12 @@ export const speakerCards: Speaker[] = [
     socials: {}
   },
   {
-    id: "richard-dick-darkey",
-    title: "Richard (Dick) Darkey",
+    id: "dick-darkey",
+    title: "Dick Darkey",
     description: "Business Development Executive & Media Consultant",
-    imageSrc: "/speakers/Richard (Dick) Darkey.jpeg",
-    href: "/speakers/richard-dick-darkey",
-    bio: "Richard (Dick) Darkey is a seasoned professional whose journey reflects vision, versatility, and purpose. With over two decades of experience spanning Banking, Finance, Marketing, FMCG, Corporate Branding, and Entrepreneurship, he has cultivated a career that seamlessly blends strategic acumen with creative insight.",
+    imageSrc: "/speakers/Dick Darkey.jpeg",
+    href: "/speakers/dick-darkey",
+    bio: "Dick Darkey is a seasoned professional whose journey reflects vision, versatility, and purpose. With over two decades of experience spanning Banking, Finance, Marketing, FMCG, Corporate Branding, and Entrepreneurship, he has cultivated a career that seamlessly blends strategic acumen with creative insight.",
     socials: {}
   },
   {
