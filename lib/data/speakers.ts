@@ -23,6 +23,15 @@ export const speakerCards: Speaker[] = [
     socials: {}
   },
   {
+    id: "bola-ray",
+    title: "Nat Kwabena Adisi (Bola Ray)",
+    description: "CEO of EIB Network Limited",
+    imageSrc: "/speakers/Nathan K. Adisi (Bola Ray).jpg",
+    href: "/speakers/bola-ray",
+    bio: "Nat Kwabena Adisi, popularly known as Bola Ray, is a prominent media personality, entrepreneur, and CEO of EIB Network. With a career spanning over three decades, he has built a strong reputation across radio, television, and digital platforms. Beyond his media impact, he is recognized for his philanthropic efforts through the Bola Ray Foundation, championing mentorship, education, and youth empowerment.",
+    socials: {}
+  },
+  {
     id: "kuukua-eshun",
     title: "Kuukua Eshun",
     description: "Award-Winning Filmmaker & Cultural Diplomat",
