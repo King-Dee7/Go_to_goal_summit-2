@@ -260,7 +260,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value for Global Acclaim</p>
+              <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value for Global Dominance</p>
 
               <div className="hero-ctas reveal reveal-delay-3">
                 <a href="/apply" className="hero-cta-primary">
