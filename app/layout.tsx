@@ -69,6 +69,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: [
+      { url: "/favicon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/favicon.ico", sizes: "16x16 24x24 32x32" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "192x192" }],
+    shortcut: ["/favicon.ico"],
+  },
   keywords: [
     "Go To Goal Summit",
     "Reinvent Africa Network",
