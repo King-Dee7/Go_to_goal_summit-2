@@ -4,7 +4,7 @@ import { getSupabaseAdmin } from '@/lib/supabase';
 import { appendToSheet } from '@/lib/google-sheets';
 import { addToMailerLite } from '@/lib/mailerlite';
 import { sendEmail } from '@/lib/email';
-import { getApplicationReceivedEmail } from '@/lib/email-templates';
+import { getApplicationReceivedEmail, getVirtualRegistrationEmail } from '@/lib/email-templates';
 
 type ApplicationFormData = {
   firstName: string;
@@ -23,6 +23,7 @@ type ApplicationFormData = {
   q3: string;
   q4: string;
   q5: string;
+  isVirtual?: boolean;
 };
 
 function getErrorMessage(error: unknown): string {
@@ -60,7 +61,7 @@ export async function submitApplication(formData: ApplicationFormData) {
           q3_future_goals: formData.q3,
           q4_intentions: formData.q4,
           q5_changed_belief: formData.q5,
-          status: 'Under Review',
+          status: formData.isVirtual ? 'Virtual' : 'Under Review',
         },
       ])
       .select()
@@ -88,7 +89,7 @@ export async function submitApplication(formData: ApplicationFormData) {
         formData.q3,
         formData.q4,
         formData.q5,
-        'Under Review',
+        formData.isVirtual ? 'Virtual' : 'Under Review',
       ];
       await appendToSheet(sheetRow);
     } catch (error) {
@@ -116,10 +117,17 @@ export async function submitApplication(formData: ApplicationFormData) {
     }
 
     try {
-      const emailHtml = getApplicationReceivedEmail(formData.firstName);
+      const emailHtml = formData.isVirtual 
+        ? getVirtualRegistrationEmail(formData.firstName)
+        : getApplicationReceivedEmail(formData.firstName);
+        
+      const emailSubject = formData.isVirtual
+        ? "You're Registered for Virtual Access - From Go To Goal Summit"
+        : "We've received your application - From Go To Goal Summit";
+
       const emailResult = await sendEmail({
         to: formData.email,
-        subject: "We've received your application - From Go To Goal Summit",
+        subject: emailSubject,
         html: emailHtml,
       });
       

@@ -138,3 +138,20 @@ export const getUpdateTimeEmail = (firstName: string) => wrapEmail(`
   <p>We look forward to seeing you there!</p>
   <p style="margin-top: 30px;">Best regards,<br /><strong>The Reinvent Africa Team</strong></p>
 `);
+
+export const getVirtualRegistrationEmail = (firstName: string) => wrapEmail(`
+  <h1 style="font-size: 26px; color: #509e71; margin-bottom: 20px; font-weight: 700;">You're Registered for Virtual Access!</h1>
+  <p>Hi ${firstName},</p>
+  <p>Congratulations! You have successfully registered for <strong>Virtual Attendance</strong> at the <strong>From Go To Goal Summit</strong>.</p>
+  <p>While the in-person venue has reached capacity, we are excited to have you join our global community online. You will have full access to the live stream, keynote sessions, and interactive virtual components.</p>
+  
+  <div style="background-color: ${GRAY_COLOR}; padding: 25px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #0B56A0;">
+    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; color: ${DARK_COLOR};">Virtual Attendance Details:</h3>
+    <p style="margin: 8px 0;">📅 <strong>Date:</strong> July 17, 2026</p>
+    <p style="margin: 8px 0;">📍 <strong>Access:</strong> Online Stream (Link to be sent closer to the date)</p>
+  </div>
+
+  <p>We will share the official live streaming link and virtual schedule with you as we get closer to the event. If you have any questions, feel free to reply directly to this email.</p>
+  <p>Looking forward to connecting with you online!</p>
+  <p style="margin-top: 30px;">Warm regards,<br /><strong>The Reinvent Africa Team</strong></p>
+`);

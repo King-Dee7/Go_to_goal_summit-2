@@ -8,7 +8,7 @@ import { submitApplication } from "@/app/actions/submit-application";
 import { claimInviteCode } from "@/app/actions/invite-actions";
 
 export default function ApplyClient() {
-  const [activeTab, setActiveTab] = useState<"gateway" | "apply" | "invite">("gateway");
+  const [activeTab, setActiveTab] = useState<"gateway" | "apply" | "invite" | "virtual">("gateway");
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4 sm:p-8 font-sans relative overflow-hidden" style={{ backgroundColor: "#0A1118" }}>
@@ -107,6 +107,9 @@ export default function ApplyClient() {
             {activeTab === "apply" && (
               <ApplicationForm key="apply" onBack={() => setActiveTab("gateway")} />
             )}
+            {activeTab === "virtual" && (
+              <ApplicationForm key="virtual" isVirtual={true} onBack={() => setActiveTab("gateway")} />
+            )}
             {activeTab === "invite" && (
               <InviteForm key="invite" onBack={() => setActiveTab("gateway")} />
             )}
@@ -118,7 +121,7 @@ export default function ApplyClient() {
   );
 }
 
-function GatewayView({ onSelect }: { onSelect: (tab: "apply" | "invite") => void }) {
+function GatewayView({ onSelect }: { onSelect: (tab: "apply" | "invite" | "virtual") => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -128,29 +131,34 @@ function GatewayView({ onSelect }: { onSelect: (tab: "apply" | "invite") => void
       className="flex-1 flex flex-col justify-center"
     >
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold mb-1" style={{ color: "#111827" }}>Welcome</h2>
-        <p className="text-xs" style={{ color: "#6b7280" }}>Please select how you would like to proceed.</p>
+        <h2 className="text-2xl font-bold mb-2" style={{ color: "#111827" }}>Welcome</h2>
+        <p className="text-sm md:text-base font-semibold" style={{ color: "#111827" }}>In-person applications are now closed.</p>
+        <p className="text-xs md:text-sm mt-1" style={{ color: "#4b5563" }}>You can still register for virtual access to stream all sessions.</p>
       </div>
 
       <div className="space-y-4 max-w-[420px] mx-auto w-full">
         <button
-          onClick={() => onSelect("apply")}
+          onClick={() => onSelect("virtual")}
           className="w-full p-6 rounded-2xl border transition-all hover:bg-[#8f1b1c]/95 hover:shadow-md flex flex-col items-center justify-center text-center focus:outline-none shadow-sm"
           style={{ backgroundColor: "#af2122", borderColor: "#af2122" }}
         >
-          <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>Apply to Attend</h3>
+          <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>Register for Virtual Access</h3>
+          <p className="text-xs" style={{ color: "rgba(255,255,255,0.8)" }}>Join the global community online.</p>
+        </button>
+
+
+        <button
+          disabled
+          className="w-full p-6 rounded-2xl border flex flex-col items-center justify-center text-center opacity-50 cursor-not-allowed"
+          style={{ backgroundColor: "#af2122", borderColor: "#af2122" }}
+        >
+          <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>Apply to Attend (Full)</h3>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.8)" }}>Submit your profile for review.</p>
         </button>
 
-        <div className="flex items-center justify-center py-2">
-          <div className="h-[1px] w-full opacity-10" style={{ backgroundColor: "#000000" }}></div>
-          <span className="px-4 text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "#9ca3af" }}>Or</span>
-          <div className="h-[1px] w-full opacity-10" style={{ backgroundColor: "#000000" }}></div>
-        </div>
-
         <button
-          onClick={() => onSelect("invite")}
-          className="w-full p-6 rounded-2xl border transition-all hover:bg-[#8f1b1c]/95 hover:shadow-md flex flex-col items-center justify-center text-center focus:outline-none shadow-sm"
+          disabled
+          className="w-full p-6 rounded-2xl border flex flex-col items-center justify-center text-center opacity-50 cursor-not-allowed"
           style={{ backgroundColor: "#af2122", borderColor: "#af2122" }}
         >
           <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>I have an Invite Code</h3>
@@ -161,8 +169,9 @@ function GatewayView({ onSelect }: { onSelect: (tab: "apply" | "invite") => void
   );
 }
 
-function ApplicationForm({ onBack }: { onBack: () => void }) {
+function ApplicationForm({ onBack, isVirtual = false }: { onBack: () => void, isVirtual?: boolean }) {
   const [step, setStep] = useState(1);
+  const maxStep = isVirtual ? 2 : 7;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -254,7 +263,7 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
     return true;
   };
 
-  const handleNext = () => setStep((s) => Math.min(s + 1, 7));
+  const handleNext = () => setStep((s) => Math.min(s + 1, maxStep));
   const handlePrev = () => {
     setError(null);
     setStep((s) => Math.max(s - 1, 1));
@@ -264,14 +273,14 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
     e.preventDefault();
     if (!validateStep()) return;
 
-    if (step < 7) {
+    if (step < maxStep) {
       handleNext();
       return;
     }
     setIsSubmitting(true);
     
     try {
-      const result = await submitApplication(formData);
+      const result = await submitApplication({ ...formData, isVirtual });
       if (result.success) {
         setIsSuccess(true);
       } else {
@@ -291,9 +300,13 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
         <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: "#16A34A" }}>
           <svg className="w-8 h-8" style={{ color: "#ffffff" }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
         </div>
-        <h2 className="text-3xl font-bold mb-4" style={{ color: "#111827" }}>Application Received</h2>
+        <h2 className="text-3xl font-bold mb-4" style={{ color: "#111827" }}>
+          {isVirtual ? "Virtual Spot Secured" : "Application Received"}
+        </h2>
         <p className="text-sm max-w-sm mx-auto mb-8 leading-relaxed" style={{ color: "#6b7280" }}>
-          Thank you for applying. Your profile is now under review by our curation committee. We will notify you via email regarding your status.
+          {isVirtual 
+            ? "Your virtual attendance is confirmed. You will receive an email shortly with streaming details."
+            : "Thank you for applying. Your profile is now under review by our curation committee. We will notify you via email regarding your status."}
         </p>
         <Link href="/" className="inline-block px-8 py-3.5 font-semibold rounded-lg hover:bg-[#15803D] hover:shadow-md transition-all text-sm shadow-sm" style={{ backgroundColor: "#16A34A", color: "#ffffff" }}>
           Return to Website
@@ -309,7 +322,7 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
           <button onClick={onBack} className="p-2 -ml-2 rounded-2xl transition-colors focus:outline-none" style={{ color: "#9ca3af" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#111827")} onMouseLeave={(e) => (e.currentTarget.style.color = "#9ca3af")}>
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
           </button>
-          <h2 className="text-xl font-bold" style={{ color: "#111827" }}>Application</h2>
+          <h2 className="text-xl font-bold" style={{ color: "#111827" }}>{isVirtual ? "Virtual Registration" : "Application"}</h2>
         </div>
         
       {/* Progress Bar */}
@@ -317,8 +330,8 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
           <motion.div 
             className="h-full rounded-full"
             style={{ backgroundColor: "#000000" }}
-            initial={{ width: "14.28%" }}
-            animate={{ width: `${(step / 7) * 100}%` }}
+            initial={{ width: `${(1 / maxStep) * 100}%` }}
+            animate={{ width: `${(step / maxStep) * 100}%` }}
             transition={{ duration: 0.4, ease: "easeOut" }}
           />
         </div>
@@ -327,12 +340,14 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
       <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
         {step === 1 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5 flex-1 flex flex-col justify-center">
-            <div className="p-4 rounded-2xl border mb-2" style={{ backgroundColor: "#f9fafb", borderColor: "#f3f4f6" }}>
-              <p className="text-base leading-relaxed" style={{ color: "#6b7280" }}>
-                <span className="block mb-1" style={{ color: "#111827" }}>A note on curation:</span>
-                Please answer the upcoming questions as honestly as possible. There are no right or wrong answers, only your genuine journey, ambitions, and personal reflections.
-              </p>
-            </div>
+            {!isVirtual && (
+              <div className="p-4 rounded-2xl border mb-2" style={{ backgroundColor: "#f9fafb", borderColor: "#f3f4f6" }}>
+                <p className="text-base leading-relaxed" style={{ color: "#6b7280" }}>
+                  <span className="block mb-1" style={{ color: "#111827" }}>A note on curation:</span>
+                  Please answer the upcoming questions as honestly as possible. There are no right or wrong answers, only your genuine journey, ambitions, and personal reflections.
+                </p>
+              </div>
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input label="First name" name="firstName" value={formData.firstName} onChange={handleChange} icon={<UserIcon />} required />
               <Input label="Last name" name="lastName" value={formData.lastName} onChange={handleChange} icon={<UserIcon />} required />
@@ -429,13 +444,13 @@ function ApplicationForm({ onBack }: { onBack: () => void }) {
             </div>
           )}
 
-          {step < 7 ? (
+          {step < maxStep ? (
             <button type="submit" className="flex-1 py-4 rounded-lg font-bold text-xs uppercase tracking-widest transition-all hover:bg-[#1a1a1a] hover:shadow-md active:scale-95 shadow-sm" style={{ backgroundColor: "#000000", color: "#ffffff" }}>
               Next Step
             </button>
           ) : (
             <button type="submit" disabled={isSubmitting} className="flex-1 py-4 rounded-lg font-bold text-xs uppercase tracking-widest transition-all hover:bg-[#1a1a1a] hover:shadow-md disabled:opacity-70 disabled:cursor-not-allowed active:scale-95 shadow-sm" style={{ backgroundColor: "#000000", color: "#ffffff" }}>
-              {isSubmitting ? "Submitting..." : "Submit Application"}
+              {isSubmitting ? "Submitting..." : (isVirtual ? "Complete Registration" : "Submit Application")}
             </button>
           )}
         </div>
