@@ -132,8 +132,8 @@ function GatewayView({ onSelect }: { onSelect: (tab: "apply" | "invite" | "virtu
     >
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold mb-2" style={{ color: "#111827" }}>Welcome</h2>
-        <p className="text-sm md:text-base font-semibold" style={{ color: "#111827" }}>In-person applications are now closed.</p>
-        <p className="text-xs md:text-sm mt-1" style={{ color: "#4b5563" }}>You can still register for virtual access to stream all sessions.</p>
+        <p className="text-sm md:text-base font-semibold" style={{ color: "#111827" }}>Choose your application path below.</p>
+        <p className="text-xs md:text-sm mt-1" style={{ color: "#4b5563" }}>Select the option that best applies to you.</p>
       </div>
 
       <div className="space-y-4 max-w-[420px] mx-auto w-full">
@@ -146,19 +146,18 @@ function GatewayView({ onSelect }: { onSelect: (tab: "apply" | "invite" | "virtu
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.8)" }}>Join the global community online.</p>
         </button>
 
-
         <button
-          disabled
-          className="w-full p-6 rounded-2xl border flex flex-col items-center justify-center text-center opacity-50 cursor-not-allowed"
+          onClick={() => onSelect("apply")}
+          className="w-full p-6 rounded-2xl border transition-all hover:bg-[#8f1b1c]/95 hover:shadow-md flex flex-col items-center justify-center text-center focus:outline-none shadow-sm"
           style={{ backgroundColor: "#af2122", borderColor: "#af2122" }}
         >
-          <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>Apply to Attend (Full)</h3>
+          <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>Apply to Attend</h3>
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.8)" }}>Submit your profile for review.</p>
         </button>
 
         <button
-          disabled
-          className="w-full p-6 rounded-2xl border flex flex-col items-center justify-center text-center opacity-50 cursor-not-allowed"
+          onClick={() => onSelect("invite")}
+          className="w-full p-6 rounded-2xl border transition-all hover:bg-[#8f1b1c]/95 hover:shadow-md flex flex-col items-center justify-center text-center focus:outline-none shadow-sm"
           style={{ backgroundColor: "#af2122", borderColor: "#af2122" }}
         >
           <h3 className="text-lg font-bold mb-1" style={{ color: "#ffffff" }}>I have an Invite Code</h3>

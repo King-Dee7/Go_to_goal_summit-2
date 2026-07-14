@@ -157,19 +157,18 @@ export const getVirtualRegistrationEmail = (firstName: string) => wrapEmail(`
 `);
 
 export const getRSVPEmail = (firstName: string, applicationId: string) => {
-  const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://reinventaf.com' 
-    : 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+    (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://reinventaf.com');
   
   const inPersonUrl = `${baseUrl}/api/rsvp?id=${applicationId}&status=in-person`;
   const virtualUrl = `${baseUrl}/api/rsvp?id=${applicationId}&status=virtual`;
   const declinedUrl = `${baseUrl}/api/rsvp?id=${applicationId}&status=declined`;
 
   return wrapEmail(`
-    <h1 style="font-size: 24px; color: ${DARK_COLOR}; margin-bottom: 20px; font-weight: 700;">Action Required: Confirm Your Attendance</h1>
+    <h1 style="font-size: 24px; color: ${DARK_COLOR}; margin-bottom: 20px; font-weight: 700;">Action Required: Please Confirm Your Attendance (Updated)</h1>
     <p>Hi ${firstName},</p>
-    <p>The <strong>From Go To Goal Summit</strong> is fast approaching, and we need to finalize our guest list.</p>
-    <p>Please click one of the buttons below to confirm your attendance status. If you cannot attend in person, we highly encourage you to join us virtually!</p>
+    <p>We recently sent you an email to confirm your attendance for the <strong>From Go To Goal Summit</strong>, but there was a slight technical glitch with the confirmation links we provided. Please accept our sincerest apologies for any inconvenience this may have caused!</p>
+    <p>To help us finalize our guest list, could you please click one of the buttons below to confirm your status? The links have now been fixed. If you cannot attend in person, we highly encourage you to join us virtually!</p>
     
     <div style="margin: 40px 0; text-align: center;">
       <a href="${inPersonUrl}" style="display: block; margin-bottom: 15px; padding: 16px 24px; background-color: #0B56A0; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">

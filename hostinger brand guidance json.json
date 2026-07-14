@@ -1,0 +1,219 @@
+{
+  "data": {
+    "branding": {
+      "colorScheme": "light",
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "role": "body"
+        }
+      ],
+      "colors": {
+        "primary": "#2F1C6A",
+        "accent": "#673DE6",
+        "background": "#F4F5FF",
+        "textPrimary": "#673DE6",
+        "link": "#673DE6"
+      },
+      "typography": {
+        "fontFamilies": {
+          "primary": "DM Sans",
+          "heading": "DM Sans"
+        },
+        "fontStacks": {
+          "heading": [
+            "DM Sans",
+            "sans-serif"
+          ],
+          "body": [
+            "DM Sans",
+            "sans-serif"
+          ],
+          "paragraph": [
+            "DM Sans",
+            "sans-serif"
+          ]
+        },
+        "fontSizes": {
+          "h1": "16px",
+          "h2": "16px",
+          "body": "16px"
+        }
+      },
+      "spacing": {
+        "baseUnit": 4,
+        "borderRadius": "8px"
+      },
+      "components": {
+        "input": {
+          "background": "#FFFFFF",
+          "textColor": "#000000",
+          "borderColor": "#DADCE0",
+          "borderRadius": "8px",
+          "borderRadiusCorners": {
+            "topLeft": "8px",
+            "topRight": "8px",
+            "bottomRight": "8px",
+            "bottomLeft": "8px"
+          },
+          "shadow": "none"
+        },
+        "buttonPrimary": {
+          "background": "#673DE6",
+          "textColor": "#FFFFFF",
+          "borderRadius": "8px",
+          "borderRadiusCorners": {
+            "topLeft": "8px",
+            "topRight": "8px",
+            "bottomRight": "8px",
+            "bottomLeft": "8px"
+          },
+          "shadow": "none"
+        }
+      },
+      "images": {
+        "logo": null,
+        "favicon": "https://auth.hostinger.com/assets/images/brand/hostinger/favicon.ico",
+        "ogImage": null
+      },
+      "__llm_button_reasoning": {
+        "primary": {
+          "index": 0,
+          "text": "Log in",
+          "reasoning": "The 'Log in' button is the primary CTA due to its vibrant accent color (#673DE6), which aligns with the brand's color scheme. It is prominently placed and uses action-oriented text."
+        },
+        "secondary": {
+          "index": -1,
+          "text": "N/A",
+          "reasoning": "There are no other buttons with a different background color that could serve as a secondary CTA."
+        },
+        "confidence": 0.95
+      },
+      "personality": {
+        "tone": "professional",
+        "energy": "medium",
+        "targetAudience": "tech-savvy individuals and businesses looking for web hosting solutions."
+      },
+      "designSystem": {
+        "framework": "bootstrap",
+        "componentLibrary": ""
+      },
+      "confidence": {
+        "buttons": 0.95,
+        "colors": 0.9,
+        "overall": 0.925
+      },
+      "__llm_metadata": {
+        "logoSelection": {
+          "llmCalled": false,
+          "llmSucceeded": false,
+          "finalSource": "none"
+        },
+        "buttonClassification": {
+          "llmCalled": true,
+          "llmSucceeded": true
+        }
+      }
+    },
+    "metadata": {
+      "title": "Hostinger login | Sign in to Hostinger account",
+      "viewport": "width=device-width, initial-scale=1",
+      "favicon": "https://auth.hostinger.com/assets/images/brand/hostinger/favicon.ico",
+      "scrapeId": "019ecfa3-a765-747e-bc1c-12e66ea0b4ef",
+      "sourceURL": "https://hpanel.hostinger.com",
+      "url": "https://auth.hostinger.com/login",
+      "statusCode": 200,
+      "contentType": "text/html; charset=utf-8",
+      "timezone": "America/New_York",
+      "proxyUsed": "basic",
+      "indexId": "65656754-091a-4d01-a330-ab4a1fcce49b",
+      "creditsUsed": 1,
+      "concurrencyLimited": false
+    },
+    "html": "<!DOCTYPE html><html>\n<body class=\"\">\n<!-- Google Tag Manager (noscript) -->\n\n<!-- End Google Tag Manager (noscript) -->\n<a class=\"logo\" href=\"https://www.hostinger.com/\" data-qa=\"homepage-button\">\n    <img src=\"https://auth.hostinger.com/assets/images/brand/hostinger/logo.svg\" alt=\"Hostinger\">\n</a>\n<div class=\"container \">\n    <div>\n                <div class=\"content\">\n            <div id=\"login\" class=\"d-flex justify-content-center align-items-center flex-column position-relative\">\n                <div class=\"w-100\">\n                    <h3 class=\"mb-25 text-center title\">Log in</h3>\n\n                    \n                    <span class=\"w-100\">\n                                                                <div class=\"social-login-block d-flex justify-content-center align-items-center w-100 mb-25\">\n                                                    \n                                                                            \n                                                                            \n                                            </div>\n                    <div class=\"or-wrapper mb-25 position-relative\">\n                        <hr>\n                        <p>or</p>\n                    </div>\n                                                        </span>\n                    <form method=\"post\" autocomplete=\"on\" class=\"d-flex justify-content-center align-items-center flex-column w-100\">\n                                                                        <div class=\"mb-15 w-100\">\n                            <label for=\"email-input\" class=\"label\">Email address</label>\n                            <input id=\"email-input\" pattern=\"[^@\\s]+@[^@\\s]+\\.[^@\\s]+\" value=\"\" name=\"email\" type=\"email\" autocomplete=\"email\" class=\"input color-black\" data-qa=\"email-input\" required=\"\">\n                        </div>\n                        <label for=\"password-input\" class=\"label\">Password</label>\n                        <div class=\"mb-8 w-100 text-left position-relative\">\n                            <input id=\"password-input\" name=\"password\" type=\"password\" class=\"input color-black\" data-qa=\"password-input\" required=\"\">\n                            <div id=\"show-password-button\" class=\"position-absolute show-password-eye\" data-qa=\"password-eye-icon\">\n                                <svg id=\"eye-icon\" height=\"24\" viewBox=\"0 0 24 24\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\">\n                                    <path clip-rule=\"evenodd\" d=\"m12 4.5c-5 0-9.27 3.11-11 7.5 1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z\"></path>\n                                </svg>\n                            </div>\n                        </div>\n                        <a id=\"forgot-password-link\" href=\"https://auth.hostinger.com/forgot-password\" class=\"w-100 text-left fs-16 mb-25 secondary-action color-hostinger\" data-qa=\"forgot-password-link\">Forgot password?</a>\n\n                        <button id=\"login-button\" type=\"submit\" class=\"mb-25 w-100 primary-action background-color-hostinger\" data-qa=\"login-button\">Log in</button>\n\n                                                                            <a id=\"account-recovery-link\" href=\"https://auth.hostinger.com/account-recovery\" class=\"mb-25 fs-16 secondary-action color-hostinger\" data-qa=\"account-recovery-link\">Can't Access Your Account?</a>\n                                            </form>\n                                        <div class=\"text-center\">\n                        Don't have an account? <a href=\"https://auth.hostinger.com/register\" class=\"fs-16 secondary-action color-hostinger\" data-qa=\"signup-button\">Sign Up</a>\n                    </div>\n                                    </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n\n\n\n\n\n\n\n\n\n\n</body></html>"
+  },
+  "scrape_id": "019ecfa3-a765-747e-bc1c-12e66ea0b4ef",
+  "id": "0DUKozyILpRC0llC0Bs4J",
+  "startedAt": "2026-06-16T08:54:28.789Z",
+  "endedAt": "2026-06-16T08:54:38.032Z",
+  "endpoint": "scrape",
+  "formState": {
+    "parseFile": null,
+    "parseFileMeta": null,
+    "extractSetupCompleted": false,
+    "urls": [],
+    "extractSchema": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "company_mission": {
+          "type": "string"
+        },
+        "supports_sso": {
+          "type": "boolean"
+        },
+        "is_open_source": {
+          "type": "boolean"
+        },
+        "is_in_yc": {
+          "type": "boolean"
+        }
+      }
+    },
+    "extractPrompt": "Extract the company details, following the schema.",
+    "enableWebSearch": false,
+    "constrainUrls": false,
+    "options": {
+      "onlyMainContent": true,
+      "parsePDF": true,
+      "stealthMode": false,
+      "excludeTags": [],
+      "includeTags": [],
+      "waitFor": "",
+      "timeout": "",
+      "maxAge": "2 days",
+      "ignoreSitemap": false,
+      "crawlEntireDomain": false,
+      "sitemap": "include",
+      "limit": "10",
+      "maxDepth": "",
+      "excludePaths": [],
+      "includePaths": [],
+      "includeSubdomains": false,
+      "search": "",
+      "scrapeContentFromSearchResults": true,
+      "timeBasedSearch": "",
+      "location": "",
+      "prompt": ""
+    },
+    "formats": [
+      "html",
+      "branding"
+    ],
+    "sources": [
+      "web"
+    ],
+    "categories": [],
+    "jsonSchema": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "company_name": {
+          "type": "string"
+        },
+        "company_description": {
+          "type": "string"
+        }
+      }
+    },
+    "jsonPrompt": "",
+    "questionPrompt": "",
+    "highlightsQuery": "",
+    "agent": {},
+    "url": "hpanel.hostinger.com",
+    "endpoint": "scrape"
+  },
+  "status": "success",
+  "version": "7rM3bL6NLqVwu01X29FxK",
+  "isPreview": false
+}
