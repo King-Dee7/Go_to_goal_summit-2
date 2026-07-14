@@ -46,6 +46,7 @@ CREATE TABLE applications (
     
     -- Status tracking
     status VARCHAR(50) DEFAULT 'Under Review', -- 'Under Review', 'Accepted', 'Rejected'
+    rsvp_status VARCHAR(50) DEFAULT 'pending', -- 'pending', 'in-person', 'virtual', 'declined'
     invite_code_issued VARCHAR(50),
     sync_errors TEXT,
     

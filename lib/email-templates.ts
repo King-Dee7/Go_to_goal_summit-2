@@ -155,3 +155,36 @@ export const getVirtualRegistrationEmail = (firstName: string) => wrapEmail(`
   <p>Looking forward to connecting with you online!</p>
   <p style="margin-top: 30px;">Warm regards,<br /><strong>The Reinvent Africa Team</strong></p>
 `);
+
+export const getRSVPEmail = (firstName: string, applicationId: string) => {
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://reinventaf.com' 
+    : 'http://localhost:3000';
+  
+  const inPersonUrl = `${baseUrl}/api/rsvp?id=${applicationId}&status=in-person`;
+  const virtualUrl = `${baseUrl}/api/rsvp?id=${applicationId}&status=virtual`;
+  const declinedUrl = `${baseUrl}/api/rsvp?id=${applicationId}&status=declined`;
+
+  return wrapEmail(`
+    <h1 style="font-size: 24px; color: ${DARK_COLOR}; margin-bottom: 20px; font-weight: 700;">Action Required: Confirm Your Attendance</h1>
+    <p>Hi ${firstName},</p>
+    <p>The <strong>From Go To Goal Summit</strong> is fast approaching, and we need to finalize our guest list.</p>
+    <p>Please click one of the buttons below to confirm your attendance status. If you cannot attend in person, we highly encourage you to join us virtually!</p>
+    
+    <div style="margin: 40px 0; text-align: center;">
+      <a href="${inPersonUrl}" style="display: block; margin-bottom: 15px; padding: 16px 24px; background-color: #0B56A0; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+        Yes, I will attend in-person
+      </a>
+      
+      <a href="${virtualUrl}" style="display: block; margin-bottom: 15px; padding: 16px 24px; background-color: #2F8E49; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">
+        Yes, I will attend virtually
+      </a>
+      
+      <a href="${declinedUrl}" style="display: block; padding: 16px 24px; background-color: #f8f9fa; color: #333333; text-decoration: none; border-radius: 8px; font-weight: 500; font-size: 16px; border: 1px solid #ddd;">
+        Unfortunately, I cannot attend
+      </a>
+    </div>
+
+    <p style="margin-top: 30px;">Best regards,<br /><strong>The Reinvent Africa Team</strong></p>
+  `);
+};
