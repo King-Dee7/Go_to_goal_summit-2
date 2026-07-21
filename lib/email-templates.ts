@@ -187,3 +187,22 @@ export const getRSVPEmail = (firstName: string, applicationId: string) => {
     <p style="margin-top: 30px;">Best regards,<br /><strong>The Reinvent Africa Team</strong></p>
   `);
 };
+
+export const getInPersonReminderEmail = (firstName: string) => wrapEmail(`
+  <h1 style="font-size: 26px; color: #0B56A0; margin-bottom: 20px; font-weight: 700;">Important Update: Arrival Time for Tomorrow!</h1>
+  <p>Hi ${firstName},</p>
+  <p>We are so excited to see you tomorrow at the <strong>From Go To Goal Summit</strong>!</p>
+  <p>We are reaching out with an important update regarding the schedule. Please ensure you arrive at the Google AI Community Center by <strong>4:30 PM prompt</strong>.</p>
+  
+  <div style="background-color: ${GRAY_COLOR}; padding: 25px; border-radius: 12px; margin: 30px 0; border-left: 4px solid #F6C10E;">
+    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px; color: ${DARK_COLOR};">Why Arrive Early?</h3>
+    <p style="margin: 0; font-size: 15px; line-height: 1.6;">
+      Arriving early will give you a fantastic opportunity to settle in, network, and form relationships with our speakers and fellow attendees before the official kickoff. 
+      But more importantly, the event starts at <strong>5:00 PM sharp</strong>, and we want to make sure you don't miss a single moment.
+    </p>
+  </div>
+
+  <p>See you tomorrow at 4:30 PM!</p>
+  <p style="margin-top: 30px;">Best regards,<br /><strong>The Reinvent Africa Team</strong></p>
+`);
+
