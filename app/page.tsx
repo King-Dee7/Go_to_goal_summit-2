@@ -164,6 +164,11 @@ export default function Home() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+        } else {
+          // Allow cards to fall back in alignment when scrolling up
+          if (entry.target.classList.contains('experience-inbound-card')) {
+            entry.target.classList.remove('visible');
+          }
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
@@ -263,9 +268,9 @@ export default function Home() {
               <p className="hero-subtitle-theme reveal reveal-delay-2">The Architecture of Ambition: Bridging Vision &amp; Value for Global Dominance</p>
 
               <div className="hero-ctas reveal reveal-delay-3">
-                <a href="/apply" className="hero-cta-primary">
+                <a href="https://www.instagram.com/reinventafrica54/" target="_blank" rel="noopener noreferrer" className="hero-cta-primary">
                   <span className="hero-cta-fill" aria-hidden="true"></span>
-                  <span className="hero-cta-label">Apply to<br className="cta-br" /> Attend</span>
+                  <span className="hero-cta-label">View<br className="cta-br" /> Highlights</span>
                 </a>
                 <a href="#agenda" className="hero-cta-secondary">View<br className="cta-br" /> Agenda</a>
               </div>
@@ -300,16 +305,16 @@ export default function Home() {
             {/* Right Column: TEDAI Waterfall Images */}
             <div className="waterfall-collage reveal">
               <div className="waterfall-img waterfall-img-1">
-                <Image src="/summit-speaker.png" alt="Speaker on stage at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" />
+                <Image src="/alfred-waterfall.jpg" alt="Alfred speaking on stage at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" unoptimized />
               </div>
               <div className="waterfall-img waterfall-img-2">
-                <Image src="/summit-networking.png" alt="Professionals networking at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" />
+                <Image src="/smiling ladies.jpg" alt="Smiling ladies at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" unoptimized />
               </div>
               <div className="waterfall-img waterfall-img-3">
-                <Image src="/summit-stage.png" alt="Summit stage and venue" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" />
+                <Image src="/wtrefall.png" alt="Danielli smiling at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={90} loading="lazy" />
               </div>
               <div className="waterfall-img waterfall-img-4">
-                <Image src="/summit-audience.png" alt="Audience member at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" />
+                <Image src="/last waterfall.png" alt="Audience members at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" unoptimized />
               </div>
             </div>
           </div>
@@ -324,32 +329,29 @@ export default function Home() {
           <div className="experience-inbound-grid">
             <div className="experience-inbound-card reveal">
               <div className="experience-inbound-card-img">
-                <Image src="/summit-audience.png" alt="Engaged audience at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
+                <Image src="/1st card.png" alt="Engaged audience at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
               </div>
               <div className="experience-inbound-card-body">
                 <h3>Hear Real Stories</h3>
                 <p>Unfiltered journeys of failure, growth, and breakthrough from seasoned professionals across industries. No rehearsed talks, just honest accounts of what it takes to build something meaningful.</p>
-                <a href="#agenda" className="experience-inbound-card-link">See sessions</a>
               </div>
             </div>
             <div className="experience-inbound-card reveal reveal-delay-1">
               <div className="experience-inbound-card-img">
-                <Image src="/summit-networking-new.png" alt="Professionals networking at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
+                <Image src="/2nd card.png" alt="Professionals networking at the summit" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
               </div>
               <div className="experience-inbound-card-body">
                 <h3>Build Your Network</h3>
                 <p>Connect with mentors, peers, and collaborators through structured networking moments designed to spark real relationships. Leave with contacts who share your ambition and can open new doors.</p>
-                <a href="/apply" className="experience-inbound-card-link">Apply to attend</a>
               </div>
             </div>
             <div className="experience-inbound-card reveal reveal-delay-2">
               <div className="experience-inbound-card-img">
-                <Image src="/summit-speaker.png" alt="Speaker delivering a keynote on stage" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
+                <Image src="/3rd image.png" alt="Speaker delivering a keynote on stage" fill sizes="(max-width: 900px) 100vw, 33vw" quality={85} loading="lazy" />
               </div>
               <div className="experience-inbound-card-body">
                 <h3>Gain Practical Tools</h3>
                 <p>Learn how speakers achieved goals once considered impossible. Understand the business behind passion and walk away with actionable frameworks and strategies you can apply the next day.</p>
-                <a href="#story" className="experience-inbound-card-link">Why this summit</a>
               </div>
             </div>
           </div>
@@ -384,7 +386,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="agenda-row-media">
-                  <Image src="/opening-sessions-final.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
+                  <Image src="/opening sessions.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
                 </div>
               </article>
 
@@ -398,7 +400,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="agenda-row-media">
-                  <Image src="/panel-discussions-final.png" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
+                  <Image src="/panel discussions.png" alt="Professionals discussing ideas in a panel environment" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
                 </div>
               </article>
 
@@ -412,7 +414,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="agenda-row-media">
-                  <Image src="/networking-close-final.png" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
+                  <Image src="/networking.png" alt="Audience networking and engaging at summit close" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
                 </div>
               </article>
             </div>
@@ -452,7 +454,7 @@ export default function Home() {
             </div>
 
             <div className="reveal flex justify-center mt-4 sm:mt-10">
-              <a href="/apply" className="btn-primary">Apply to Attend</a>
+              <a href="https://www.instagram.com/reinventafrica54/" target="_blank" rel="noopener noreferrer" className="btn-primary">View Highlights</a>
             </div>
 
 
@@ -697,7 +699,7 @@ export default function Home() {
               FROM GO TO GOAL SUMMIT is more than an event. It is a movement toward intentional ambition. Will you be part of it?
             </p>
             <div className="reveal">
-              <a href="/apply" className="btn-primary" style={{ "fontSize": "17px", "padding": "18px 24px" }}>Apply to Attend</a>
+              <a href="https://www.instagram.com/reinventafrica54/" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ "fontSize": "17px", "padding": "18px 24px" }}>View Highlights</a>
             </div>
           </div>
         </section>
