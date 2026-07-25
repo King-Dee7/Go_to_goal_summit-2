@@ -23,6 +23,15 @@ export const speakerCards: Speaker[] = [
     socials: {}
   },
   {
+    id: "hill-harper",
+    title: "Hill Harper",
+    description: "Award-Winning Actor, Best-Selling Author & Entrepreneur",
+    imageSrc: "/speakers/Hill Harper.jpg",
+    href: "/speakers/hill-harper",
+    bio: "Hill Harper is an award-winning actor, best-selling author, entrepreneur, and humanitarian, best known for his roles in The Good Doctor and CSI:NY. A graduate of Brown University and Harvard Law School, he has authored four New York Times bestsellers addressing wealth gaps and empowerment. Harper is a dedicated social justice advocate, serving on the President's Cancer Panel and the board of the National Black Bank Fund. As a global speaker, he champions individual empowerment, financial literacy, and social equity.",
+    socials: {}
+  },
+  {
     id: "bola-ray",
     title: "Nat Kwabena Adisi (Bola Ray)",
     description: "CEO of EIB Network Limited",
@@ -101,6 +110,24 @@ export const speakerCards: Speaker[] = [
     imageSrc: "/speakers/Anthony Shaw.jpeg",
     href: "/speakers/anthony-shaw",
     bio: "Anthony Shaw is a 39-year-old business leader, marketing executive, and entrepreneur with over 15 years of combined international and local experience. His career spans luxury retail, education management, telecommunications, and brand development, and he is recognized for his ability to align commercial success with social impact.",
+    socials: {}
+  },
+  {
+    id: "danielli-ofori-atta",
+    title: "Danielli Ofori-Atta",
+    description: "Founder & CEO, The Danielli Group",
+    imageSrc: "/speakers/Danielli Offori-Atta.jpg",
+    href: "/speakers/danielli-ofori-atta",
+    bio: "Danielli Ofori-Atta is a strategic operator and CEO of The Danielli Group, specializing in high-value infrastructure and cross-border transactions across Africa. With a rare blend of execution depth and strategic authority, she bridges the gap between sovereign priorities and private capital. She advises governments on institutional frameworks and shapes market positioning for ventures, ensuring long-term value creation in complex, multi-jurisdictional landscapes.",
+    socials: {}
+  },
+  {
+    id: "daisy-alabi",
+    title: "Daisy Alabi",
+    description: "IT & Law Professional",
+    imageSrc: "/speakers/Daisy Alabi.jpg",
+    href: "/speakers/daisy-alabi",
+    bio: "Daisy is a proactive IT law professional dedicated to advancing digital transformation and educational technology. Holding an LLM in Information Technology Law, she is a skilled facilitator who moderates high-level dialogues intersecting communication, policy, and technology. As the host of Spotlight EdTech Ghana, Daisy actively champions and amplifies local innovations within the educational technology ecosystem.",
     socials: {}
   }
 ];

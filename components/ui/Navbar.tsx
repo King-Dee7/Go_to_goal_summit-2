@@ -103,7 +103,7 @@ export function Navbar({ forceLight = false }: NavbarProps) {
           <li><Link href="/#speakers">Speakers</Link></li>
           <li><Link href="/#sponsors">Partners</Link></li>
           <li><Link href="/#faq">FAQ</Link></li>
-          <li><Link href="/apply" className="nav-cta">Apply to Attend</Link></li>
+          <li><a href="https://www.instagram.com/reinventafrica54/" target="_blank" rel="noopener noreferrer" className="nav-cta">View Highlights</a></li>
         </ul>
         <button
           className="nav-hamburger"

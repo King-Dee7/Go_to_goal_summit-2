@@ -49,7 +49,7 @@ export function SpeakerFooter() {
             <Link href="/#sponsors" className="text-sm text-slate-700 hover:text-slate-900 transition-colors">Partners</Link>
             <Link href="/#speakers" className="text-sm text-slate-700 hover:text-slate-900 transition-colors">Speakers</Link>
             <Link href="/#faq" className="text-sm text-slate-700 hover:text-slate-900 transition-colors">FAQ</Link>
-            <Link href="/apply" className="text-sm text-slate-700 hover:text-slate-900 transition-colors">Apply to Attend</Link>
+            <a href="https://www.instagram.com/reinventafrica54/" target="_blank" rel="noopener noreferrer" className="text-sm text-slate-700 hover:text-slate-900 transition-colors">View Highlights</a>
           </nav>
 
           {/* Right: Newsletter Signup */}
