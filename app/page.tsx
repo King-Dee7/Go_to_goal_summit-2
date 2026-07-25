@@ -311,7 +311,7 @@ export default function Home() {
                 <Image src="/smiling ladies.jpg" alt="Smiling ladies at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" unoptimized />
               </div>
               <div className="waterfall-img waterfall-img-3">
-                <Image src="/wtrefall.png" alt="Danielli smiling at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={90} loading="lazy" />
+                <Image src="/wtrefall.png" alt="Danielli smiling at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={90} loading="lazy" unoptimized />
               </div>
               <div className="waterfall-img waterfall-img-4">
                 <Image src="/last waterfall.png" alt="Audience members at the summit" fill sizes="(max-width: 768px) 50vw, 400px" quality={100} loading="lazy" unoptimized />
