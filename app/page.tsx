@@ -386,7 +386,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="agenda-row-media">
-                  <Image src="/opening sessions.png" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
+                  <Image src="/Wade.jpg" alt="Summit stage during opening session" fill sizes="(max-width: 1024px) 100vw, 34vw" quality={85} loading="lazy" />
                 </div>
               </article>
 
