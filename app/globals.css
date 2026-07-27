@@ -3282,8 +3282,10 @@ summary:focus-visible {
 }
 
 /* Heavy Gaussian Blur on Hover */
-.experience-inbound-card:hover .experience-inbound-card-img img {
-  filter: blur(16px) brightness(0.65);
+@media (hover: hover) {
+  .experience-inbound-card:hover .experience-inbound-card-img img {
+    filter: blur(16px) brightness(0.65);
+  }
 }
 
 .experience-inbound-card-body {
@@ -3325,14 +3327,16 @@ summary:focus-visible {
   transition: opacity 0.8s ease 0.3s, max-height 1.2s ease, margin-top 1.2s ease;
 }
 
-.experience-inbound-card:hover .experience-inbound-card-body h3 {
-  transform: translateY(-10px);
-}
+@media (hover: hover) {
+  .experience-inbound-card:hover .experience-inbound-card-body h3 {
+    transform: translateY(-10px);
+  }
 
-.experience-inbound-card:hover .experience-inbound-card-body p {
-  opacity: 1;
-  max-height: 250px;
-  margin-top: 15px;
+  .experience-inbound-card:hover .experience-inbound-card-body p {
+    opacity: 1;
+    max-height: 250px;
+    margin-top: 15px;
+  }
 }
 
 @media (max-width: 900px) {
